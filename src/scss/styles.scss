@@ -1,0 +1,296 @@
+$tab-color: #ED1B2C;
+
+/* 1. Navigation Bar */
+/* 2. Header */
+/* 3. Table */
+/* 4. Padding and margins */
+/* 5. Pagination Styles  */
+
+
+/* ------------  Bootstrap Overrides ---------*/
+
+.pagination {
+    margin-top: 0;
+}
+
+.glyphicon {
+    top: 0px;
+}
+
+
+/* ------------  START Bootstrap Overrides ---------*/
+.has-date-error {
+    color: red;
+    background-color: red;
+}
+
+.nav-tabs li a {
+    color:black;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover  {
+    background-color: $tab-color;
+    color:white;
+}
+
+.nav-tabs>li.active .badge  {
+    background-color: white;
+    color:black;
+}
+
+.panel-default>.panel-heading {
+    color: white;
+    font-weight: bold;
+    font-size: 1.8em;
+    background-color: $tab-color;
+    border: 3px solid $tab-color;
+    background-image:none;
+}
+
+.panel-default>.panel-body {
+    background-color: #f7f7f7;
+}
+
+
+/* ------------  END Bootstrap Overrides ---------*/
+
+/*---------------React Widgets Overide -----------*/
+.rw-input {
+  margin-bottom: 1px;
+}
+/*---------------React Widgets Overide -----------*/
+
+/* ------------  File Icon Styles ---------*/
+.fa-file-image-o {
+    color: cadetblue;
+}
+
+.fa-file-word-o {
+    color: blue;
+}
+
+.fa-file-pdf-o {
+    color: red;
+}
+
+.fa-file-excel-o {
+    color: forestgreen;
+}
+
+.fa-file-text-o {
+    color: mediumpurple;
+}
+/* ------------  File Icon Styles ---------*/
+
+/* ------------  Status Icon Styles ---------*/
+.fa-star {
+    color: dodgerblue;
+}
+
+.fa-check-square {
+    color: green;
+}
+
+.fa-check-square-o {
+    color: green;
+}
+
+.fa-warning {
+    color: orange;
+}
+
+.fa-exclamation-triangle {
+    color: red;
+}
+
+.fa-ban {
+    color: red;
+}
+
+.fa-archive {
+    color: mediumpurple;
+}
+
+.fa-coffee {
+    color: olive;
+}
+
+/* ------------  Status Icon Styles ---------*/
+
+.chirp {
+    list-style-type: none;
+    padding: 6px;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+}
+
+.chirp p {
+    margin-bottom: 0;
+}
+
+.drop-zone {
+    border-width: 5px;
+    border-color: darkblue;
+    border-style: dashed;
+    border-radius: 4px;
+    width: 130px;
+    padding: 10px;
+}
+
+.timestamp {
+    color: #d1d1d1;
+}
+
+.chirp img {
+/*    display: block;*/
+    border-radius: 4px;
+/*    width: 100%;*/
+}
+
+.chirp-input {
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+/*________ 4. Padding and margins ______________________*/
+
+.dp-small {
+  width: 150px;
+}
+
+.dp-select {
+    margin-bottom: 15px;
+}
+
+.dp-margin-5-LR {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.dp-margin-10-LR {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.dp-margin-10-B {
+    margin-bottom: 10px;
+}
+
+.margin-20 {
+  margin-left: 20px;
+}
+
+.margin-10-top {
+  margin-top: 10px;
+}
+
+.margin-20-top {
+  margin-top: 20px;
+}
+
+/* 4. Padding and margins */
+
+.dpHand {
+    cursor: pointer;
+    cursor: hand;
+}
+
+/*---------------Heading ------------------*/
+
+.dp-H3 {
+
+    border-bottom : solid 1px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    padding: 0 20px 10px 20px;
+
+}
+
+/*---------------Header ------------------*/
+
+
+/*---------------Footer ------------------*/
+
+.dpFooter {
+    margin-top: 15px;
+    height: 50px;
+    background: #F8F8F8;
+    text-align: center;
+    padding-top: 15px;
+}
+
+/*---------------Footer ------------------*/
+
+.section-header {
+    height: 60px;
+    margin-bottom: 10px;
+    background-color: #3864A3;
+    border-bottom: 5px solid #000;
+    padding: 10px;
+}
+
+.section-header-text-main {
+    color: #ffffff;
+    font-size: 1.8em;
+}
+
+.section-header-text-sub {
+    color: #ffffff;
+    font-size: 1.2em;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+/*---------------Header ------------------*/
+
+/*---------------Navigation Bar ------------------*/
+
+.dp-side-nav {
+    padding-left: 0px;
+}
+
+.dp-nav-section {
+    margin: 0 auto;
+}
+
+/*---------------Navigation Bar ------------------*/
+
+/*---------------Tab Bar ------------------*/
+
+.tab-bar {
+    height: 10px;
+    background-color: #0e718f;
+}
+
+/*---------------Tab Bar ------------------*/
+
+/*
+@media (min-width: 550px) {
+    .chirp img {
+        display: block;
+        border-radius: 4px;
+        width: 100%;
+    }
+}
+*/
+
+
+/*---------------Table ------------------*/
+
+
+.colaligncenter {
+    text-align: center;
+}
+
+/*---------------Table ------------------*/
+
+/*---------------Pagination Styles ------------------*/
+
+
+.dpPag {
+  border-radius: 10px;
+  border: 2px solid #71ABFF;
+    padding: 5px 20px;
+}
+
+/*---------------Pagination Styles ------------------*/

@@ -1,0 +1,72 @@
+/* global styles */
+
+@import 'fonts/roboto';
+@import 'typography';
+@import 'links';
+
+
+:global(body) {
+
+}
+
+
+/* ------------  File Icon Styles ---------*/
+.fa-file-image-o {
+    color: cadetblue;
+}
+
+.fa-file-word-o {
+    color: blue;
+}
+
+.fa-file-pdf-o {
+    color: red;
+}
+
+.fa-file-excel-o {
+    color: forestgreen;
+}
+
+.fa-file-text-o {
+    color: mediumpurple;
+}
+/* ------------  File Icon Styles ---------*/
+
+/* ------------  Status Icon Styles ---------*/
+.fa-star {
+    color: dodgerblue;
+}
+
+.fa-check-square {
+    color: green;
+}
+
+.fa-check-square-o {
+    color: green;
+}
+
+.fa-warning {
+    color: orange;
+}
+
+.fa-exclamation-triangle {
+    color: red;
+}
+
+.fa-ban {
+    color: red;
+}
+
+.fa-archive {
+    color: mediumpurple;
+}
+
+.fa-coffee {
+    color: olive;
+}
+
+/* ------------  Status Icon Styles ---------*/
+
+select.custom {
+  padding: 0px;
+}
