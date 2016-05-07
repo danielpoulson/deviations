@@ -21,7 +21,7 @@ export class Header extends Component {
   onLogin = (e) => {
     e.preventDefault();
     this.props.login(this.state.login);
-    this.props.getUserDashboard(this.state.login.username);
+    // this.props.getUserDashboard(this.state.login.username);
   };
 
   setStateLogin = (evt) => {
@@ -46,7 +46,7 @@ export class Header extends Component {
             <div className="topband">
                 <section className="col-sm-12 dp-nav-section ">
                     <div className="col-sm-5">
-                        <h3 className="topband_h1">Change Control</h3>
+                        <h3 className="topband_h1">Deviation Database</h3>
                     </div>
                     <div className="col-sm-7" style={loginStyle}>
                         { !this.props.fullname ?
