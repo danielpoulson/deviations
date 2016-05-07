@@ -2,18 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Toastr from 'toastr';
 
-import ChangeList from 'components/Changes/change-list';
+import DeviationList from 'components/Deviations/deviations-list';
 import Pagination from 'components/Common/pagination';
 import SearchBox from 'components/Common/search-box';
 
 /* actions */
-import { getChange, getChanges, addChange, loadPage, exportChanges } from 'actions/actions_changes';
+import { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations } from 'actions/actions_deviations';
 import { setMain } from 'actions/actions_main';
 
-@connect(state => ({ changes: state.changes, user: state.main.user }),
-  { getChange, getChanges, addChange, loadPage, exportChanges, setMain })
+@connect(state => ({ deviations: state.deviations, user: state.main.user }),
+  { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, setMain })
 
-export default class Changes extends Component {
+export default class Deviations extends Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   };
@@ -35,13 +35,13 @@ export default class Changes extends Component {
     };
     this.onSearchText = this.onSearchText.bind(this);
     this.onSortByClick = this.onSortByClick.bind(this);
-    this.onGetChange = this.onGetChange.bind(this);
+    this.onGetDeviation = this.onGetDeviation.bind(this);
   }
 
   componentWillMount() {
-    const search = this.props.changes.searchText;
-    if (!this.props.changes.alldata.length > 0) {
-      this.props.getChanges(4);
+    const search = this.props.deviations.searchText;
+    if (!this.props.deviations.alldata.length > 0) {
+      this.props.getDeviations(1);
     }
     this.setState({ txtSearch: search });
     this.onChange(1, search);
@@ -66,12 +66,12 @@ export default class Changes extends Component {
     this.props.loadPage(action);
   };
 
-  onGetChange(i) {
+  onGetDeviation(i) {
     const _id = i;
     // const _id = this.props.changelist[i].CC_No;
-    this.props.setMain({ MainId: _id, CurrentMode: 'change', loading: true });
-    this.props.getChange(_id);
-    this.context.router.push(`/change/${_id}`);
+    this.props.setMain({ MainId: _id, CurrentMode: 'deviation', loading: true });
+    this.props.getDeviation(_id);
+    this.context.router.push(`/deviation/${_id}`);
   }
 
   onSortByClick(column) {
@@ -85,22 +85,22 @@ export default class Changes extends Component {
     this.setState({ activePage: i });
   }
 
-  allChanges = () => {
+  allDeviations = () => {
     let _showAll = this.state.showAll;
     _showAll = !_showAll;
     this.setState({ showAll: _showAll });
 
     if (this.state.showAll !== true) {
-      this.props.getChanges(6);
+      this.props.getDeviations(6);
     } else {
-      this.props.getChanges(4);
+      this.props.getDeviations(4);
     }
     this.setState({ txtSearch: null });
     this.setState({ activePage: 0 });
-    Toastr.success(`Only showing active changes - ${this.state.showAll}`, 'Change Detail', { timeOut: 1000 });
+    Toastr.success(`Only showing active changes - ${this.state.showAll}`, 'Deviation Detail', { timeOut: 1000 });
   };
 
-  exportChange = () => {
+  exportDeviation = () => {
     const info = {
       fsSource: 'exp',
       fsAddedBy: this.props.user.username,
@@ -109,11 +109,11 @@ export default class Changes extends Component {
       showAll: this.state.showAll
     };
 
-    this.props.exportChanges(info);
+    this.props.exportDeviations(info);
   };
 
-  newChange = () => {
-    this.props.getChange(null);
+  newDeviation = () => {
+    this.props.getDeviation(null);
     this.props.setMain({ MainId: 'new', CurrentMode: 'change', loading: false });
     this.context.router.push('/change/new');
   };
@@ -126,7 +126,7 @@ export default class Changes extends Component {
     if (this.state.showAll !== true) {
       butText = 'Show all changes';
     } else {
-      butText = 'Show Current Changes';
+      butText = 'Show Current Deviations';
     }
 
     return (
@@ -134,7 +134,7 @@ export default class Changes extends Component {
         <div className="">
           <div className="section-header">
             <div className="col-sm-6 pull-left">
-              <p className="section-header-text-main">Change Control - {_changeTitle} </p>
+              <p className="section-header-text-main">Deviation Control - {_changeTitle} </p>
             </div>
 
             <SearchBox
@@ -147,17 +147,17 @@ export default class Changes extends Component {
           <div className="col-sm-6">
             <button
               className="btn btn-success pull-left"
-              onClick={this.newChange} >
-              New Change
+              onClick={this.newDeviation} >
+              New Deviation
             </button>
             <button
               className="btn btn-info dp-margin-10-LR"
-              onClick={this.exportChange} >
+              onClick={this.exportDeviation} >
               Export List
             </button>
             <button
               className="btn btn-warning"
-              onClick={this.allChanges} >
+              onClick={this.allDeviations} >
               {butText}
             </button>
           </div>
@@ -165,19 +165,19 @@ export default class Changes extends Component {
           <div className="col-sm-6">
             <Pagination
               activePage = {this.state.activePage}
-              numPage = {this.props.changes.per_page}
-              count = {this.props.changes.total}
+              numPage = {this.props.deviations.per_page}
+              count = {this.props.deviations.total}
               getPage = {this.linkClick.bind(this)} />
           </div>
         </div>
 
 
         <div className="">
-          <ChangeList
-            changelist={this.props.changes.paged}
-            getChange={this.onGetChange}
+          <DeviationList
+            devlist={this.props.deviations.paged}
+            getDeviation={this.onGetDeviation}
             sortByClick = {this.onSortByClick}
-            colSelected = {this.props.changes.sorted} />
+            colSelected = {this.props.deviations.sorted} />
         </div>
 
       </section>
@@ -185,11 +185,11 @@ export default class Changes extends Component {
   }
 }
 
-Changes.propTypes = {
+Deviations.propTypes = {
   changes: PropTypes.array,
-  exportChanges: PropTypes.func,
-  getChanges: PropTypes.func,
-  getChange: PropTypes.func,
+  exportDeviations: PropTypes.func,
+  getDeviations: PropTypes.func,
+  getDeviation: PropTypes.func,
   loadPage: PropTypes.func,
   setMain: PropTypes.func,
   user: PropTypes.object,

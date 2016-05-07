@@ -1,54 +1,56 @@
 import axios from 'axios';
 
-export const GET_CHANGES = 'GET_CHANGES';
-export const GET_CHANGE = 'GET_CHANGE';
-export const ADD_CHANGE = 'ADD_CHANGE';
-export const EDIT_CHANGE = 'EDIT_CHANGE';
-export const LOAD_PAGE_CHANGES = 'LOAD_PAGE_CHANGES';
+export const GET_DEVS = 'GET_DEVS';
+export const GET_DEV = 'GET_DEV';
+export const ADD_DEV = 'ADD_DEV';
+export const EDIT_DEV = 'EDIT_DEV';
+export const LOAD_PAGE_DEVS = 'LOAD_PAGE_DEVS';
 export const CREATE_LOG = 'CREATE_LOG';
 export const BOOKOUT_FILE = 'BOOKOUT_FILE';
 
 
-export function getChanges(data) {
-  const url = `/api/changes/${data}`;
+export function getDeviations(data) {
+  // TODO: Hard copy customer can not choose to load a particular customer
+  const cust = 'all';
+  const url = `/api/deviationlist/${data}/${cust}`;
   const request = axios.get(url);
 
   return {
-    type: GET_CHANGES,
+    type: GET_DEVS,
     payload: request,
   };
 
 }
 
-export function getChange(data) {
+export function getDeviation(data) {
 
-  const url = `/api/change/${data}`;
+  const url = `/api/deviation/${data}`;
   const request = axios.get(url);
 
   return {
-    type: GET_CHANGE,
+    type: GET_DEV,
     payload: request,
   };
 
 }
 
-export function addChange(data) {
+export function addDeviation(data) {
   const url = '/api/changes';
   const request = axios.post(url, data);
 
   return {
-    type: ADD_CHANGE,
+    type: ADD_DEV,
     payload: request,
   };
 
 }
 
-export function editChange(data) {
+export function editDeviation(data) {
   const url = `/api/change/${data._id}`;
   axios.put(url, data);
 
   return {
-    type: EDIT_CHANGE,
+    type: EDIT_DEV,
     payload: data,
   };
 
@@ -57,7 +59,7 @@ export function editChange(data) {
 export function loadPage(data) {
   return {
 
-    type: LOAD_PAGE_CHANGES,
+    type: LOAD_PAGE_DEVS,
     data,
   };
 
@@ -85,11 +87,11 @@ export function bookoutFile(data) {
 
 }
 
-export function exportChanges(search) {
+export function exportDeviations(search) {
   const url = '/export/changes';
   axios.post(url, search);
 
   return {
-    type: 'EXPORT_CHANGES',
+    type: 'EXPORT_DEVS',
   };
 }

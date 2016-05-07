@@ -12,7 +12,7 @@ function searchData(data, searchText, sortColumn) {
   function search(item) {
     const reg1 = new RegExp(`${searchText}.*`, 'i');
 
-    if (item.SourceId.match(reg1) || item.TKChamp.match(reg1) || item.TKName.match(reg1)) {
+    if (item.DevId.match(reg1) || item.TKChamp.match(reg1) || item.TKName.match(reg1)) {
       return true;
     }
     return false;

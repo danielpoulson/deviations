@@ -1,4 +1,4 @@
-import { GET_CHANGES, ADD_CHANGE, EDIT_CHANGE, LOAD_PAGE_CHANGES } from 'actions/actions_changes';
+import { GET_DEVS, ADD_DEV, EDIT_DEV, LOAD_PAGE_DEVS } from 'actions/actions_deviations';
 import _ from 'lodash';
 
 const initialState = {
@@ -44,7 +44,7 @@ export default function (state, action) {
 
   switch (action.type) {
 
-    case ADD_CHANGE:
+    case ADD_DEV:
       _data = action.payload.data;
       alldata = [
         ...state.alldata,
@@ -55,7 +55,7 @@ export default function (state, action) {
         alldata,
       };
 
-    case EDIT_CHANGE:
+    case EDIT_DEV:
       _data = action.payload;
       currIds = state.alldata.map(c => c._id);
       index = currIds.indexOf(_data._id);
@@ -70,7 +70,7 @@ export default function (state, action) {
         alldata,
       };
 
-    case GET_CHANGES:
+    case GET_DEVS:
       alldata = action.payload.data;
       per_page = 15;
       page = 1;
@@ -87,7 +87,7 @@ export default function (state, action) {
         alldata,
       };
 
-    case LOAD_PAGE_CHANGES: {
+    case LOAD_PAGE_DEVS: {
       const column = action.data.column || state.sorted;
       per_page = action.data.numPage || 15;
       page = action.data.page_num || 1;

@@ -5,6 +5,7 @@ import { Route, IndexRoute } from 'react-router';
 import { App } from 'containers/App';
 import Home from 'containers/Home/home';
 import Changes from 'containers/Changes';
+import Deviations from 'containers/Deviations/deviations';
 import ChangeDetail from 'containers/ChangeDetail';
 import TaskDetail from 'containers/Tasks/task-details';
 import Tasks from 'containers/Tasks/tasks';
@@ -21,7 +22,7 @@ function requireAuth(nextState, replace) {
 
 export default (
   <Route path="/" component={App}>
-    <Route path="changes" component={Changes} onEnter={requireAuth} />
+    <Route path="deviations" component={Deviations} onEnter={requireAuth} />
     <Route path="change/:id" component={ChangeDetail} onEnter={requireAuth} />
     <Route path="task/:id" component={TaskDetail} onEnter={requireAuth} />
     <Route path="tasks" component={Tasks} onEnter={requireAuth} />

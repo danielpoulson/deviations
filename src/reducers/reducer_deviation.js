@@ -1,9 +1,9 @@
-import { GET_CHANGE, CREATE_LOG } from 'actions/actions_changes';
+import { GET_DEV, CREATE_LOG } from 'actions/actions_deviations';
 
 export default function (state = null, action) {
 
   switch (action.type) {
-    case GET_CHANGE:
+    case GET_DEV:
       if (!action.payload.data) {
         return null;
       }

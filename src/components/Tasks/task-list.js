@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import TaskTable from './task-table';
 import { getTask } from 'actions/actions_tasks';
-import { getChange } from 'actions/actions_changes';
+import { getChange } from 'actions/actions_deviations';
 import { setMain } from 'actions/actions_main';
 
 @connect(null, { getTask, getChange, setMain })

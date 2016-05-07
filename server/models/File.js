@@ -7,7 +7,7 @@ var filesSchema = new Schema({
     fsFileExt: {type: String, required: '{PATH} is required!'},
     fsAddedBy: {type: String, required: '{PATH} is required!'},
     fsAddedAt: {type: Date},
-    fsSource: {type: String, required: '{PATH} is required!'},
+    fsDevNo: {type: String, required: '{PATH} is required!'},
     fsFilePath: {type: String},
     fsBooked: {type: Number, required: '{PATH} is required!'}
 

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getUserDashboard } from 'actions/actions_main';
-import { loadPage } from 'actions/actions_changes';
+import { loadPage } from 'actions/actions_deviations';
 import { loadPageTask } from 'actions/actions_tasks';
 import BarChart from 'components/graphs/bar-chart';
 import LineChart from 'components/graphs/line-chart';
@@ -62,7 +62,7 @@ export default class Home extends Component {
         <div className="row">
           <div className="col-sm-3">
             <div className={`${tile} green grow`} onClick={this.getChanges}>
-              <h2>My Changes</h2>
+              <h2>My Deviations</h2>
               <i className="fa fa-list-alt"></i>&nbsp; {this.props.countChangesUser}
             </div>
           </div>
@@ -74,7 +74,7 @@ export default class Home extends Component {
           </div>
           <div className="col-sm-3">
             <div className={`${tile} orange grow`} onClick={this.getAllChanges}>
-              <h2>Open Changes</h2>
+              <h2>All Deviations</h2>
               <i className="fa fa-list-alt"></i>&nbsp; {this.props.allOpenChanges}
             </div>
           </div>
@@ -87,7 +87,7 @@ export default class Home extends Component {
         </div>
         <div className="row cc-graph">
           <div className="col-sm-6">
-            <h3>Open vs Closed Change Controls</h3>
+            <h3>Open vs Closed Deviations</h3>
             <BarChart />
           </div>
           <div className="col-sm-6">

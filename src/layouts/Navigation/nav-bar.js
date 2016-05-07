@@ -26,7 +26,7 @@ export class NavBar extends React.Component {
     super(props);
     this.state = {
       homeTab: 'active',
-      changeTab: null,
+      devTab: null,
       tasksTab: null,
       filesTab: null,
     };
@@ -48,7 +48,7 @@ export class NavBar extends React.Component {
   setActiveItem = (e) => {
     const tabPressed = e.target.offsetParent.id;
     this.setState({ homeTab: null });
-    this.setState({ changesTab: null });
+    this.setState({ devTab: null });
     this.setState({ tasksTab: null });
     this.setState({ filesTab: null });
     this.setState({ [tabPressed]: 'active' });
@@ -63,8 +63,8 @@ export class NavBar extends React.Component {
                 <li className={this.state.homeTab} onClick={this.setActiveItem}>
                   <Link id="homeTab" to="/"><i className="fa fa-home fa-fw"></i>&nbsp; Home</Link>
                 </li>
-                <li className={this.state.changesTab} onClick={this.setActiveItem}>
-                  <Link id="changesTab" to="/changes" activeClassName="active"><i className="fa fa-list-ul fa-fw"></i>&nbsp; Changes</Link>
+                <li className={this.state.devTab} onClick={this.setActiveItem}>
+                  <Link id="devTab" to="/deviations" activeClassName="active"><i className="fa fa-list-ul fa-fw"></i>&nbsp; Deviations</Link>
                 </li>
                 <li className={this.state.tasksTab} onClick={this.setActiveItem}>
                   <Link id="tasksTab" to="/tasks" activeClassName="active"><i className="fa fa-tasks fa-fw"></i>&nbsp; Tasks</Link>

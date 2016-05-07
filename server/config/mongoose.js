@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
+var DeviationModel = require('../models/Deviation');
 var userModel = require('../models/User');
-var changeModel = require('../models/Change');
-var projectModel = require('../models/Project');
 var taskModel = require('../models/Task');
 var filesModel = require('../models/File');
 

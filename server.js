@@ -8,7 +8,6 @@ require('./server/config/express')(app, config);
 require('./server/config/mongoose')(config);
 require('./server/config/passport')();
 app.use(require('./server/config/route'));
-
 app.get('*', function (req, res) {
     res.render('index.html');
 });
