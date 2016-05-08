@@ -4,7 +4,6 @@ import { Route, IndexRoute } from 'react-router';
 /* containers */
 import { App } from 'containers/App';
 import Home from 'containers/Home/home';
-import Changes from 'containers/Changes';
 import Deviations from 'containers/Deviations/deviations';
 import ChangeDetail from 'containers/ChangeDetail';
 import TaskDetail from 'containers/Tasks/task-details';

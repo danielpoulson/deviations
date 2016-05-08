@@ -7,7 +7,7 @@ import ComboBox from 'components/Common/combo-box';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
-export const fields = [];
+export const fields = ['dvMatNo', 'dvMatName', 'dvBatchNo', 'dvDOM', 'dvDescribe', 'dvCust', 'dvSupplier' ];
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
 
@@ -41,7 +41,7 @@ export default class ChangeForm extends Component {
 
   render() {
     const {
-      fields: { CC_Descpt, CC_Code, CC_Multi, CC_ASS, CC_Champ, CC_Comp, CC_TDate, CC_CDate, CC_Pry, CC_Stat, CC_Curt, CC_Prop, CC_Rat },
+      fields: { dvMatNo, dvMatName, dvBatchNo, dvDOM, dvDescribe, dvCust, dvSupplier},
       onSubmit,
       status,
       users,
@@ -51,130 +51,82 @@ export default class ChangeForm extends Component {
         <div className="row">
           <div className="col-sm-12">
             <Input
-              name="CC_Descpt"
-              label="Change Title"
-              placeholder="Enter the title of your change request (Required)"
+              name="dvMatNo"
+              label="Material Number"
+              placeholder="Enter Material No. ( Required, Min 5 character )"
               inputstyle="form-control"
-              {...CC_Descpt}
+              {...dvMatNo}
             />
+            <div className="col-sm-2"></div>
           </div>
           <div className="col-sm-6">
             <Input
-              name="CC_Code"
-              label="Code / Item"
-              placeholder="Enter an item code (Required)"
+              name="dvMatName"
+              label="Material Name:"
+              placeholder="Enter Item Description ( Required, Min 5 characters )"
               inputstyle="form-control"
-              {...CC_Code}
+              {...dvMatName}
             />
           </div>
 
-          <div className="col-sm-6">
-            <Input
-              name="CC_Multi"
-              label="Multipy Products?"
-              placeholder="Does this CC affect multiply products?"
-              inputstyle="form-control"
-              {...CC_Multi}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-4">
-            <Input
-              name="CC_ASS"
-              label="Associated"
-              placeholder="Associated CC or Dev?"
-              inputstyle="form-control"
-              {...CC_ASS}
-            />
-          </div>
-          <div className="col-sm-4">
-            <ComboBox
-              label="Champion"
-              data={users}
-              defaultValue={users[0]}
-              {...CC_Champ}
-            />
-          </div>
-          <div className="col-sm-4">
-            <Input
-              name="CC_Comp"
-              label="Company"
-              placeholder="Company impacted (Required)"
-              inputstyle="form-control"
-              {...CC_Comp}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-2">
-            <DateTimePicker
-              label="Target Date"
-              onChange={this.handleStartDateChange}
-              {...CC_TDate}
-            />
-          </div>
-          <div className="col-sm-2">
-            <DateTimePicker
-              label="Complete Date"
-              onChange={this.handleStartDateChange}
-              {...CC_CDate}
-            />
-          </div>
-          <div className="col-sm-1">
-            <Input
-              name="CC_Pry"
-              label="Priority"
-              {...CC_Pry}
-              inputstyle="form-control"
-            />
-          </div>
-          <div className="col-sm-4">
-            <ComboBox
-              label="Complete Date"
-              onChange={this.handleStartDateChange}
-              data={status}
-              {...CC_Stat}
-            />
-          </div>
-        </div>
-        <div className="row">
           <div className="col-sm-12">
-            <TextArea
-              name="CC_Curt"
-              label="Current Situation"
-              rows="4"
+            <Input
+              name="dvBatchNo"
+              label="Batch Number"
+              placeholder="Enter Batch / Lot ( Required, Min 5 characters )"
               inputstyle="form-control"
-              {...CC_Curt}
-              value={CC_Curt.value || ''}
+              {...dvBatchNo}
             />
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <TextArea
-              name="CC_Prop"
-              label="Proposed Situation"
-              {...CC_Prop}
-              value={CC_Prop.value || ''}
-              rows="4"
-              inputstyle="form-control"
+        <div className="col-sm-2">
+            <DateTimePicker
+              label="Date of Manufacture"
+              {...dvDOM}
             />
-          </div>
         </div>
+
         <div className="row">
           <div className="col-sm-12">
             <TextArea
               name="CC_Rat"
-              label="Justification and Rational"
-              {...CC_Rat}
-              value={CC_Rat.value || ''}
-              rows="4"
+              label="Describe the Deviation"
+              {...dvDescribe}
+              value={dvDescribe.value || ''}
+              rows="6"
               inputstyle="form-control"
             />
           </div>
         </div>
 
+        <div className="col-sm-2">
+            <DateTimePicker
+              label="Date of Deviation"
+              {...dvDate}
+            />
+        </div>
+        <div className="row">
+          <div className="col-sm-4">
+            <Input
+              name="dvCust"
+              label="Customer"
+              placeholder="Enter Customer Name ( Required, Min 5 characters )"
+              inputstyle="form-control"
+              {...dvCust}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-4">
+            <Input
+              name="dvSupplier"
+              label="Supplier"
+              placeholder="Supplier / Manufacturer ( Required, Min 5 characters )"
+              inputstyle="form-control"
+              {...dvSupplier}
+            />
+          </div>
+        </div>
         <div>
           <button type="submit" className="btn btn-success pull-left" disabled={submitting} >
             {submitting ? <i /> : <i />} Save Change
