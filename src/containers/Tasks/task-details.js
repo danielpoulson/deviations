@@ -76,7 +76,7 @@ class TaskDetail extends React.Component {
     if (this.props.main.CurrentMode === 'project') {
       this.context.router.push(`/project/${id}`);
     } else {
-      this.context.router.push(`/change/${id}`);
+      this.context.router.push(`/deviation/${id}`);
     }
   }
 

@@ -67,6 +67,7 @@ router.get('/logout', function (req, res) {
  //*************Deviation Routes************************
  router.get('/api/deviationlist/:status/:cust', deviations.getDeviations);
  router.get('/api/deviation/:id', deviations.getDeviationById);
+ router.get('/api/deviation/tasks/:id', tasks.getDeviationTaskList);
 // //--------- Changes--------------------
 //
 //
@@ -89,15 +90,15 @@ router.get('/logout', function (req, res) {
 
  //  router.get('/api/project/tasks/:id', tasks.getProjectTaskList);
   router.get('/api/alltasks/:status/:capa', tasks.getTasks);
- //  router.get('/api/task/:id', tasks.getTaskById);
+  router.get('/api/task/:id', tasks.getTaskById);
  //  router.put('/api/task/:id', tasks.updateTask);
  //  router.post('/api/task', tasks.createTask);
  //  router.delete('/api/tasks/:id', tasks.deleteTask);
  //  router.post('/export/tasks', tasks.dumpTasks);
  //
- //  router.get('/api/files/:files', files.getFiles);
- //  router.get('/api/files/:files', files.getFiles);
- //  router.get('/api/filecount/:id', files.getFileCount);
+ 
+  router.get('/api/files/:files', files.getFiles);
+  router.get('/api/filecount/:id', files.getFileCount);
  //  router.put('/api/filebooked/:id', files.updateFileBook);
  //
  //    //**********File function ***************

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 import TaskTable from './task-table';
 import { getTask } from 'actions/actions_tasks';
-import { getChange } from 'actions/actions_deviations';
+import { getDeviation } from 'actions/actions_deviations';
 import { setMain } from 'actions/actions_main';
 
-@connect(null, { getTask, getChange, setMain })
+@connect(null, { getTask, getDeviation, setMain })
 
 class TaskList extends Component {
   static contextTypes = {
@@ -15,10 +15,10 @@ class TaskList extends Component {
 
   handleClick = (i) => {
     if (this.props.type === 'All') {
-      const ccNo = this.props.tasklist[i].SourceId;
-      this.props.setMain({ MainId: ccNo, CurrentMode: 'change', loading: true });
-      this.props.getChange(ccNo);
-      this.context.router.push(`/change/${ccNo}`);
+      const dvNo = this.props.tasklist[i].DevId;
+      this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true });
+      this.props.getDeviation(dvNo);
+      this.context.router.push(`/deviation/${dvNo}`);
     } else {
       const _id = this.props.tasklist[i]._id;
       this.props.getTask(_id);

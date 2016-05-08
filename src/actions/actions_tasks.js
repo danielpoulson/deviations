@@ -37,7 +37,7 @@ export function getAllTasks() {
 }
 
 export function getProjectTasks(data) {
-  const url = `/api/project/tasks/${data}`;
+  const url = `/api/deviation/tasks/${data}`;
   const request = axios.get(url);
 
   return {

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import DeviationDetailForm from 'components/Devations/deviation-detail.form';
+import DeviationDetailForm from 'components/Deviations/deviation-detail.form';
+import DeviationInvestForm from 'components/Deviations/deviation-invest.form';
 import TaskList from 'components/Tasks/task-list';
 import FileList from 'containers/Files/file-list';
 import DeviationLog from 'components/Deviations/deviation-log';
@@ -28,6 +29,7 @@ class DeviationDetail extends Component {
       _dvNo: '',
       dirty: false,
       DetailTab: 'show',
+      InvestTab: 'hidden',
       errors: {},
       FilesTab: 'hidden',
       fCount: 0,
@@ -41,6 +43,36 @@ class DeviationDetail extends Component {
         { id: 3, name: 'On-hold' },
         { id: 4, name: 'Closed' },
         { id: 5, name: 'Cancelled' }
+      ],
+      outcomes: [
+        'Accept',
+        'Rework',
+        'Repair',
+        'Reject',
+        ''
+      ],
+      categories: [
+        'Bulk',
+        'Finished Goods',
+        'Packaging / Labels',
+        'Raw Materials',
+        'other',
+        ''
+      ],
+      classifies: [
+        'Contamination',
+        'Customer Complaint',
+        'Documentation',
+        'Formulation Difficulty',
+        'Leakers',
+        'Not Assigned',
+        'Out of Specification',
+        'Operator Error',
+        'Procedure',
+        'Transport Issue',
+        'Stock Discrepancy',
+        'Other',
+        ''
       ]
     };
 
@@ -116,6 +148,7 @@ class DeviationDetail extends Component {
 
   showTab(value) {
     this.setState({ DetailTab: 'hidden' });
+    this.setState({ InvestTab: 'hidden' });
     this.setState({ TasksTab: 'hidden' });
     this.setState({ FilesTab: 'hidden' });
     this.setState({ LogTab: 'hidden' });
@@ -129,6 +162,11 @@ class DeviationDetail extends Component {
 
     const detailTabClass = classNames({
       active: this.state.DetailTab === 'show'
+    });
+
+    const investTabClass = classNames({
+      active: this.state.InvestTab === 'show',
+      hidden: this.props.main.MainId === 'new'
     });
 
     const tasksTabClass = classNames({
@@ -157,6 +195,9 @@ class DeviationDetail extends Component {
             <li className={detailTabClass}>
               <a onClick={this.showTab.bind(this, 'DetailTab')} data-toggle="tab">Detail</a>
             </li>
+            <li className={investTabClass}>
+              <a onClick={this.showTab.bind(this, 'InvestTab')} data-toggle="tab">Investigation</a>
+            </li>
             <li className={tasksTabClass}>
               <a onClick={this.showTab.bind(this, 'TasksTab')} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
             </li>
@@ -172,6 +213,21 @@ class DeviationDetail extends Component {
             <div className="panel panel-default">
               <div className="panel-body">
                 <DeviationDetailForm onSubmit={this.saveDeviation} status={this.state.status} users={this.props.users} onCancel={this.cancelDeviation} />
+              </div>
+            </div>
+          </div>
+
+          <div className={this.state.InvestTab}>
+            <div className="panel panel-default">
+              <div className="panel-body">
+                <DeviationInvestForm 
+                  onSubmit={this.saveDeviation}
+                  status={this.state.status}
+                  outcomes={this.state.outcomes}
+                  categories={this.state.categories}
+                  classifies={this.state.classifies}
+                  users={this.props.users}
+                  onCancel={this.cancelDeviation} />
               </div>
             </div>
           </div>

@@ -7,7 +7,7 @@ import ComboBox from 'components/Common/combo-box';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
-export const fields = ['dvMatNo', 'dvMatName', 'dvBatchNo', 'dvDOM', 'dvDescribe', 'dvCust', 'dvSupplier' ];
+export const fields = ['dvMatNo', 'dvMatName', 'dvBatchNo', 'dvDOM', 'dvDescribe', 'dvCreated', 'dvCust', 'dvSupplier' ];
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
 
@@ -41,7 +41,7 @@ export default class ChangeForm extends Component {
 
   render() {
     const {
-      fields: { dvMatNo, dvMatName, dvBatchNo, dvDOM, dvDescribe, dvCust, dvSupplier},
+      fields: { dvMatNo, dvMatName, dvBatchNo, dvDOM, dvDescribe, dvCreated, dvCust, dvSupplier},
       onSubmit,
       status,
       users,
@@ -102,7 +102,7 @@ export default class ChangeForm extends Component {
         <div className="col-sm-2">
             <DateTimePicker
               label="Date of Deviation"
-              {...dvDate}
+              {...dvCreated}
             />
         </div>
         <div className="row">
@@ -128,10 +128,10 @@ export default class ChangeForm extends Component {
           </div>
         </div>
         <div>
-          <button type="submit" className="btn btn-success pull-left" disabled={submitting} >
-            {submitting ? <i /> : <i />} Save Change
+          <button type="submit" className="btn btn-success pull-left" >
+            Save Change
           </button>
-          <button className="btn btn-info dp-margin-10-LR" disabled={submitting} onClick={this.props.onCancel}>
+          <button className="btn btn-info dp-margin-10-LR" onClick={this.props.onCancel}>
             Cancel
           </button>
         </div>
