@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import {getValues} from 'redux-form';
 import DeviationDetailForm from 'components/Deviations/deviation-detail.form';
 import DeviationInvestForm from 'components/Deviations/deviation-invest.form';
 import TaskList from 'components/Tasks/task-list';
@@ -34,6 +35,7 @@ class DeviationDetail extends Component {
       FilesTab: 'hidden',
       fCount: 0,
       LogTab: 'hidden',
+      notnew: true,
       tasks: [],
       TasksTab: 'hidden',
       tCount: 0,
@@ -89,6 +91,10 @@ class DeviationDetail extends Component {
       this.props.getProjectTasks(dvNo);
     }
     this.setState({ _dvNo: dvNo });
+
+    if(dvNo === 'new'){
+      this.setState({ notnew: false });
+    }
   }
 
   onRefresh() {
@@ -132,10 +138,16 @@ class DeviationDetail extends Component {
     this.context.router.push('/deviations');
   };
 
-  saveDetail(data) {
-    const _data = data;
-    
-    _data.dvLog = this.logMessage('Deviation actioned and completed');
+  saveDetail() {
+    let _data = {};
+
+    if (this.state._dvNo !== 'new') {
+      _data.dvLog = this.logMessage('Deviation actioned and completed');     
+    } else {
+      _data.dvLog = this.logMessage('Deviation Created');
+    }
+
+    _data.dvClosed = 0;
 
     this.saveDeviation(_data)
 
@@ -143,27 +155,40 @@ class DeviationDetail extends Component {
 
 
 // TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-  saveDeviation (data) {
+  saveDeviation (_data) {
 
-    if (this.state._dvNo !== 'new') {
-      // _data._id = this.props.deviation._id;
-      // _data.CC_Stat = typeof _data.CC_Stat === 'object' ? _data.CC_Stat.id : _data.CC_Stat;
-      // _data.dvNo = this.props.deviation.dvNo;
-      //this.props.editDeviation(data);
-      data.dvClosed = 0;
-      console.log('this.state.devform');
-      console.log(`This is the initial value: ${this.props.devform.dvClass.initial}`);
-      console.log(`This is the changed value: ${this.props.devform.dvClass.value}`);
+    _data.dvNo = this.state._dvNo;
+
+    // Save on new or edit
+    _data.dvMatNo= this.props.devform.dvMatNo.value;
+    _data.dvMatName= this.props.devform.dvMatName.value;
+    _data.dvCust= this.props.devform.dvCust.value;
+    _data.dvBatchNo= this.props.devform.dvBatchNo.value;
+    _data.dvSupplier= this.props.devform.dvSupplier.value;
+    _data.dvDOM= this.props.devform.dvDOM.value;
+    _data.dvDescribe= this.props.devform.dvDescribe.value;
+
+    if(_data.dvNo !== 'new') {
+      _data._id = this.props.deviation._id;
+      _data.dvAssign= this.props.devform.dvAssign.value;
+      _data.dvInvest= this.props.devform.dvInvest.value;
+      _data.dvOutCome= this.props.devform.dvOutCome.value;
+      _data.dvCustSend= this.props.devform.dvCustSend.value;
+      _data.dvCat = this.props.devform.dvCat.value;
+      _data.dvClass = this.props.devform.dvClass.value;
+      _data.dvCreated = this.props.devform.dvCreated.value;
+
+      this.props.editDeviation(_data);
+
     } else {
-      data.dvClosed = 0;
-      console.log(data);
-      // _data.CC_Stat = _data.CC_Stat.id || 1;
-      //this.props.addDeviation(_data);
+
+      this.props.addDeviation(_data);
+      
     }
 
     toastr.success('Deviation has been saved', 'Deviation Detail', { timeOut: 1000 });
     this.setState({ dirty: false });
-    // this.context.router.push('/deviations');
+    this.context.router.push('/deviations');
   }
 
   showTab(value) {
@@ -242,34 +267,34 @@ class DeviationDetail extends Component {
           <div className={this.state.InvestTab}>
             <div className="panel panel-default">
               <div className="panel-body">
-                <DeviationInvestForm 
+                {this.state.notnew && <DeviationInvestForm 
                   onSubmit={this.saveDetail}
                   status={this.state.status}
                   outcomes={this.state.outcomes}
                   categories={this.state.categories}
                   classifies={this.state.classifies}
                   users={this.props.users}
-                  onCancel={this.cancelDeviation} />
+                  onCancel={this.cancelDeviation} />}
               </div>
             </div>
           </div>
 
-          <DeviationLog
+          {this.state.notnew && <DeviationLog
             logTab={this.state.LogTab}
             onApprove={this.onApprove}
             onFinal={this.onFinal}
             onCancel={this.onCancel}
-            log={this.props.deviation} />
+            log={this.props.deviation} />}
 
-          <TaskList
+          {this.state.notnew && <TaskList
             tasklist = {this.props.tasklist}
             tasksTab = {this.state.TasksTab}
-            title={this.state.deviationTitle} />
+            title={this.state.deviationTitle} />}
 
-          <FileList
+          {this.state.notnew && <FileList
             filesTab={this.state.FilesTab}
             refreshDeviation={this.onRefresh}
-            sourceId={this.props.location.pathname.split('/')[2]} />
+            sourceId={this.props.location.pathname.split('/')[2]} />}
 
       </div>
     );

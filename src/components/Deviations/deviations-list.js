@@ -38,10 +38,10 @@ const DeviationList = (props) => {
                 <th className="col-sm-1" onClick={props.sortByClick.bind(null, 'dvNo')}>
                   Dev# <span className={th1Class}></span>
                 </th>
-                <th className="col-sm-1" onClick={props.sortByClick.bind(null, 'dvMatNo')}>
+                <th className="col-sm-2" onClick={props.sortByClick.bind(null, 'dvMatNo')}>
                   Item Id <span className={th1Class}></span>
                 </th>
-                <th className="col-sm-5" onClick={props.sortByClick.bind(null, 'dvMatName')}>
+                <th className="col-sm-4" onClick={props.sortByClick.bind(null, 'dvMatName')}>
                     Item Description <span className={th1Class}></span>
                 </th>
                 <th className="col-sm-2" onClick={props.sortByClick.bind(null, 'dvCust')}>

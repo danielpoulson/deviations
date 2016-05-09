@@ -7,7 +7,7 @@ import ComboBox from 'components/Common/combo-box';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
-export const fields = [ 'dvAssign', 'dvInvest', 'dvOutcome', 'dvCustSend', 'dvCat', 'dvClass'];
+export const fields = [ 'dvAssign', 'dvInvest', 'dvOutCome', 'dvCustSend', 'dvCat', 'dvClass'];
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
 
@@ -42,7 +42,7 @@ export default class ChangeForm extends Component {
 
   render() {
     const {
-      fields: { dvAssign, dvInvest, dvOutcome, dvCustSend, dvCat, dvClass },
+      fields: { dvAssign, dvInvest, dvOutCome, dvCustSend, dvCat, dvClass },
       handleSubmit,
       status,
       outcomes,
@@ -77,7 +77,7 @@ export default class ChangeForm extends Component {
           data={outcomes}
           labelstyle="col-sm-2 control-label"
           inputdiv="col-sm-3"
-          {...dvOutcome}
+          {...dvOutCome}
         />
 
         <DateTimePicker

@@ -8,9 +8,9 @@ import TaskReducer from './reducer_task';
 import FilesReducer from './reducer_files';
 import UsersReducer from './reducer_users';
 import UserReducer from './reducer_user';
+import { NEW_DEVIATION } from 'actions/actions_deviations';
 
 const rootReducer = combineReducers({
-  form: formReducer,
   /* your reducers */
   deviations: DeviationsReducer,
   deviation: DeviationReducer,
@@ -20,6 +20,17 @@ const rootReducer = combineReducers({
   files: FilesReducer,
   users: UsersReducer,
   user: UserReducer,
+
+  form: formReducer.plugin({
+    devform: (state, action) => { // <------ 'account' is name of form given to reduxForm()
+      switch(action.type) {
+        case NEW_DEVIATION:
+          return undefined;       // <--- blow away form data
+        default:
+          return state;
+      }
+    }
+  })
 });
 
 export default rootReducer;

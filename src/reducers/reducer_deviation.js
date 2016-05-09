@@ -1,4 +1,4 @@
-import { GET_DEV, CREATE_LOG } from 'actions/actions_deviations';
+import { GET_DEV, CREATE_LOG, NEW_DEVIATION } from 'actions/actions_deviations';
 
 export default function (state = null, action) {
 
@@ -26,6 +26,9 @@ export default function (state = null, action) {
         CC_LOG: _addLog
       };
     }
+
+    case NEW_DEVIATION:
+      return {};
 
     default:
       return state;

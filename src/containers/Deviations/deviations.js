@@ -7,11 +7,11 @@ import Pagination from 'components/Common/pagination';
 import SearchBox from 'components/Common/search-box';
 
 /* actions */
-import { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations } from 'actions/actions_deviations';
+import { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation } from 'actions/actions_deviations';
 import { setMain } from 'actions/actions_main';
 
 @connect(state => ({ deviations: state.deviations, user: state.main.user }),
-  { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, setMain })
+  { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation, setMain })
 
 export default class Deviations extends Component {
   static contextTypes = {
@@ -113,9 +113,10 @@ export default class Deviations extends Component {
   };
 
   newDeviation = () => {
-    this.props.getDeviation(null);
-    this.props.setMain({ MainId: 'new', CurrentMode: 'change', loading: false });
-    this.context.router.push('/change/new');
+    // this.props.getDeviation(null);
+    this.props.resetDeviation();
+    this.props.setMain({ MainId: 'new', CurrentMode: 'deviation', loading: false });
+    this.context.router.push('/deviation/new');
   };
 
   render() {

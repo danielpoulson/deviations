@@ -68,6 +68,7 @@ router.get('/logout', function (req, res) {
  router.get('/api/deviationlist/:status/:cust', deviations.getDeviations);
  router.get('/api/deviation/:id', deviations.getDeviationById);
  router.get('/api/deviation/tasks/:id', tasks.getDeviationTaskList);
+ router.put('/api/deviations/:id', deviations.updateDeviation);
 // //--------- Changes--------------------
 //
 //

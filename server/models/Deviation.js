@@ -11,7 +11,6 @@ var deviationSchema = new Schema({
     dvBatchNo: {type: String, required: '{PATH} is required!'},
     dvSupplier: {type: String, required: '{PATH} is required!'},
     dvDOM: {type: Date},
-    dvDate: {type: Date},
     dvDescribe: {type: String},
     dvAssign: {type: String},
     dvInvest: {type: String},
