@@ -7,7 +7,7 @@ import ComboBox from 'components/Common/combo-box';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
-export const fields = [ 'dvUser', 'dvInvest', 'dvOutcome', 'dvCustSend', 'dvCat', 'dvClass'];
+export const fields = [ 'dvAssign', 'dvInvest', 'dvOutcome', 'dvCustSend', 'dvCat', 'dvClass'];
 
 const newdata = {  // used to populate "account" reducer when "Load" is clicked
 
@@ -20,8 +20,9 @@ const validate = values => {
 };
 
 @reduxForm({
-  form: 'deviation-invest',
+  form: 'devform',
   fields,
+  destroyOnUnmount: false,
   validate,
 },
   state => ({
@@ -41,8 +42,8 @@ export default class ChangeForm extends Component {
 
   render() {
     const {
-      fields: { dvUser, dvInvest, dvOutcome, dvCustSend, dvCat, dvClass },
-      onSubmit,
+      fields: { dvAssign, dvInvest, dvOutcome, dvCustSend, dvCat, dvClass },
+      handleSubmit,
       status,
       outcomes,
       categories,
@@ -50,67 +51,63 @@ export default class ChangeForm extends Component {
       users,
       } = this.props;
     return (
-      <form onSubmit={onSubmit}>
-        <div className="row">
-          <div className="col-sm-4">
-            <ComboBox
-              label="Assigned To"
-              data={users}
-              defaultValue={users[0]}
-              {...dvUser}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <TextArea
-              name="dvInvest"
-              label="Investigation"
-              {...dvInvest}
-              value={dvInvest.value || ''}
-              rows="6"
-              inputstyle="form-control"
-            />
-          </div>
-        </div>
-        <div className="Row">
-          <div className="col-sm-4">
-            <ComboBox
-              label="Outcomes"
-              data={outcomes}
-              {...dvOutcome}
-            />
-          </div>
-        </div>
-        <div className="col-sm-2">
-            <DateTimePicker
-              label="Date sent to customer"
-              {...dvCustSend}
-            />
-        </div>
-        <div className="Row">
-          <div className="col-sm-4">
-            <ComboBox
-              label="Categories"
-              data={categories}
-              {...dvCat}
-            />
-          </div>
-        </div>
-        <div className="Row">
-          <div className="col-sm-4">
-            <ComboBox
-              label="Classification"
-              data={classifies}
-              {...dvClass}
-            />
-          </div>
-        </div>
-        <div>
-          <button type="submit" className="btn btn-success pull-left" >
-            Save Change
+      <form onSubmit={handleSubmit} className="form-horizontal">
+
+        <ComboBox
+          label="Assigned To"
+          data={users}
+          defaultValue={users[0]}
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-3"
+          {...dvAssign}
+        />
+
+        <TextArea
+          name="dvInvest"
+          label="Investigation"
+          value={dvInvest.value || ''}
+          rows="6"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-10"
+          {...dvInvest}
+        />
+
+        <ComboBox
+          label="Outcomes"
+          data={outcomes}
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-3"
+          {...dvOutcome}
+        />
+
+        <DateTimePicker
+          label="Date sent to customer"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-2"
+          {...dvCustSend}
+        />
+
+        <ComboBox
+          label="Categories"
+          data={categories}
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-3"
+          {...dvCat}
+        />
+
+        <ComboBox
+          label="Classification"
+          data={classifies}
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-3"
+          {...dvClass}
+        />
+
+        <div className="pull-right">
+          <button type="submit" className="btn btn-primary" >
+            Save Investigation
           </button>
-          <button className="btn btn-info dp-margin-10-LR" onClick={this.props.onCancel}>
+          <button className="btn btn-default dp-margin-10-LR" onClick={this.props.onCancel}>
             Cancel
           </button>
         </div>

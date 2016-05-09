@@ -8,8 +8,8 @@ const DeviationLog = (props) => {
   const butGroup = { padding: 10 };
 
   if (_log !== null) {
-    var logs = _log.dvLog.map((log) => <li className="list-group-item" key={log._id}>
-                      <span style={spanStyle} className="glyphicon glyphicon-edit"></span> Deviation Control : {log.dvLogType}
+    var logs = _log.dvLog.map((log) => <li className="list-group-item" key={log.dvLogDate}>
+                      <span style={spanStyle} className="glyphicon glyphicon-edit"></span> {log.dvLogType}
                       <small><em> ({moment(new Date(log.dvLogDate)).format('DD/MM/YYYY')}) {log.dvLogBy} </em></small></li>);
   }
 

@@ -11,13 +11,14 @@ const DatePicker = (props) => {
     dtStyle = { border: '2px solid red' };
   }
 
-  const labelClass = `control-label ${props.dpLabelCol}`;
+  const _labelstyle = props.labelstyle;
+  const _inputdiv = props.inputdiv;
 
 
   return (
     <div className={wrapperClass}>
-      <label className={labelClass} htmlFor={props.name}>{props.label}</label>
-      <div className={props.dpInputCol}>
+      <label className={_labelstyle} htmlFor={props.name}>{props.label}</label>
+      <div className={_inputdiv}>
         <DateTimePicker
           style={dtStyle}
           format="DD/MM/YY"
@@ -34,12 +35,12 @@ const DatePicker = (props) => {
 };
 
 DatePicker.propTypes = {
+  inputdiv: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
-  dpLabelCol: PropTypes.string,
-  dpInputCol: PropTypes.string,
+  labelstyle: PropTypes.string,
   value: PropTypes.any,
   touched: PropTypes.bool,
 };

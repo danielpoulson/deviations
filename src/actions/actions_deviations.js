@@ -46,7 +46,7 @@ export function addDeviation(data) {
 }
 
 export function editDeviation(data) {
-  const url = `/api/change/${data._id}`;
+  const url = `/api/deviations/${data._id}`;
   axios.put(url, data);
 
   return {

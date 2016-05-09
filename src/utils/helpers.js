@@ -8,8 +8,6 @@ export function calculateDay (date, closed) {
          var timeDiff = Math.abs(currentTime - logTime);
          var dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-         console.log(dayDiff);
-
          return dayDiff;
      } else {
          return "-";

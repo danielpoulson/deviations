@@ -3,7 +3,6 @@ import { reduxForm } from 'redux-form';
 import Input from 'components/Common/form-text-input';
 import TextArea from 'components/Common/text-area';
 import DateTimePicker from 'components/Common/date-picker';
-import ComboBox from 'components/Common/combo-box';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
@@ -20,8 +19,9 @@ const validate = values => {
 };
 
 @reduxForm({
-  form: 'deviation-detail',
+  form: 'devform',
   fields,
+  destroyOnUnmount: false,
   validate,
 },
   state => ({
@@ -32,106 +32,95 @@ const validate = values => {
 export default class ChangeForm extends Component {
   static propTypes = {
     fields: PropTypes.object.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    resetForm: PropTypes.func.isRequired,
-    users: PropTypes.array.isRequired,
-    status: PropTypes.array.isRequired,
+    handleSubmit: PropTypes.func,
+    onCancel: PropTypes.func,
   };
 
   render() {
     const {
       fields: { dvMatNo, dvMatName, dvBatchNo, dvDOM, dvDescribe, dvCreated, dvCust, dvSupplier},
-      onSubmit,
-      status,
-      users,
+      handleSubmit,
+      onCancel,
       } = this.props;
     return (
-      <form onSubmit={onSubmit}>
-        <div className="row">
-          <div className="col-sm-12">
-            <Input
-              name="dvMatNo"
-              label="Material Number"
-              placeholder="Enter Material No. ( Required, Min 5 character )"
-              inputstyle="form-control"
-              {...dvMatNo}
-            />
-            <div className="col-sm-2"></div>
-          </div>
-          <div className="col-sm-6">
-            <Input
-              name="dvMatName"
-              label="Material Name:"
-              placeholder="Enter Item Description ( Required, Min 5 characters )"
-              inputstyle="form-control"
-              {...dvMatName}
-            />
-          </div>
+      <form onSubmit={handleSubmit} className="form-horizontal">
+          
+        <Input
+          name="dvMatNo"
+          label="Material Number"
+          placeholder="Enter Material No. ( Required, Min 5 character )"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-4"
+          {...dvMatNo}
+        />
 
-          <div className="col-sm-12">
-            <Input
-              name="dvBatchNo"
-              label="Batch Number"
-              placeholder="Enter Batch / Lot ( Required, Min 5 characters )"
-              inputstyle="form-control"
-              {...dvBatchNo}
-            />
-          </div>
-        </div>
-        <div className="col-sm-2">
-            <DateTimePicker
-              label="Date of Manufacture"
-              {...dvDOM}
-            />
-        </div>
+        <Input
+          name="dvMatName"
+          label="Material Name:"
+          labelstyle="col-sm-2 control-label"
+          placeholder="Enter Item Description ( Required, Min 5 characters )"
+          inputdiv="col-sm-9"
+          {...dvMatName}
+        />
 
-        <div className="row">
-          <div className="col-sm-12">
-            <TextArea
-              name="CC_Rat"
-              label="Describe the Deviation"
-              {...dvDescribe}
-              value={dvDescribe.value || ''}
-              rows="6"
-              inputstyle="form-control"
-            />
-          </div>
-        </div>
+        <Input
+          name="dvBatchNo"
+          label="Batch Number"
+          labelstyle="col-sm-2 control-label"
+          placeholder="Enter Batch / Lot ( Required, Min 5 characters )"
+          inputdiv="col-sm-4"
+          {...dvBatchNo}
+        />
 
-        <div className="col-sm-2">
-            <DateTimePicker
-              label="Date of Deviation"
-              {...dvCreated}
-            />
-        </div>
-        <div className="row">
-          <div className="col-sm-4">
-            <Input
-              name="dvCust"
-              label="Customer"
-              placeholder="Enter Customer Name ( Required, Min 5 characters )"
-              inputstyle="form-control"
-              {...dvCust}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-4">
-            <Input
-              name="dvSupplier"
-              label="Supplier"
-              placeholder="Supplier / Manufacturer ( Required, Min 5 characters )"
-              inputstyle="form-control"
-              {...dvSupplier}
-            />
-          </div>
-        </div>
-        <div>
-          <button type="submit" className="btn btn-success pull-left" >
-            Save Change
+        <DateTimePicker
+          name="dvDom"
+          label="Date of Manufacture"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-2"
+          {...dvDOM}
+        />
+
+        <TextArea
+          name="CC_Rat"
+          label="Describe the Deviation"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-9"
+          value={dvDescribe.value || ''}
+          rows="6"
+          {...dvDescribe}
+        />
+
+        <DateTimePicker
+          name="dvCreated"
+          label="Date of Deviation"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-2"
+          {...dvCreated}
+        />
+
+        <Input
+          name="dvCust"
+          label="Customer"
+          labelstyle="col-sm-2 control-label"
+          placeholder="Enter Customer Name ( Required, Min 5 characters )"
+          inputdiv="col-sm-6"
+          {...dvCust}
+        />
+
+        <Input
+          name="dvSupplier"
+          label="Supplier"
+          labelstyle="col-sm-2 control-label"
+          placeholder="Supplier / Manufacturer ( Required, Min 5 characters )"
+          inputdiv="col-sm-6"
+          {...dvSupplier}
+        />
+
+        <div className="pull-right">
+          <button type="submit" className="btn btn-primary" >
+            Save Deviation
           </button>
-          <button className="btn btn-info dp-margin-10-LR" onClick={this.props.onCancel}>
+          <button className="btn btn-default dp-margin-10-LR" onClick={onCancel}>
             Cancel
           </button>
         </div>

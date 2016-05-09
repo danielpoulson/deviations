@@ -80,6 +80,7 @@ class DeviationDetail extends Component {
     this.onFinal = this.onFinal.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
+    this.saveDetail = this.saveDetail.bind(this);
   }
 
   componentWillMount() {
@@ -107,15 +108,22 @@ class DeviationDetail extends Component {
   }
 
   logMessage(message) {
-    const _log = {
-      dvNo: this.props.deviation.dvNo,
-      dvLogType: message,
+
+    let _dvLog = this.props.deviation.dvLog;
+
+    const newMessage = {
+      dvLogType : message,
       dvLogBy: this.props.main.user.fullname,
       dvLogDate: new Date()
     };
 
-    this.props.createLog(_log);
-    toastr.success(message);
+    if (typeof _dvLog === "undefined") {
+      _dvLog = new Array(newMessage);
+    } else {
+      _dvLog.push(newMessage);
+    }
+
+    return _dvLog;
 
   }
 
@@ -124,27 +132,39 @@ class DeviationDetail extends Component {
     this.context.router.push('/deviations');
   };
 
-// TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-  saveDeviation = (data) => {
+  saveDetail(data) {
     const _data = data;
+    
+    _data.dvLog = this.logMessage('Deviation actioned and completed');
+
+    this.saveDeviation(_data)
+
+  }
+
+
+// TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
+  saveDeviation (data) {
 
     if (this.state._dvNo !== 'new') {
       // _data._id = this.props.deviation._id;
       // _data.CC_Stat = typeof _data.CC_Stat === 'object' ? _data.CC_Stat.id : _data.CC_Stat;
       // _data.dvNo = this.props.deviation.dvNo;
-      // this.props.editDeviation(_data);
+      //this.props.editDeviation(data);
+      data.dvClosed = 0;
+      console.log('this.state.devform');
+      console.log(`This is the initial value: ${this.props.devform.dvClass.initial}`);
+      console.log(`This is the changed value: ${this.props.devform.dvClass.value}`);
     } else {
-      // var created = [];
-      // created.push({ CC_Id: 0, CC_Action: 'Created', CC_ActBy: this.props.main.user.fullname, CC_ActDept: this.props.main.user.dept, CC_ActDate: new Date() });
-      // _data.CC_LOG = created;
+      data.dvClosed = 0;
+      console.log(data);
       // _data.CC_Stat = _data.CC_Stat.id || 1;
-      // this.props.addDeviation(_data);
+      //this.props.addDeviation(_data);
     }
 
     toastr.success('Deviation has been saved', 'Deviation Detail', { timeOut: 1000 });
     this.setState({ dirty: false });
-    this.context.router.push('/deviations');
-  };
+    // this.context.router.push('/deviations');
+  }
 
   showTab(value) {
     this.setState({ DetailTab: 'hidden' });
@@ -212,7 +232,9 @@ class DeviationDetail extends Component {
           <div className={this.state.DetailTab}>
             <div className="panel panel-default">
               <div className="panel-body">
-                <DeviationDetailForm onSubmit={this.saveDeviation} status={this.state.status} users={this.props.users} onCancel={this.cancelDeviation} />
+                <DeviationDetailForm 
+                  onSubmit={this.saveDetail}
+                  onCancel={this.cancelDeviation} />
               </div>
             </div>
           </div>
@@ -221,7 +243,7 @@ class DeviationDetail extends Component {
             <div className="panel panel-default">
               <div className="panel-body">
                 <DeviationInvestForm 
-                  onSubmit={this.saveDeviation}
+                  onSubmit={this.saveDetail}
                   status={this.state.status}
                   outcomes={this.state.outcomes}
                   categories={this.state.categories}
@@ -260,6 +282,7 @@ DeviationDetail.propTypes = {
 
 export default connect(state => ({
   deviation: state.deviation,
+  devform: state.form.devform,
   main: state.main,
   tasklist: state.tasks.ctlist,
   ctTotal: state.tasks.ctTotal,

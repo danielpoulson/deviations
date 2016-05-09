@@ -6,16 +6,17 @@ const ComboBox = (props) => {
   const spanStyle = { color: 'red' };
   let dtStyle = {};
   const wrapperClass = 'form-group';
+  const _labelstyle = props.labelstyle;
+  const _inputdiv = props.inputdiv;
+
   if (props.touched && props.error && props.error.length > 0) {
     dtStyle = { border: '2px solid red' };
   }
 
-  const labelClass = `control-label ${props.dpLabelCol}`;
-
   return (
     <div className={wrapperClass}>
-      <label className={labelClass} htmlFor={props.name}>{props.label}</label>
-      <div className={props.dpInputCol}>
+      <label className={_labelstyle} htmlFor={props.name}>{props.label}</label>
+      <div className={_inputdiv}>
         <Combobox
           style={dtStyle}
           valueField="id"
@@ -38,8 +39,9 @@ ComboBox.propTypes = {
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   error: PropTypes.string,
-  dpLabelCol: PropTypes.string,
-  dpInputCol: PropTypes.string,
+  inputdiv: PropTypes.string,
+  inputstyle: PropTypes.string,
+  labelstyle: PropTypes.string,
   defaultValue: PropTypes.any,
   value: PropTypes.any,
   touched: PropTypes.bool,
