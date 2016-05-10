@@ -7,7 +7,8 @@ const DeviationLog = (props) => {
   const spanStyle = { color: 'blue' };
   const butGroup = { padding: 10 };
 
-  if (_log !== null) {
+
+  if (_log !== null && Object.keys(_log).length !== 0) {
     var logs = _log.dvLog.map((log) => <li className="list-group-item" key={log.dvLogDate}>
                       <span style={spanStyle} className="glyphicon glyphicon-edit"></span> {log.dvLogType}
                       <small><em> ({moment(new Date(log.dvLogDate)).format('DD/MM/YYYY')}) {log.dvLogBy} </em></small></li>);
