@@ -21,7 +21,7 @@ exports.getDeviations = function(req, res) {
             if(err){
                 console.log("get deviations : " + err);
             }
-            res.send(collection);
+            res.status(200).send(collection);
         });
 };
 
@@ -39,7 +39,7 @@ exports.updateDeviation = function(req, res) {
 exports.deleteDeviation = function(req, res) {
     Deviation.remove({ProjNo:req.params.id}, function (err) {
         if (err) return handleError(err);
-        res.send(200);
+        res.sendStatus(200);
     });
 };
 
@@ -57,8 +57,6 @@ exports.createDeviation = function(req, res) {
 
         req.body.dvNo = newDevNum;
 
-        console.log(newDevNum);
-
         var deviation = new Deviation(req.body);
 
         deviation.save(function (err) {
@@ -69,7 +67,7 @@ exports.createDeviation = function(req, res) {
             res.status(400);
             return res.send({reason:err.toString()});
         }
-        res.send(200);
+        res.status(200).send(deviation);
         });
     });
 

@@ -181,7 +181,7 @@ class DeviationDetail extends Component {
       this.props.editDeviation(_data);
 
     } else {
-
+      _data.dvAssign = 'Quality Assurance';
       this.props.addDeviation(_data);
       
     }
