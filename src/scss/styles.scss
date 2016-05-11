@@ -9,6 +9,11 @@ $tab-color: #ED1B2C;
 
 /* ------------  Bootstrap Overrides ---------*/
 
+html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+}
+
 .pagination {
     margin-top: 0;
 }

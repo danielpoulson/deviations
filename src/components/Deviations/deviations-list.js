@@ -1,6 +1,7 @@
 import React from 'react';
 import DeviationRow from './deviation-row';
 import classNames from 'classnames';
+import { devtable } from './deviations-list.scss';
 
 const DeviationList = (props) => {
 
@@ -33,14 +34,14 @@ const DeviationList = (props) => {
   if (_devs !== undefined) {
 
     var deviations = _devs.map((dev) => <DeviationRow key={dev.dvNo} deviation={dev}
-      getDeviation = {props.getDeviation}
+      getDeviation = {props.getDeviation} detailView = {props.detailView}
     />);
   }
 
   return (
       <div>
         <div className="panel panel-success">
-          <table className="table table-hover phange-table dp_point">
+          <table className={`table table-hover ${devtable}`}>
             <thead className="print-table-head">
               <tr className="dpHand">
                 <th className="col-sm-1" onClick={props.sortByClick.bind(null, 'dvNo')}>
@@ -63,7 +64,7 @@ const DeviationList = (props) => {
                 </th>
               </tr>
             </thead>
-          <tbody className="dpHand">{deviations}</tbody>
+          {deviations}
         </table>
       </div>
     </div>

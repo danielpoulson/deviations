@@ -31,7 +31,8 @@ export default class Deviations extends Component {
       count: 0,
       numPage: 15,
       txtSearch: '',
-      showAll: false
+      showAll: false,
+      detailView: false,
     };
     this.onSearchText = this.onSearchText.bind(this);
     this.onSortByClick = this.onSortByClick.bind(this);
@@ -119,6 +120,10 @@ export default class Deviations extends Component {
     this.context.router.push('/deviation/new');
   };
 
+  showDetailed = () => {
+    this.setState({detailView: !this.state.detailView});
+  }
+
   render() {
     var _changeTitle = 'Register';
     let butText;
@@ -145,7 +150,7 @@ export default class Deviations extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <button
               className="btn btn-success pull-left"
               onClick={this.newDeviation} >
@@ -161,9 +166,12 @@ export default class Deviations extends Component {
               onClick={this.allDeviations} >
               {butText}
             </button>
+            <span style={{paddingLeft: 20}} class="checkbox">
+              <label><input onClick={this.showDetailed} type="checkbox" /> Show Detail View</label>
+            </span>
           </div>
 
-          <div className="col-sm-6">
+          <div className="col-sm-4">
             <Pagination
               activePage = {this.state.activePage}
               numPage = {this.props.deviations.per_page}
@@ -178,7 +186,8 @@ export default class Deviations extends Component {
             devlist={this.props.deviations.paged}
             getDeviation={this.onGetDeviation}
             sortByClick = {this.onSortByClick}
-            colSelected = {this.props.deviations.sorted} />
+            colSelected = {this.props.deviations.sorted}
+            detailView = {this.state.detailView} />
         </div>
 
       </section>

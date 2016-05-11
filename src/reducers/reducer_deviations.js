@@ -10,7 +10,7 @@ function searchData(data, searchText, sortColumn) {
   function search(item) {
     const reg1 = new RegExp(`${searchText}.*`, 'i');
 
-    if (item.dvNo.match(reg1) || item.dvMatNo.match(reg1) || item.dvMatName.match(reg1) || item.dvCust.match(reg1) || item.dvAssign.match(reg1) ) {
+    if (item.dvNo.match(reg1) || item.dvMatNo.match(reg1) || item.dvMatName.match(reg1) || item.dvCust.match(reg1) || item.dvAssign.match(reg1)) {
       return true;
     }
     return false;
