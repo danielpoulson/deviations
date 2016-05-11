@@ -53,23 +53,23 @@ class TaskDetail extends React.Component {
   };
 
   saveTask = (data) => {
-    const _SourceId = this.props.main.MainId;
+    const _DevId = this.props.main.MainId;
     const _data = data;
 
     if (this.state.taskId !== 'new') {
       _data.TKChampNew = _data.TKChamp !== this.props.task.TKChamp;
       _data._id = this.state.taskId;
       _data.TKStat = typeof _data.TKStat === 'object' ? _data.TKStat.id : _data.TKStat;
-      _data.SourceId = _SourceId;
+      _data.DevId = _DevId;
       this.props.editTask(_data);
     } else {
       _data.TKStat = _data.TKStat.id || 1;
-      _data.SourceId = _SourceId;
+      _data.DevId = _DevId;
       this.props.addTask(_data);
     }
 
     toastr.success('Task has been saved', 'Task Detail', { timeOut: 1000 });
-    this.taskNav(_SourceId);
+    this.taskNav(_DevId);
   };
 
   taskNav(id) {

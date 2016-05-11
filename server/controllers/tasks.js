@@ -16,9 +16,14 @@ exports.getDeviationTaskList = function(req, res) {
 };
 
 exports.updateTask = function(req, res) {
+    const newOwner = req.body.TKChampNew;
+    req.body.TKChampNew = false;
     Task.findByIdAndUpdate({_id:req.params.id}, {$set: req.body}, function (err) {
         if (err) return handleError(err);
         res.send(200);
+        // if(newOwner){
+        //   createEmail(req.body);
+        // }
     });
 };
 

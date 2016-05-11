@@ -36,8 +36,10 @@ export function getDeviation(data) {
 }
 
 export function addDeviation(data) {
+  let _data = data;
+  _data.dvExtract = data.dvDescribe.slice(0,200);
   const url = '/api/deviations';
-  const request = axios.post(url, data);
+  const request = axios.post(url, _data);
 
   return {
     type: ADD_DEV,
@@ -47,12 +49,14 @@ export function addDeviation(data) {
 }
 
 export function editDeviation(data) {
-  const url = `/api/deviations/${data.dvNo}`;
-  axios.put(url, data);
+  let _data = data;
+  _data.dvExtract = data.dvDescribe.slice(0,200);
+  const url = `/api/deviations/${_data.dvNo}`;
+  axios.put(url, _data);
 
   return {
     type: EDIT_DEV,
-    payload: data,
+    payload: _data,
   };
 
 }

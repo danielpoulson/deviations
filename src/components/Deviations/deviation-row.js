@@ -32,7 +32,7 @@ const DeviationRow = (props) => {
         <td className={dvextract}>{_dev.dvAssign}</td>
       </tr>
       <tr  className={bottomRow} onClick = { props.getDeviation.bind(null, props.deviation.dvNo)}>
-        <td className={dvextract} style={rowStyle} colSpan="6">{_dev.dvDescribe}</td>
+        <td className={dvextract} style={rowStyle} colSpan="6">{_dev.dvExtract}</td>
       </tr>
     </tbody>
   );

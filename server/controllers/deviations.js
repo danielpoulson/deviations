@@ -15,7 +15,7 @@ exports.getDeviations = function(req, res) {
         search = new RegExp(customer);
     }
 
-    Deviation.find({$and: [{dvClosed: {$lt:status}}, {$or:[{dvCust:"MFG"}, {dvCust: search}]}]}, {dvNo:true, dvMatNo:true, dvMatName:true, dvDescribe:1, dvCust:true, 'dvLog.dvLogDate': 1, dvAssign:true, dvClosed:true, dvClass: 1})
+    Deviation.find({$and: [{dvClosed: {$lt:status}}, {$or:[{dvCust:"MFG"}, {dvCust: search}]}]}, {dvNo:true, dvMatNo:true, dvMatName:true, dvExtract:1, dvCust:true, 'dvLog.dvLogDate': 1, dvAssign:true, dvClosed:true, dvClass: 1})
         .sort({dvNo:1})
         .exec(function(err, collection) {
             if(err){
@@ -44,7 +44,6 @@ exports.deleteDeviation = function(req, res) {
 };
 
 exports.createDeviation = function(req, res) {
-
     var newDevNum = '';
     var new_date = new Date();
     var yr = new_date.getFullYear().toString().substr(2, 2);

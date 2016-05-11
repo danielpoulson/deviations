@@ -7,6 +7,7 @@ var deviationSchema = new Schema({
     dvNo: {type: String, required: '{PATH} is required!'},
     dvMatNo: {type: String, required: '{PATH} is required!'},
     dvMatName: {type: String, required: '{PATH} is required!'},
+    dvExtract: {type: String},
     dvCust: {type: String, required: '{PATH} is required!'},
     dvBatchNo: {type: String, required: '{PATH} is required!'},
     dvSupplier: {type: String, required: '{PATH} is required!'},

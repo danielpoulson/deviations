@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import TextArea from 'components/Common/text-area';
-import TextInputTask from 'components/Common/text-input-task';
+import TextInputTask from 'components/Common/form-text-input';
 import DateTimePicker from 'components/Common/date-picker';
 import ComboBox from 'components/Common/combo-box';
-export const fields = ['TKName', 'TKStart', 'TKTarg', 'TKStat', 'TKChamp', 'TKComment', 'TKChampNew'];
+export const fields = ['TKName', 'TKComp', 'TKTarg', 'TKStat', 'TKChamp', 'TKComment', 'TKCapa'];
 
 const newdata = {
   TKStat: 1,
   TKChamp: null,
-  TKStart: new Date(),
+  TKComp: new Date(),
 };
 
 const validate = values => {
@@ -48,7 +48,7 @@ state => ({
 export default class TaskForm extends React.Component {
   render() {
     const {
-      fields: { TKName, TKStart, TKTarg, TKStat, TKChamp, TKComment },
+      fields: { TKName, TKComp, TKTarg, TKStat, TKChamp, TKComment, TKCapa },
       handleSubmit,
       onCancel,
       deleteTask,
@@ -61,56 +61,67 @@ export default class TaskForm extends React.Component {
     return (
       <div>
         <form onSubmit={handleSubmit} className="form form-horizontal" >
-
           <TextInputTask
             name="TKName"
             label="Task Name"
             placeholder="Enter Task Name (Required)"
-            dpInputCol="col-sm-9"
-            dpLabelCol="col-sm-2"
-            error={TKName.error}
-            touched={TKName.touched}
-            { ...TKName } />
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-9"
+            {...TKName}
+          />
 
           <DateTimePicker
-            label="Start date"
-            dpLabelCol="col-sm-2"
-            dpInputCol="col-sm-3"
-            onChange={this.handleStartDateChange}
-            { ...TKStart } />
-
-          <DateTimePicker
-            label="Target Date"
-            dpLabelCol="col-sm-2"
-            dpInputCol="col-sm-3"
-            onChange={this.handleStartDateChange}
+            name="TKTarg"
+            label="Target date"
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-2"
             { ...TKTarg } />
+
+          <DateTimePicker
+            name="TKComp"
+            label="Date Completed"
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-2"
+            {...TKComp}
+          />
 
           <ComboBox
             label="Status"
             data={status}
-            dpInputCol="col-sm-4"
-            dpLabelCol="col-sm-2"
-            { ...TKStat }
+            defaultValue={status[0]}
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-3"
+            { ...TKStat  }
           />
 
           <ComboBox
             label="Owner"
             data={users}
-            dpInputCol="col-sm-4"
-            dpLabelCol="col-sm-2"
+            defaultValue={users[0]}
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-3"
             { ...TKChamp }
           />
+
+          <div className="form-group">
+              <div className="col-sm-offset-2 col-sm-10">
+                  <div className="checkbox">
+                      <label>
+                          <input type="checkbox" {...TKCapa} />Preventative Action
+                      </label>
+                  </div>
+              </div>
+          </div>
 
           <TextArea
             name="TKComment"
             label="Comment"
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-9"
+            value={TKComment.value || ''}
             rows="6"
-            inputstyle="form-control"
-            dpInputCol="col-sm-9"
-            dpLabelCol="col-sm-2"
             { ...TKComment }
-            value={TKComment.value || ''} />
+          />
 
           <div className="col-sm-9 col-md-offset-2">
             <button className="btn btn-success pull-left" disabled={submitting} onClick={handleSubmit}>

@@ -93,9 +93,9 @@ router.get('/logout', function (req, res) {
  //  router.get('/api/project/tasks/:id', tasks.getProjectTaskList);
   router.get('/api/alltasks/:status/:capa', tasks.getTasks);
   router.get('/api/task/:id', tasks.getTaskById);
- //  router.put('/api/task/:id', tasks.updateTask);
- //  router.post('/api/task', tasks.createTask);
- //  router.delete('/api/tasks/:id', tasks.deleteTask);
+  router.put('/api/task/:id', tasks.updateTask);
+  router.post('/api/task', tasks.createTask);
+  router.delete('/api/tasks/:id', tasks.deleteTask);
  //  router.post('/export/tasks', tasks.dumpTasks);
  //
  
