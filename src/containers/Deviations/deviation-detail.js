@@ -142,7 +142,7 @@ class DeviationDetail extends Component {
     let _data = {};
 
     if (this.state._dvNo !== 'new') {
-      _data.dvLog = this.logMessage('Deviation actioned and completed');     
+      _data.dvLog = this.logMessage('Deviation Edit.');     
     } else {
       _data.dvLog = this.logMessage('Deviation Created');
     }
@@ -294,7 +294,7 @@ class DeviationDetail extends Component {
           {this.state.notnew && <FileList
             filesTab={this.state.FilesTab}
             refreshDeviation={this.onRefresh}
-            sourceId={this.props.location.pathname.split('/')[2]} />}
+            dvNo={this.props.location.pathname.split('/')[2]} />}
 
       </div>
     );

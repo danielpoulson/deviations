@@ -44,7 +44,7 @@ exports.createTask = function(req, res, next) {
             res.status(400);
             return res.send({reason:err.toString()});
         }
-        res.send(200);
+        res.status(200).send(task);
     });
 };
 

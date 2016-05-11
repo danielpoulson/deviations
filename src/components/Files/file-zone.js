@@ -6,7 +6,7 @@ import Request from 'superagent';
 class FileZone extends React.Component {
   // TODO: MED 2 Change function of the filezone drop function to multiply files
   onDrop = (files) => {
-    const sourceId = this.props.sourceId;
+    const dvNo = this.props.dvNo;
     const addFile = this.props.addFile;
     const req = Request.post('/server/upload');
 
@@ -20,10 +20,10 @@ class FileZone extends React.Component {
       if (myArray) {
         _newFileName = _fileName;
       } else {
-        _newFileName = `${sourceId} - ${file.name}`;
+        _newFileName = `${dvNo} - ${file.name}`;
       }
 
-      req.field('sourceId', sourceId);
+      req.field('dvNo', dvNo);
       req.field('dpUser', this.props.user.username);
       req.field('docName', file.name);
       req.attach(_newFileName, file, file.name);
@@ -47,7 +47,7 @@ class FileZone extends React.Component {
 }
 
 FileZone.propTypes = {
-  sourceId: PropTypes.string,
+  dvNo: PropTypes.string,
   addFile: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 

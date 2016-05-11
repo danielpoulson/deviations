@@ -20,8 +20,8 @@ class FileList extends Component {
   }
 
   componentWillMount() {
-    if (this.props.sourceId) {
-      this.props.getFiles(this.props.sourceId);
+    if (this.props.dvNo) {
+      this.props.getFiles(this.props.dvNo);
     }
   }
 
@@ -73,7 +73,7 @@ class FileList extends Component {
               <FileZone
                 addFile={this.onAddFile}
                 user={this.props.user}
-                sourceId={this.props.sourceId} />
+                dvNo={this.props.dvNo} />
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@ FileList.propTypes = {
   getFiles: PropTypes.func,
   removeFile: PropTypes.func,
   setFiletabCount: PropTypes.func,
-  sourceId: PropTypes.string,
+  dvNo: PropTypes.string,
   user: PropTypes.object,
 };
 

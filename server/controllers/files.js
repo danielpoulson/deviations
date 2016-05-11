@@ -83,8 +83,9 @@ function addExportFile(fileData){
 
 exports.getFiles = function (req, res) {
 
-    File.find({fsSource: req.params.files})
+    File.find({fsDevNo: req.params.files})
         .exec(function (err, collection) {
+            if (err) throw err;
             res.send(collection);
         });
 };
