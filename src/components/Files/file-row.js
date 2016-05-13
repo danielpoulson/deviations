@@ -8,7 +8,7 @@ import BookoutButton from 'components/Common/bookout-button';
 const FileRow = (props) => {
 
   const file = props.file;
-  const fullFileName = `${file.fsSource} - ${file.fsFileName}.${file.fsFileExt}`;
+  const fullFileName = `${file.fsDevNo} - ${file.fsFileName}.${file.fsFileExt}`;
 
   return (
     <tr>

@@ -9,7 +9,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '.././uploaded/')
+    cb(null, '.././uploads/')
   },
 
   filename: function (req, file, cb) {
@@ -101,10 +101,10 @@ router.get('/logout', function (req, res) {
  
   router.get('/api/files/:files', files.getFiles);
   router.get('/api/filecount/:id', files.getFileCount);
- //  router.put('/api/filebooked/:id', files.updateFileBook);
+  router.put('/api/filebooked/:id', files.updateFileBook);
  //
  //    //**********File function ***************
- // router.get('/server/upload/:file', files.downloadFile);
- // router.get('/server/upload/:file', files.downloadFile);
- //  router.post('/server/upload', upload.any(), files.uploadFile);
- //  router.delete('/server/delete/:id', files.deletefile);
+router.get('/server/upload/:file', files.downloadFile);
+router.get('/server/upload/:file', files.downloadFile);
+router.post('/server/upload', upload.any(), files.uploadFile);
+router.delete('/server/delete/:id', files.deletefile);

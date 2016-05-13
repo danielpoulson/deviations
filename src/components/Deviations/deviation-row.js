@@ -19,8 +19,6 @@ const DeviationRow = (props) => {
     bottomRow = "";
   }
 
-    console.log(props.detailView);
-
   return (
     <tbody className="dpHand">
   		<tr style={topRow} onClick = { props.getDeviation.bind(null, props.deviation.dvNo)} >

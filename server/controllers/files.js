@@ -13,9 +13,9 @@ exports.downloadFile = function (req, res) {
 
     if(fileType == 'exp'){
         filename = filename.slice(6);
-        file = '.././uploaded/' + filename;
+        file = '.././uploads/' + filename;
     } else {
-        file = '.././uploaded/' + filename;
+        file = '.././uploads/' + filename;
     }
 
     res.download(file, filename, function(err){
@@ -53,7 +53,7 @@ exports.uploadFile = function (req, res) {
     fileData.fsAddedBy = req.body.dpUser;
 
     fileData.fsFileExt = docName.split('.').pop();
-    fileData.fsSource = req.body.sourceId;
+    fileData.fsDevNo = req.body.dvNo;
     fileData.fsFilePath = req.files[0].filename;
     fileData.fsBooked = 0;
 
@@ -103,9 +103,9 @@ function fileDeletion(id) {
         File.findById(id, function (err, doc){
 
           if(doc){
-            fs.unlink('.././uploaded/' + doc.fsFilePath, function (err) {
+            fs.unlink('.././uploads/' + doc.fsFilePath, function (err) {
                 if (err) throw err;
-                console.log('successfully deleted /uploaded/' + doc.fsFilePath);
+                console.log('successfully deleted /uploads/' + doc.fsFilePath);
             });
 
             File.remove({_id: id}, function (err) {
@@ -116,7 +116,7 @@ function fileDeletion(id) {
 }
 
 exports.getFileCount = function(req,res){
-    File.count({fsSource:req.params.id}, function(err, fileCount){
+    File.count({fsDevNo:req.params.id}, function(err, fileCount){
         res.send(fileCount.toString());
     });
 };
