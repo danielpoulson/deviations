@@ -8,11 +8,11 @@ import SearchBox from 'components/Common/search-box';
 
 /* actions */
 import { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation } from 'actions/actions_deviations';
-import { setMain } from 'actions/actions_main';
+import { setMain, setView } from 'actions/actions_main';
 import { resetLog, getLog } from 'actions/actions_logger';
 
-@connect(state => ({ deviations: state.deviations, user: state.main.user }),
-  { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation, setMain, resetLog, getLog })
+@connect(state => ({ deviations: state.deviations, user: state.main.user, showAll: state.main.ShowAll }),
+  { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation, setMain, resetLog, getLog, setView })
 
 export default class Deviations extends Component {
   static contextTypes = {
@@ -46,6 +46,7 @@ export default class Deviations extends Component {
       this.props.getDeviations(1);
     }
     this.setState({ txtSearch: search });
+    this.setState({ showAll: this.props.showAll });
     this.onChange(1, search);
   }
 
@@ -93,11 +94,12 @@ export default class Deviations extends Component {
     let _showAll = this.state.showAll;
     _showAll = !_showAll;
     this.setState({ showAll: _showAll });
+    this.props.setView();
 
     if (this.state.showAll !== true) {
-      this.props.getDeviations(6);
+      this.props.getDeviations(2);
     } else {
-      this.props.getDeviations(4);
+      this.props.getDeviations(1);
     }
     this.setState({ txtSearch: null });
     this.setState({ activePage: 0 });

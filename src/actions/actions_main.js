@@ -6,6 +6,7 @@ export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 export const SET_FILETAB_COUNT = 'SET_FILETAB_COUNT';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_USER_DASHBOARD = 'SET_USER_DASHBOARD';
+export const SET_VIEW = 'SET_VIEW';
 
 
 export function getUserDashboard(username){
@@ -61,6 +62,12 @@ export function login(data) {
     type: SET_USER,
     payload: request
   };
+}
+
+export function setView() {
+  return {
+    type: SET_VIEW
+  }
 }
 
 // export function login(data) {

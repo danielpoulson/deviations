@@ -1,9 +1,10 @@
-import { SET_MAIN, SET_USER, USER_LOGGED_OUT, SET_FILETAB_COUNT, SET_LOADING, SET_USER_DASHBOARD} from 'actions/actions_main';
+import { SET_MAIN, SET_USER, USER_LOGGED_OUT, SET_FILETAB_COUNT, SET_LOADING, SET_USER_DASHBOARD, SET_VIEW } from 'actions/actions_main';
 import toastr from 'toastr';
 
 const initialState = {
   MainId: '',
   CurrentMode: 'change',
+  ShowAll: false,
   user: {
     username: '',
     fullname: '',
@@ -58,6 +59,14 @@ export default function (state, action) {
       return {
         ...state,
         loading: action.data.loading
+      };
+
+    case SET_VIEW:
+      const _showAll = !state.ShowAll;
+      
+      return {
+        ...state,
+        ShowAll: _showAll,
       };
 
     case SET_USER_DASHBOARD:
