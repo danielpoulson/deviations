@@ -27,7 +27,7 @@ const FileRow = (props) => {
           <BookoutButton
             user={props.user}
             fileLoad={fullFileName}
-            source={file.fsSource}
+            source={file.fsDevNo}
             fileId={file._id}
             fsBooked={file.fsBooked}
             createLog={props.createLog}

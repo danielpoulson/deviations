@@ -8,6 +8,7 @@ import TaskReducer from './reducer_task';
 import FilesReducer from './reducer_files';
 import UsersReducer from './reducer_users';
 import UserReducer from './reducer_user';
+import LogReducer from './reducer_log';
 import { NEW_DEVIATION } from 'actions/actions_deviations';
 
 const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   files: FilesReducer,
   users: UsersReducer,
   user: UserReducer,
+  log: LogReducer,
 
   form: formReducer.plugin({
     devform: (state, action) => { // <------ 'account' is name of form given to reduxForm()

@@ -9,3 +9,11 @@
 	table-layout: fixed;
 	
 }
+
+:local(.scrollable){
+	list-style-type: none;
+	height: 500px;
+	width: 100%;
+	overflow: hidden;
+	overflow-y: scroll;
+}

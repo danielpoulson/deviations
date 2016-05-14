@@ -26,7 +26,7 @@ const DeviationRow = (props) => {
         <td className={dvextract}>{_dev.dvMatNo}</td>
         <td className={dvextract}>{_dev.dvMatName}</td>
         <td className={dvextract}>{_dev.dvCust}</td>
-        <td>{calculateDay(_dev.dvLog[0].dvLogDate, _dev.dvClosed)}</td>
+        <td>{calculateDay(_dev.dvCreated, _dev.dvClosed)}</td>
         <td className={dvextract}>{_dev.dvAssign}</td>
       </tr>
       <tr  className={bottomRow} onClick = { props.getDeviation.bind(null, props.deviation.dvNo)}>

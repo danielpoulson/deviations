@@ -3,6 +3,7 @@ var DeviationModel = require('../models/Deviation');
 var userModel = require('../models/User');
 var taskModel = require('../models/Task');
 var filesModel = require('../models/File');
+var loggerModel = require('../models/Logger');
 
 module.exports = function(config) {
 	mongoose.connect(config.db);

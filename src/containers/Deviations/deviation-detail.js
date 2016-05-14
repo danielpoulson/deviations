@@ -115,19 +115,14 @@ class DeviationDetail extends Component {
 
   logMessage(message) {
 
-    let _dvLog = this.props.deviation.dvLog;
-
-    const newMessage = {
-      dvLogType : message,
-      dvLogBy: this.props.main.user.fullname,
-      dvLogDate: new Date()
+    // let _dvLog = this.props.deviation.dvLog;
+    const _dvLog = {
+      SourceId: this.state._dvNo,  
+      LogType: 'DEV',
+      LogMessage : message,
+      LogBy: this.props.main.user.fullname,
+      LogDate: new Date()
     };
-
-    if (typeof _dvLog === "undefined") {
-      _dvLog = new Array(newMessage);
-    } else {
-      _dvLog.push(newMessage);
-    }
 
     return _dvLog;
 
@@ -142,7 +137,7 @@ class DeviationDetail extends Component {
     let _data = {};
 
     if (this.state._dvNo !== 'new') {
-      _data.dvLog = this.logMessage('Deviation Edit.');     
+      _data.dvLog = this.logMessage('Deviation Edit');     
     } else {
       _data.dvLog = this.logMessage('Deviation Created');
     }
@@ -284,7 +279,7 @@ class DeviationDetail extends Component {
             onApprove={this.onApprove}
             onFinal={this.onFinal}
             onCancel={this.onCancel}
-            log={this.props.deviation} />}
+            log={this.props.log} />}
 
           {this.state.notnew && <TaskList
             tasklist = {this.props.tasklist}
@@ -309,6 +304,7 @@ export default connect(state => ({
   deviation: state.deviation,
   devform: state.form.devform,
   main: state.main,
+  log: state.log,
   tasklist: state.tasks.ctlist,
   ctTotal: state.tasks.ctTotal,
   users: state.users

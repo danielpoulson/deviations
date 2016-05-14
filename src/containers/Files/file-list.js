@@ -6,7 +6,7 @@ import FileZone from 'components/Files/file-zone';
 /* actions */
 import { getFiles, addFile, bookoutFile, deleteFile, removeFile } from 'actions/actions_files';
 import { setFiletabCount } from 'actions/actions_main';
-import { createLog } from 'actions/actions_deviations';
+import { createLog } from 'actions/actions_logger';
 
 class FileList extends Component {
   constructor(props) {

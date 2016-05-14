@@ -9,9 +9,10 @@ import SearchBox from 'components/Common/search-box';
 /* actions */
 import { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation } from 'actions/actions_deviations';
 import { setMain } from 'actions/actions_main';
+import { resetLog, getLog } from 'actions/actions_logger';
 
 @connect(state => ({ deviations: state.deviations, user: state.main.user }),
-  { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation, setMain })
+  { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation, setMain, resetLog, getLog })
 
 export default class Deviations extends Component {
   static contextTypes = {
@@ -70,8 +71,10 @@ export default class Deviations extends Component {
   onGetDeviation(i) {
     const _id = i;
     // const _id = this.props.changelist[i].CC_No;
+    this.props.resetLog();
     this.props.setMain({ MainId: _id, CurrentMode: 'deviation', loading: true });
     this.props.getDeviation(_id);
+    this.props.getLog(_id);
     this.context.router.push(`/deviation/${_id}`);
   }
 
@@ -130,9 +133,9 @@ export default class Deviations extends Component {
 
 
     if (this.state.showAll !== true) {
-      butText = 'Show all changes';
+      butText = 'All Deviations';
     } else {
-      butText = 'Show Current Deviations';
+      butText = 'Current Deviations';
     }
 
     return (

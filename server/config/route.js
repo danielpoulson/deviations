@@ -4,6 +4,7 @@ const deviations = require('../controllers/deviations');
 const tasks = require('../controllers/tasks');
 const files = require('../controllers/files');
 const users = require('../controllers/users');
+const loggers = require('../controllers/loggers');
 const multer = require('multer');
 
 
@@ -43,34 +44,18 @@ router.get('/logout', function (req, res) {
 
 //**********User Routes ***************
 
-//--------- Changes--------------------
-
-// router.route('/api/changes/:status')
-//     .get(changes.getChanges);
-//
-// router.post('/api/changes', changes.createChange);
-// router.put('/api/changelog/:id', changes.updateChangeComment);
-//
-// // TODO: LOW (MAJOR) - Get files and tasks that are associated with a change when download a change
-// // A change requires the associated tasks and files to be downloaded at the same time however
-// // currently these are all downloaded with seperate calls. At the application level the state of a change
-// // should be associated with the task and the files so changes to state are managed together.
-// router.route('/api/change/:id')
-//     .get(changes.getChangeById)
-//     .put(changes.updateChange);
-//
-// router.post('/export/changes', changes.dumpChanges);
-//
-// router.get('/api/userdashboard/:user', changes.getUserDashboard);
-//
-
  //*************Deviation Routes************************
  router.get('/api/deviationlist/:status/:cust', deviations.getDeviations);
  router.get('/api/deviation/:id', deviations.getDeviationById);
  router.get('/api/deviation/tasks/:id', tasks.getDeviationTaskList);
  router.put('/api/deviations/:id', deviations.updateDeviation);
  router.post('/api/deviations', deviations.createDeviation);
-// //--------- Changes--------------------
+//*************Deviation Routes************************
+
+//*************Logger Routes************************
+router.post('/api/logger', loggers.createLog);
+router.get('/api/logger/:id', loggers.getLog);
+//*************Logger Routes************************
 //
 //
 // router.route('/api/projects/:status')

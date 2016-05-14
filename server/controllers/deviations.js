@@ -1,6 +1,7 @@
 var Deviation = require('mongoose').model('Deviation');
 var Task = require('mongoose').model('Task');
 var files = require('../controllers/files');
+var logger = require('../controllers/loggers');
 var fs = require('fs');
 
 exports.getDeviations = function(req, res) {
@@ -15,7 +16,7 @@ exports.getDeviations = function(req, res) {
         search = new RegExp(customer);
     }
 
-    Deviation.find({$and: [{dvClosed: {$lt:status}}, {$or:[{dvCust:"MFG"}, {dvCust: search}]}]}, {dvNo:true, dvMatNo:true, dvMatName:true, dvExtract:1, dvCust:true, 'dvLog.dvLogDate': 1, dvAssign:true, dvClosed:true, dvClass: 1})
+    Deviation.find({$and: [{dvClosed: {$lt:status}}, {$or:[{dvCust:"MFG"}, {dvCust: search}]}]}, {dvNo:true, dvMatNo:true, dvMatName:true, dvExtract:1, dvCust:true, 'dvCreated':1, dvAssign:true, dvClosed:true, dvClass: 1})
         .sort({dvNo:1})
         .exec(function(err, collection) {
             if(err){
@@ -26,8 +27,14 @@ exports.getDeviations = function(req, res) {
 };
 
 exports.updateDeviation = function(req, res) {
+    const _dev = req.body;
+    // These two functions below do the following functions
+    // 1. push the logged event to the logger function
+    logger._createlog(_dev.dvLog);
+    // 2. The delete function on the objects removes the dvLog key so the old records are not overwritten.
+    delete _dev.dvLog;
 
-    Deviation.update({dvNo:req.params.id}, {$set: req.body}, function (err) {
+    Deviation.update({dvNo:req.params.id}, {$set: _dev}, function (err) {
         if (err) {
             console.log({reason:err.toString()});
         }
@@ -48,15 +55,21 @@ exports.createDeviation = function(req, res) {
     var new_date = new Date();
     var yr = new_date.getFullYear().toString().substr(2, 2);
     var search = new RegExp("DV" + yr);
+    var _dev = req.body;
 
     var devCount = Deviation.count({dvNo: search}).exec(function (err, count) {
         if (err) return handleError(err);
 
         newDevNum = "DV" + ((yr * 10000) + (count + 1));
 
-        req.body.dvNo = newDevNum;
+        var _logs = _dev.dvLog;
+        _logs.SourceId = newDevNum;
+        logger._createlog(_logs);
+        delete _dev.dvLog;
 
-        var deviation = new Deviation(req.body);
+        _dev.dvNo = newDevNum;
+
+        var deviation = new Deviation(_dev);
 
         deviation.save(function (err) {
         if(err) {
