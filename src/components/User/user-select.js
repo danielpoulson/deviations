@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import Combobox from 'components/Common/combo-box';
+import ComboBox from 'components/Common/combo-box';
+import { labStyle } from './user-style.scss';
 
 const UserSelect = (props) => {
   const fnStyle = {
@@ -9,22 +10,21 @@ const UserSelect = (props) => {
   };
 
   return (
-    <div className="col-sm-12">
-      <div style={fnStyle} className="col-sm-6">
-        <Combobox
-          name="Full Name"
-          label="Select user"
-          data={props.users}
-          dpInputCol="col-sm-9"
-          dpLabelCol="col-sm-3"
-          onChange={props.onChange}
-          defaultValue={props.users[0]} />
-      </div>
-      <div style={fnStyle} className="col-sm-3">
-        <button className="btn btn-info" onClick={props.newUser}>
-          New User
-        </button>
-      </div>
+    <div>
+      <ComboBox
+        label="Full Name"
+        data={props.users}
+        defaultValue={props.users[0]}
+        labelstyle={`col-sm-2 control-label ${labStyle}`}
+        inputdiv="col-sm-4"
+        onChange={props.onChange}
+        { ...props.users  }
+      />
+    
+      <button className="btn btn-info" onClick={props.newUser}>
+        New User
+      </button>
+
     </div>
   );
 };

@@ -24,7 +24,7 @@ export function getTasks(data) {
 
 export function getAllTasks() {
 // TODO: LOW 2 Remove the hardwire status input 4 = "active tasks"
-  const _status = 5;
+  const _status = 4;
   const _capa = 0;
   const url = `/api/alltasks/${_status}/${_capa}`;
   const request = axios.get(url);

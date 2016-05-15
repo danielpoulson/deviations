@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import TextInputTask from 'components/Common/text-input-task';
+import TextInputTask from 'components/Common/form-text-input';
 import ComboBox from 'components/Common/combo-box';
 export const fields = ['_id', 'fullname', 'username', 'email', 'dept', 'role', 'password'];
 
@@ -48,78 +48,69 @@ export default class UserProfileForm extends React.Component {
       fields: { fullname, username, email, role, password },
         handleSubmit,
         deleteUser,
+        onCancel,
         roleSelect,
+        newUser,
       } = this.props;
 
     return (
       <div>
         <form className="form form-horizontal" onSubmit={handleSubmit}>
 
-          <div className="col-sm-12">
-            <TextInputTask
-              name="username"
-              label="User Name"
-              placeholder="Enter Users username (Required)"
-              dpInputCol="col-sm-4"
-              dpLabelCol="col-sm-2"
-              error={username.error}
-              touched={username.touched}
-              { ...username } />
-          </div>
+          <TextInputTask
+            name="username"
+            label="User Name"
+            placeholder="Enter Users username (Required)"
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-3"
+            {...username}
+          />
 
-          <div className="col-sm-12">
-            <TextInputTask
-              name="fullname"
-              label="Full Name"
-              placeholder="Enter Full Name (Required)"
-              dpInputCol="col-sm-5"
-              dpLabelCol="col-sm-2"
-              error={fullname.error}
-              touched={fullname.touched}
-              { ...fullname } />
-          </div>
+          <TextInputTask
+            name="fullname"
+            label="Full Name"
+            placeholder="Enter Users fullname (Required)"
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-3"
+            {...fullname}
+          />
 
-          <div className="col-sm-12">
-            <TextInputTask
-              name="email"
-              label="Email"
-              placeholder="Enter Email Address (Required)"
-              dpInputCol="col-sm-5"
-              dpLabelCol="col-sm-2"
-              error={email.error}
-              touched={email.touched}
-              { ...email } />
-          </div>
+          <TextInputTask
+            name="email"
+            label="Email"
+            placeholder="Enter Users email (Required)"
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-3"
+            {...email}
+          />
 
-          <div className="col-sm-12">
-            <ComboBox
-              label="Role"
-              name="role"
-              data={roleSelect}
-              dpInputCol="col-sm-4"
-              dpLabelCol="col-sm-2"
-              { ...role }
-              />
-          </div>
+          <ComboBox
+            label="Role"
+            data={roleSelect}
+            defaultValue={role[0]}
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-3"
+            { ...role  }
+          />
 
-          <div className="col-sm-12">
-            <TextInputTask
-              name="password"
-              label="Password"
-              type="password"
-              placeholder="***************"
-              dpInputCol="col-sm-5"
-              dpLabelCol="col-sm-2"
-              error={password.error}
-              touched={password.touched}
-              { ...password } />
-          </div>
+          <TextInputTask
+            name="password"
+            label="Password"
+            placeholder="***************"
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-3"
+            type="password"
+            { ...password }
+          />
 
           <div className="col-sm-9 col-md-offset-2">
             <button type="submit" className="btn btn-success pull-left">
               Save
             </button>
-            <button className="btn btn-danger dp-margin-10-LR" onClick={deleteUser}>
+            <button className="btn btn-info dp-margin-10-LR" onClick={onCancel}>
+              Cancel
+            </button>
+            <button className="btn btn-danger dp-margin-10-LR" disabled={newUser} onClick={deleteUser}>
               Delete
             </button>
           </div>
@@ -133,6 +124,8 @@ UserProfileForm.propTypes = {
   fields: PropTypes.object,
   errors: PropTypes.object,
   handleSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
   deleteUser: PropTypes.func.isRequired,
+  newUser: PropTypes.bool,
   roleSelect: PropTypes.array.isRequired,
 };

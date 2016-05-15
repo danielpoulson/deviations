@@ -1,13 +1,11 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
-import { scrollable } from './deviations-list.scss';
+import { scrollable, panelStyle, spanStyle } from './deviations-list.scss';
 
 const DeviationLog = (props) => {
 
   const _log = props.log;
   let logs = [];
-  const spanStyle = { color: 'blue', paddingRight: 10 };
-  const butGroup = { padding: 10 };
   const listStyleLi = { padding: 5 }
 
   if (_log !== null && Object.keys(_log).length !== 0) {
@@ -22,18 +20,17 @@ const DeviationLog = (props) => {
       return 0;
     });
 
-    logs = sortlogs.map((log) => <li style={listStyleLi} key={log._id}>
-                        {log.LogType} - {log.LogMessage} - {log.LogBy} <small>({moment(new Date(log.LogDate)).format('DD/MM/YY, h:mm a')})</small>
-                      </li>);
+    logs = sortlogs.map((log) => <li style={listStyleLi} key={log._id}><span className={`glyphicon glyphicon-info-sign ${spanStyle}`}></span>
+       {log.LogType} - {log.LogMessage} - {log.LogBy} <small>({moment(new Date(log.LogDate)).format('DD/MM/YY, h:mm a')})</small></li>);
 
   }
 
   return (
     <div className={props.logTab}>
-          <div className="col-sm-12 margin-10-top">
-              <ul className={scrollable}>{logs}</ul>
-          </div>
+      <div className={`panel panel-default ${panelStyle}`}>
+        <ul className={scrollable}>{logs}</ul>
       </div>
+    </div>
 
   );
 

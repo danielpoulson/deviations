@@ -35,6 +35,7 @@ export default class ChangeForm extends Component {
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
+    onCloseDev: PropTypes.func.isRequired,
     resetForm: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
     status: PropTypes.array.isRequired,
@@ -44,6 +45,7 @@ export default class ChangeForm extends Component {
     const {
       fields: { dvAssign, dvInvest, dvOutCome, dvCustSend, dvCat, dvClass },
       handleSubmit,
+      onCloseDev,
       status,
       outcomes,
       categories,
@@ -52,7 +54,9 @@ export default class ChangeForm extends Component {
       } = this.props;
     return (
       <form onSubmit={handleSubmit} className="form-horizontal">
-
+        <div className="pull-right">
+          <button className="btn btn-warning" onClick={onCloseDev}>Close Deviation</button>
+        </div>
         <ComboBox
           label="Assigned To"
           data={users}

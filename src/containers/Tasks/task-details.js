@@ -61,10 +61,13 @@ class TaskDetail extends React.Component {
       _data._id = this.state.taskId;
       _data.TKStat = typeof _data.TKStat === 'object' ? _data.TKStat.id : _data.TKStat;
       _data.DevId = _DevId;
+      // Coverts from true : 1 and flase to 0
+      _data.TKCapa = _data.TKCapa ? +_data.TKCapa : 0;
       this.props.editTask(_data);
     } else {
       _data.TKStat = _data.TKStat.id || 1;
       _data.DevId = _DevId;
+      _data.TKCapa = _data.TKCapa ? +_data.TKCapa : 0;
       this.props.addTask(_data);
     }
 
@@ -108,7 +111,7 @@ class TaskDetail extends React.Component {
               deleteTask={this.deleteTask}
               hideDelete={this.state.hideDelete}
               onCancel={this.cancelTask} />
-            </div>
+          </div>
         </div>
     );
   }

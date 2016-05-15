@@ -11,8 +11,8 @@ import { tile, dashboard } from './styles.scss';
 
 @connect(
   state => ({ fullname: state.main.user.fullname,
-    countChangesUser: state.main.countChangesUser,
-    allOpenChanges: state.main.allOpenChanges,
+    countDeviationsUser: state.main.countDeviationsUser,
+    allOpenDeviations: state.main.allOpenDeviations,
     allOpenTasks: state.main.allOpenTasks,
     countTasksUser: state.main.countTasksUser }), { getUserDashboard, loadPage, loadPageTask}
 )
@@ -34,11 +34,11 @@ export default class Home extends Component {
     this.context.router.push('/tasks');
   };
 
-  getChanges = () => {
+  getDeviations = () => {
     const action = {};
     action.search = this.props.fullname || null;
     this.props.loadPage(action);
-    this.context.router.push('/changes');
+    this.context.router.push('/deviations');
   };
 
   getAllTasks = () => {
@@ -48,11 +48,11 @@ export default class Home extends Component {
     this.context.router.push('/tasks');
   };
 
-  getAllChanges = () => {
+  getAllDeviations = () => {
     const action = {};
     action.search = null;
     this.props.loadPage(action);
-    this.context.router.push('/changes');
+    this.context.router.push('/deviations');
   };
 
   render(){
@@ -61,9 +61,9 @@ export default class Home extends Component {
         <div className={`${dashboard}`}><h1>Dashboard</h1></div>
         <div className="row">
           <div className="col-sm-3">
-            <div className={`${tile} green grow`} onClick={this.getChanges}>
+            <div className={`${tile} green grow`} onClick={this.getDeviations}>
               <h2>My Deviations</h2>
-              <i className="fa fa-list-alt"></i>&nbsp; {this.props.countChangesUser}
+              <i className="fa fa-list-alt"></i>&nbsp; {this.props.countDeviationsUser}
             </div>
           </div>
           <div className="col-sm-3">
@@ -73,9 +73,9 @@ export default class Home extends Component {
             </div>
           </div>
           <div className="col-sm-3">
-            <div className={`${tile} orange grow`} onClick={this.getAllChanges}>
+            <div className={`${tile} orange grow`} onClick={this.getAllDeviations}>
               <h2>All Deviations</h2>
-              <i className="fa fa-list-alt"></i>&nbsp; {this.props.allOpenChanges}
+              <i className="fa fa-list-alt"></i>&nbsp; {this.props.allOpenDeviations}
             </div>
           </div>
           <div className="col-sm-3">

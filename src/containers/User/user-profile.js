@@ -26,6 +26,7 @@ class UserProfile extends Component {
     this.deleteUser = this.deleteUser.bind(this);
     this.newUser = this.newUser.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onCancel = this.onCancel.bind(this);
   }
 
   onChange(value) {
@@ -37,6 +38,11 @@ class UserProfile extends Component {
     this.props.resetUser();
   }
 
+  onCancel(event) {
+    event.preventDefault();
+    this.setState({ isNewUser: false });
+  }
+
   deleteUser(event) {
     event.preventDefault();
     this.props.deleteUser(this.props.user._id);
@@ -45,6 +51,7 @@ class UserProfile extends Component {
     // When the action to delteUser is call the action does not remove the user from the state tree.
     // See Actions Users deleteUser
     this.props.getUsers();
+    this.props.resetUser();
   }
 
   saveUser(data) {
@@ -56,13 +63,16 @@ class UserProfile extends Component {
       this.props.saveUser(data);
       toastr.success('User account has been saved', 'User Account', { timeOut: 1000 });
     }
+    this.props.resetUser();
+    this.props.getUsers();
   }
 
   render() {
 
-    const formStyle = {
+    const panelStyle = {
       backgroundColor: '#fcfffc',
       border: 'solid 1px',
+      height: 370,
       borderRadius: 4,
       marginRight: 0,
       marginLeft: 0,
@@ -70,28 +80,33 @@ class UserProfile extends Component {
 
     };
 
+    const formStyle = {
+      paddingTop: 15,
+    };
+
     const roleSelect = ['user', 'admin'];
 
     return (
 
       <div>
-        <div>
-          <div className="section-header">
-            <div className="col-sm-6 pull-left">
-              <p className="section-header-text-main">User Profiles </p>
-            </div>
+        <div className="section-header">
+          <div className="col-sm-6 pull-left">
+            <p className="section-header-text-main">User Profiles </p>
           </div>
         </div>
 
-        { this.state.isNewUser ? null :
-          <UserSelect users={this.props.users} onChange={this.onChange} newUser={this.newUser} />
-        }
-
-        <div className="row" style={formStyle}>
-          <UserProfileForm
-            onSubmit={this.saveUser}
-            deleteUser={this.deleteUser}
-            roleSelect={roleSelect} />
+        <div style={panelStyle}>
+            { this.state.isNewUser ? null :
+              <UserSelect users={this.props.users} onChange={this.onChange} newUser={this.newUser} />
+            }
+          <div style={formStyle}>
+            <UserProfileForm
+              newUser={this.state.isNewUser}
+              onSubmit={this.saveUser}
+              deleteUser={this.deleteUser}
+              onCancel={this.onCancel}
+              roleSelect={roleSelect} />
+          </div>
         </div>
 
       </div>

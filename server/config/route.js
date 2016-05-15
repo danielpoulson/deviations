@@ -50,6 +50,8 @@ router.get('/logout', function (req, res) {
  router.get('/api/deviation/tasks/:id', tasks.getDeviationTaskList);
  router.put('/api/deviations/:id', deviations.updateDeviation);
  router.post('/api/deviations', deviations.createDeviation);
+
+ router.get('/api/userdashboard/:user', deviations.getUserDashboard);
 //*************Deviation Routes************************
 
 //*************Logger Routes************************

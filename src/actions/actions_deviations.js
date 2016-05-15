@@ -4,6 +4,7 @@ export const GET_DEVS = 'GET_DEVS';
 export const GET_DEV = 'GET_DEV';
 export const ADD_DEV = 'ADD_DEV';
 export const EDIT_DEV = 'EDIT_DEV';
+export const DELETE_DEV = 'DELETE_DEV';
 export const NEW_DEVIATION = 'NEW_DEVIATION';
 export const LOAD_PAGE_DEVS = 'LOAD_PAGE_DEVS';
 export const CREATE_LOG = 'CREATE_LOG';
@@ -48,6 +49,17 @@ export function addDeviation(data) {
 
 }
 
+export function closeDeviation(data){
+  let _data = data;
+  const url = `/api/deviations/${_data.dvNo}`;
+  axios.put(url, _data);
+
+  return {
+    type: DELETE_DEV,
+    payload: _data.dvNo,
+  };
+}
+
 export function editDeviation(data) {
   let _data = data;
   _data.dvExtract = data.dvDescribe.slice(0,200);
@@ -60,6 +72,8 @@ export function editDeviation(data) {
   };
 
 }
+
+
 
 export function resetDeviation(){
   return {

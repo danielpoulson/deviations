@@ -43,7 +43,7 @@ export class App extends Component {
         <div className="">
           <Header />
         </div>
-        <div className="">
+        <div>
             {this.props.children}
         </div>
         <div className="">

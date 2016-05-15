@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import toastr from 'toastr';
 
 /* actions */
-import { addDeviation, createLog, editDeviation, getDeviation } from 'actions/actions_deviations';
+import { addDeviation, createLog, editDeviation, closeDeviation, getDeviation } from 'actions/actions_deviations';
 import { getProjectTasks } from 'actions/actions_tasks';
 import { setMain } from 'actions/actions_main';
 
@@ -81,6 +81,7 @@ class DeviationDetail extends Component {
     this.onApprove = this.onApprove.bind(this);
     this.onFinal = this.onFinal.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.onCloseDev = this.onCloseDev.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
     this.saveDetail = this.saveDetail.bind(this);
   }
@@ -103,6 +104,37 @@ class DeviationDetail extends Component {
 
   onCancel() {
     this.logMessage('Deviation Cancelled');
+  }
+
+  onCloseDev(e) {
+    e.preventDefault();
+    const _devform = this.props.devform;
+    const _data = {
+      dvNo: this.state._dvNo,
+      dvAssign: _devform.dvAssign.value,
+      dvBatchNo: _devform.dvBatchNo.value,
+      dvCat: _devform.dvCat.value,
+      dvClass: _devform.dvClass.value,
+      dvCreated: _devform.dvCreated.value,
+      dvCust: _devform.dvCust.value,
+      dvCustSend: _devform.dvCustSend.value,
+      dvDOM: _devform.dvDOM.value,
+      dvDescribe: _devform.dvDescribe.value,
+      dvInvest: _devform.dvInvest.value,
+      dvMatName: _devform.dvMatName.value,
+      dvMatNo: _devform.dvMatNo.value,
+      dvOutCome: _devform.dvOutCome.value,
+      dvSupplier: _devform.dvSupplier.value,
+      dvClosed: 1,
+    }
+
+    _data.dvLog = this.logMessage('Deviation Completed');
+
+    this.props.closeDeviation(_data);
+    toastr.success('Deviation has been Closed', 'Deviation Detail', { timeOut: 1000 });
+    this.setState({ dirty: false });
+    this.context.router.push('/deviations');
+
   }
 
   onApprove() {
@@ -150,7 +182,7 @@ class DeviationDetail extends Component {
 
 
 // TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-  saveDeviation (_data) {
+  saveDeviation (_data, closed) {
 
     _data.dvNo = this.state._dvNo;
 
@@ -264,6 +296,7 @@ class DeviationDetail extends Component {
               <div className="panel-body">
                 {this.state.notnew && <DeviationInvestForm 
                   onSubmit={this.saveDetail}
+                  onCloseDev={this.onCloseDev}
                   status={this.state.status}
                   outcomes={this.state.outcomes}
                   categories={this.state.categories}
@@ -309,5 +342,5 @@ export default connect(state => ({
   ctTotal: state.tasks.ctTotal,
   users: state.users
 }), {
-  addDeviation, createLog, editDeviation, getDeviation, getProjectTasks, setMain
+  addDeviation, createLog, editDeviation, closeDeviation, getDeviation, getProjectTasks, setMain
 })(DeviationDetail);

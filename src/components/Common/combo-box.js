@@ -5,7 +5,7 @@ import Combobox from 'react-widgets/lib/Combobox';
 const ComboBox = (props) => {
   const spanStyle = { color: 'red' };
   let dtStyle = {};
-  const wrapperClass = 'form-group';
+  const wrapperClass = props.wrapperClass ? props.wrapperClass : 'form-group';
   const _labelstyle = props.labelstyle;
   const _inputdiv = props.inputdiv;
 
@@ -45,6 +45,7 @@ ComboBox.propTypes = {
   defaultValue: PropTypes.any,
   value: PropTypes.any,
   touched: PropTypes.bool,
+  wrapperClass: PropTypes.string,
 };
 
 export default ComboBox;

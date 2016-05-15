@@ -2,6 +2,8 @@ var Deviation = require('mongoose').model('Deviation');
 var Task = require('mongoose').model('Task');
 var files = require('../controllers/files');
 var logger = require('../controllers/loggers');
+var tasks = require('../controllers/tasks');
+var users = require('../controllers/users');
 var fs = require('fs');
 
 exports.getDeviations = function(req, res) {
@@ -129,9 +131,32 @@ exports.getCustomers = function(req, res) {
         });
 };
 
+// This function gets the count for **active** tasks and change controls for the logged in user
+exports.getUserDashboard = function(req, res){
+  const dashboard = {};
+  var username = '';
+  const promise = Deviation.count({dvClosed: {$lt:1}}).exec();
+
+  promise.then(data => {
+    dashboard.allDeviationCount = data;
+    return users.getFullname(req.params.user);
+  }).then(data => {
+    username = data[0].fullname;
+    return Deviation.count({$and: [{dvAssign: username }, {dvClosed: {$lt:1}}]})
+  }).then( data => {
+    dashboard.deviationCount = data;
+    return tasks.getTasksCountByUser(username);
+  }).then( data => {
+    dashboard.taskCount = data;
+    return tasks.getCountAll();
+  }).then( data => {
+    dashboard.allTaskCount = data;
+    res.send(dashboard);
+  });
+}
 
 
-
+// This was the old dashboard
 exports.getDashboard = function(req, res) {
     //TODO: This block is a bit of a mess not really sure what is the best approach for making all these calls. D.Poulson 05/04/2015
     var dashArray = {

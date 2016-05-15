@@ -3,7 +3,7 @@ var Task = require('mongoose').model('Task');
 exports.getTasks = function(req, res) {
     var status = req.params.status;
     var capa = req.params.capa;
-    Task.find({TKStat: {$lt : status}, TKCapa: {$gte : capa}},{DevId:true, TKName:true, TKTarg:true, TKComp:true, TKChamp:true, TKStat:true, TKCapa:true})
+    Task.find({$and: [{TKStat: { $lte: status }}, { TKCapa: { $gte: capa }}]}, { DevId: true, TKName: true, TKTarg: true, TKComp:true, TKChamp:true, TKStat:true, TKCapa:true})
         .sort({TKTarg:1}).exec(function(err, collection) {
         res.send(collection);
     });
@@ -52,6 +52,14 @@ exports.getTaskById = function(req, res) {
     Task.findOne({_id:req.params.id}).exec(function(err, task) {
         res.send(task);
     });
+};
+
+exports.getTasksCountByUser = function(user){
+  return Task.count({$and: [{TKChamp:user}, {TKStat: {$lt:5}}]});
+};
+
+exports.getCountAll = function(){
+  return Task.count({ TKStat: { $lte: 4 }});
 };
 
 exports.getTaskCount = function(req,res){

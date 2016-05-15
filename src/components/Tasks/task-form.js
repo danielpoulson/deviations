@@ -10,6 +10,7 @@ const newdata = {
   TKStat: 1,
   TKChamp: null,
   TKComp: new Date(),
+  TKCapa: false,
 };
 
 const validate = values => {
@@ -35,6 +36,8 @@ const validate = values => {
   return errors;
 };
 
+
+
 @reduxForm({
   form: 'task',
   fields,
@@ -46,6 +49,10 @@ state => ({
 )
 
 export default class TaskForm extends React.Component {
+  onChangeCheck(){
+
+  }
+
   render() {
     const {
       fields: { TKName, TKComp, TKTarg, TKStat, TKChamp, TKComment, TKCapa },

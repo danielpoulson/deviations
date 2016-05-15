@@ -1,4 +1,4 @@
-import { GET_DEVS, ADD_DEV, EDIT_DEV, LOAD_PAGE_DEVS } from 'actions/actions_deviations';
+import { GET_DEVS, ADD_DEV, EDIT_DEV, DELETE_DEV, LOAD_PAGE_DEVS } from 'actions/actions_deviations';
 import _ from 'lodash';
 
 const initialState = {
@@ -24,6 +24,10 @@ function searchData(data, searchText, sortColumn) {
   _sortColumn = sortColumn || 'CC_No';
   const newList = _.chain(data).filter(search).sortBy(_sortColumn).value();
   return newList;
+}
+
+function searchIndex(data, index) {
+  return data.filter((item) => item.dvNo !== index);
 }
 
 export default function (state, action) {
@@ -71,6 +75,16 @@ export default function (state, action) {
         paged,
         alldata,
       };
+
+    case DELETE_DEV: {
+      const dvNo = action.payload;
+      const deleted = searchIndex(state.alldata, dvNo);
+      return {
+        ...state,
+        alldata: deleted,
+      };
+    }
+
 
     case GET_DEVS:
       alldata = action.payload.data;

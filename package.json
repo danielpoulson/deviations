@@ -113,7 +113,7 @@
     "react-select": "^1.0.0-beta9",
     "react-widgets": "^3.3.0",
     "redux": "^3.3.1",
-    "redux-form": "^4.2.2",
+    "redux-form": "^5.2.3",
     "redux-promise": "^0.5.3",
     "redux-promises": "^1.0.0",
     "superagent": "^1.8.3",

@@ -120,7 +120,7 @@ export default class ChangeForm extends Component {
           <button type="submit" className="btn btn-primary" >
             Save Deviation
           </button>
-          <button className="btn btn-default dp-margin-10-LR" onClick={onCancel}>
+          <button className="btn btn-info dp-margin-10-LR" onClick={onCancel}>
             Cancel
           </button>
         </div>
