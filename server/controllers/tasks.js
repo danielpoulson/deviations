@@ -1,4 +1,10 @@
 var Task = require('mongoose').model('Task');
+var Deviation = require('mongoose').model('Deviation');
+var fs = require('fs');
+var files = require('../controllers/files');
+var json2csv = require('json2csv');
+var moment = require('moment');
+var momentLocalizer = require('react-widgets/lib/localizers/moment');
 
 exports.getTasks = function(req, res) {
     var status = req.params.status;
@@ -59,11 +65,125 @@ exports.getTasksCountByUser = function(user){
 };
 
 exports.getCountAll = function(){
-  return Task.count({ TKStat: { $lte: 4 }});
+  return Task.count({$and: [{TKStat: { $lte: 4 }}, { TKCapa: { $gte: 0 }}]});
 };
 
 exports.getTaskCount = function(req,res){
     Task.count({DevId:req.params.id}, function(err, taskCount){
         res.send(taskCount.toString());
     });
+};
+
+exports.dumpTasks = function(req, res) {
+    var fileData = {};
+    var newDate = new Date();
+    var int = parseInt((Math.random()*1000000000),10);
+
+    fileData.fsAddedAt = newDate;
+    fileData.fsAddedBy = req.body.fsAddedBy;
+    fileData.fsFileName = 'tasks' + int;
+    fileData.fsFileExt = 'csv';
+    fileData.fsDevNo = req.body.fsSource;
+    fileData.fsFilePath = 'tasks' + int + '.csv';
+    fileData.fsBooked = 0;
+
+    files.addExportFile(fileData);
+
+    // TODO DP: The task export function takes in a search command but does not filter by the search text.           
+    var _search = !req.body.search ? "." : req.body.search;
+    var regExSearch = new RegExp(_search + ".*", "i");
+    var _status = 4;
+
+    getDeviationList(int)
+    res.sendStatus(200);
+};
+
+
+function getDeviationList(int) {
+    var status = 4;
+    var file = '.././uploads/tasks' + int + '.csv';
+    var fields = ['DevId', '_name', 'TKName', 'TKTarg', 'TKChamp', 'TKStat'];
+
+    Deviation.find({})
+        .select({ dvNo: 1, dvMatName: 1, _id:0 })
+        .exec(function(err, collection) {
+
+            Task
+                .where('TKStat').lte(4)
+                .select({DevId:1, TKName:1, TKTarg:1, TKChamp:1, TKStat:1})
+                .exec(function(err, coll) {
+
+                    var reformattedArray = coll.map(function(obj){
+
+                        var TKName = obj.TKName;
+                        var TKTarg = moment(obj.TKTarg).format("DD/MM/YY");
+                        var TKChamp = obj.TKChamp;
+                        let TKStat = null;
+                        var DevId = obj.DevId;
+
+                        switch (obj.TKStat) {
+                            case 1 :
+                                TKStat = "Not Started (New)";
+                                break;
+                            case 2 :
+                                TKStat = 'On Track';
+                                break;
+                            case 3 :
+                                TKStat = 'In Concern';
+                                break;
+                            case 4 :
+                                TKStat = 'Behind Schedule';
+                                break;
+                            case 5 :
+                                TKStat = 'Completed';
+                                break;
+                            default :
+                                TKStat = "Not Set";
+                                break;
+                        }
+
+                        var _tasks = collection.find(deviation => deviation.dvNo === obj.DevId);
+
+                        if (typeof _tasks === 'object') {
+                            var _name = _tasks.dvMatName;
+                            return {TKName, _name, TKTarg, TKChamp, TKStat, DevId};
+                        };
+
+
+                    });
+
+                    json2csv({ data: reformattedArray, fields: fields }, function(err, csv) {
+                      if (err) console.log(err);
+                      fs.writeFile(file, csv, function(err) {
+                        if (err) throw err;
+                        console.log('file saved');
+                      });
+                    });
+
+            });
+    })
+};
+
+function write_to_log (write_data) {
+    var fs = require("fs");
+    var path = '.././logs/logs.txt';
+    var date = new Date();
+    var day = ("0" + date.getDate()).slice(-2)
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+    var year = date.getFullYear();
+    var dString = day + "/" + month + "/" + year;
+
+    var write_data = "\r\n" + dString + " - " + write_data;
+
+    fs.appendFile(path, write_data, function(error) {
+         if (error) {
+           console.error("write error:  " + error.message);
+         } else {
+           console.log("Successful Write to " + path);
+         }
+    });
+}
+
+function handleError(err){
+    console.log(err);
 };

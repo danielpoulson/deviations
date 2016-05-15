@@ -219,3 +219,40 @@ exports.dumpDeviation = function(req, res) {
 
     res.sendStatus(200);
 };
+
+exports.dumpDeviations = function(req, res) {
+    //var status = 2;
+    var int = parseInt((Math.random()*1000000000),10);
+    var file = '.././uploads/deviations' + int + '.csv';
+    var fileData = {};
+    var newDate = new Date();
+
+
+
+    fileData.fsAddedAt = newDate;
+    fileData.fsAddedBy = req.body.fsAddedBy;
+    fileData.fsFileName = 'deviations' + int;
+    fileData.fsFileExt = 'csv';
+    fileData.fsDevNo = req.body.fsDevNo;
+    fileData.fsFilePath = 'deviations' + int + '.csv';
+    fileData.fsBooked = 0;
+
+    files.addExportFile(fileData);
+
+    const _search = !req.body.search ? "." : req.body.search;
+    const regExSearch = new RegExp(_search + ".*", "i");
+    const _status = req.body.showAll ? 1 : 0;
+
+
+    Deviation.find({dvClosed: {$lte:_status}})
+        .select({dvNo: 1, dvMatNo: 1, dvMatName: 1, dvCust: 1, 'dvCreated':1, dvAssign: 1, dvClosed: 1, dvClass: 1, _id: 0})
+        .where({$or: [{dvAssign : regExSearch }, {dvNo : regExSearch}, {dvMatName : regExSearch}, {dvCust : regExSearch}]})
+        .stream()
+        .pipe(Deviation.csvTransformStream())
+        .pipe(fs.createWriteStream(file));
+
+    console.log("Files have been created");
+
+    res.sendStatus(200);
+
+};

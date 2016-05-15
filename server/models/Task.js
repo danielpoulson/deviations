@@ -10,7 +10,8 @@ var taskSchema = new Schema({
     TKStat: {type: Number, required: '{PATH} is required!'},
     TKCapa: {type: Number},
     DevId: {type: String, required: '{PATH} is required!'},
-    TKComment: String
+    TKComment: String,
+    datecreated: {type:Date, default: Date.now}
 });
 
 var Task = mongoose.model('Task', taskSchema);/**

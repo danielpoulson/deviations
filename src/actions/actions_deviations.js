@@ -113,7 +113,7 @@ export function bookoutFile(data) {
 }
 
 export function exportDeviations(search) {
-  const url = '/export/changes';
+  const url = '/export/deviations';
   axios.post(url, search);
 
   return {

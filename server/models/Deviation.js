@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var mongooseToCsv = require('mongoose-to-csv'); //https://www.npmjs.com/package/mongoose-to-csv
+var moment = require('moment');
+var momentLocalizer = require('react-widgets/lib/localizers/moment');
 
 var deviationSchema = new Schema({
     Id: Number,
@@ -29,7 +31,7 @@ var deviationSchema = new Schema({
 });
 
 deviationSchema.plugin(mongooseToCsv, {
-    headers: 'DevNo Mat# Material_Name Customer Assigned Created Class',
+    headers: 'DevNo Mat# Material_Name Customer Assigned Created Class Closed',
     constraints: {
         'DevNo': 'dvNo',
         'Mat#': 'dvMatNo',
@@ -40,13 +42,11 @@ deviationSchema.plugin(mongooseToCsv, {
     },
     virtuals: {
         'Created': function (doc) {
-            var dateString = new Date(doc.dvCreated);
-            var day = dateString.getDay().toString();
-            var mth = dateString.getMonth();
-            var yr = dateString.getYear();
-            var _date = ('0'+ day ).slice(-2) + '/' + ('0'+ mth ).slice(-2)  + '/' + ('0'+ yr ).slice(-2);
+            return moment(doc.dvCreated).format("DD/MM/YY");
+        },
 
-            return _date;
+        'Closed': function(doc) {
+            return doc.dvClosed ? 'Closed' : 'Open'
         }
     }
 });

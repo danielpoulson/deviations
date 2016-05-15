@@ -50,6 +50,7 @@ router.get('/logout', function (req, res) {
  router.get('/api/deviation/tasks/:id', tasks.getDeviationTaskList);
  router.put('/api/deviations/:id', deviations.updateDeviation);
  router.post('/api/deviations', deviations.createDeviation);
+ router.post('/export/deviations', deviations.dumpDeviations);
 
  router.get('/api/userdashboard/:user', deviations.getUserDashboard);
 //*************Deviation Routes************************
@@ -83,7 +84,7 @@ router.get('/api/logger/:id', loggers.getLog);
   router.put('/api/task/:id', tasks.updateTask);
   router.post('/api/task', tasks.createTask);
   router.delete('/api/tasks/:id', tasks.deleteTask);
- //  router.post('/export/tasks', tasks.dumpTasks);
+  router.post('/export/tasks', tasks.dumpTasks);
  //
  
   router.get('/api/files/:files', files.getFiles);

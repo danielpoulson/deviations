@@ -108,9 +108,9 @@ export default class Deviations extends Component {
 
   exportDeviation = () => {
     const info = {
-      fsSource: 'exp',
+      fsDevNo: 'exp',
       fsAddedBy: this.props.user.username,
-      fsType: 'changes',
+      fsType: 'deviations',
       search: this.state.txtSearch,
       showAll: this.state.showAll
     };
