@@ -1,0 +1,65 @@
+:local(.fmclogo) {
+	content:url('../../images/RED_SOLID.jpg');
+};
+
+:local(.Chemlogo) {
+	padding-top: 10px;
+	height: 49px;
+}
+
+/*-------------- Report -------------------*/
+
+@page {
+  	margin: 1.5cm;
+}
+
+@media screen {
+	.logo-page-break {
+		display: none;
+	}
+}
+
+
+@media print {
+	.page-break {
+    	display: block;
+    	page-break-before: always;
+    }
+  	.topband {
+    	display: none;
+  	}
+  	.navbar {
+    	display: none;
+  	}
+  	footer {
+    	display: none;
+  	}
+}
+
+
+/*Over write bootsrap defaults*/
+.report-body {
+	font-size: 10pt;
+  	.col-xs-6 .col-xs-12 {
+	    padding-left: -15px;
+	    padding-right: -15px;
+	    padding-bottom: 10px;
+	}
+ 	.report-paragraph  {
+	    padding-top: 10px;
+	    padding-bottom: 15px;
+	}
+}
+
+.report-header {
+  	.col-xs-6 {
+	    font-weight: bold;
+	    font-size: 18pt;
+	    padding-right: -15px;
+	}
+	.dpRightCol {
+		text-align: center;
+	}
+}
+
+    /*Report Task Section*/

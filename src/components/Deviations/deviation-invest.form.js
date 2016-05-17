@@ -36,6 +36,7 @@ export default class ChangeForm extends Component {
     handleSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCloseDev: PropTypes.func.isRequired,
+    onPrintDev: PropTypes.func.isRequired,
     resetForm: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
     status: PropTypes.array.isRequired,
@@ -46,6 +47,7 @@ export default class ChangeForm extends Component {
       fields: { dvAssign, dvInvest, dvOutCome, dvCustSend, dvCat, dvClass },
       handleSubmit,
       onCloseDev,
+      onPrintDev,
       status,
       outcomes,
       categories,
@@ -56,6 +58,7 @@ export default class ChangeForm extends Component {
       <form onSubmit={handleSubmit} className="form-horizontal">
         <div className="pull-right">
           <button className="btn btn-warning" onClick={onCloseDev}>Close Deviation</button>
+          <button className="btn btn-info" onClick={onPrintDev}>Print Deviation</button>
         </div>
         <ComboBox
           label="Assigned To"

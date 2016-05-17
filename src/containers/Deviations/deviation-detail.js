@@ -82,6 +82,7 @@ class DeviationDetail extends Component {
     this.onFinal = this.onFinal.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onCloseDev = this.onCloseDev.bind(this);
+    this.onPrintDev = this.onPrintDev.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
     this.saveDetail = this.saveDetail.bind(this);
   }
@@ -135,6 +136,11 @@ class DeviationDetail extends Component {
     this.setState({ dirty: false });
     this.context.router.push('/deviations');
 
+  }
+
+  onPrintDev(e) {
+    e.preventDefault()
+    this.context.router.push('/printdeviation');
   }
 
   onApprove() {
@@ -297,6 +303,7 @@ class DeviationDetail extends Component {
                 {this.state.notnew && <DeviationInvestForm 
                   onSubmit={this.saveDetail}
                   onCloseDev={this.onCloseDev}
+                  onPrintDev={this.onPrintDev}
                   status={this.state.status}
                   outcomes={this.state.outcomes}
                   categories={this.state.categories}
