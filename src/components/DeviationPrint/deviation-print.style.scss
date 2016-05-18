@@ -40,11 +40,8 @@
 /*Over write bootsrap defaults*/
 .report-body {
 	font-size: 10pt;
-  	.col-xs-6 .col-xs-12 {
-	    padding-left: -15px;
-	    padding-right: -15px;
-	    padding-bottom: 10px;
-	}
+	margin-left: -15px;
+	margin-bottom: 30px;
  	.report-paragraph  {
 	    padding-top: 10px;
 	    padding-bottom: 15px;
@@ -52,14 +49,11 @@
 }
 
 .report-header {
-  	.col-xs-6 {
-	    font-weight: bold;
-	    font-size: 18pt;
-	    padding-right: -15px;
-	}
-	.dpRightCol {
-		text-align: center;
-	}
+    font-weight: bold;
+    font-size: 18pt;
+    margin-left: -15px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
     /*Report Task Section*/

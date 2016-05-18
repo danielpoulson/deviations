@@ -4,48 +4,25 @@ import { fmclogo, Chemlogo } from './deviation-print.style';
 export default function DeviationPrint (props) {
 	return (
 		<div>
+			<img src="./src/images/RED_SOLID.jpg" className={Chemlogo} />
+			<hr/>
+			<div className="report-header">
+				<div className="col-md-6">Investigation Report</div>
+				<div className="col-md-6">{props.dev.dvNo}</div>
+			</div>
+			<div className="report-body">
+	            <div className="col-md-6"><strong>Material No :</strong> {props.dev.dvMatNo}</div>
+	            <div className="col-md-6"><strong>Assigned To :</strong> {props.dev.dvAssign}</div>
+	            <div className="col-md-12"><strong>Material Name :</strong> {props.dev.dvMatName}</div>
+	         	<div className="col-md-6"><strong>Batch # :</strong> {props.dev.dvBatchNo}</div>
+		        <div className="col-md-6"><strong>DOM:</strong> {props.dev.dvDOM}</div>
+		      	<div className="col-md-6"><strong>Customer :</strong> {props.dev.dvCust}</div>
+		        <div className="col-md-6"><strong>Supplier :</strong> {props.dev.dvSupplier}</div>
+        		<div className="col-xs-6"><strong>Outcome :</strong> {props.dev.dvOutCome}</div>
+	            <div className="col-xs-6"><strong>Category :</strong> {props.dev.dvCat}</div>
+		    </div>
+
 			<div className="container container-fluid report-body">
-		        <div className="row"><img src="./src/images/RED_SOLID.jpg" className={Chemlogo} /></div>
-			    <hr/>
-			    <div className="row report-header">
-			        <div className="col-xs-12">
-			            <div className="col-xs-6">
-			                <div>Investigation Report</div>
-			            </div>
-			            <div className="col-xs-6 dpRightCol">
-			                <div>{props.dev.dvNo}</div>
-			            </div>
-			        </div>
-			    </div>
-			    <div className="row">
-			        <div className="col-xs-12">
-			            <div className="col-xs-6"><strong>Material No :</strong> {props.dev.dvMatNo}</div>
-			            <div className="col-xs-6"><strong>Assigned To :</strong> {props.dev.dvAssign}</div>
-			        </div>
-			    </div>
-			    <div className="row">
-			        <div className="col-xs-12">
-			            <strong>Material Name :</strong> {props.dev.dvMatName}
-			        </div>
-			    </div>
-			    <div className="row">
-			        <div className="col-xs-12">
-			            <div className="col-xs-6"><strong>Batch # :</strong> {props.dev.dvBatchNo}</div>
-			            <div className="col-xs-6"><strong>DOM:</strong> {props.dev.dvDOM}</div>
-			        </div>
-			    </div>
-			    <div className="row">
-			        <div className="col-xs-12">
-			            <div className="col-xs-6"><strong>Customer :</strong> {props.dev.dvCust}</div>
-			            <div className="col-xs-6"><strong>Supplier :</strong> {props.dev.dvSupplier}</div>
-			        </div>
-			    </div>
-			    <div className="row">
-			        <div className="col-xs-12">
-			            <div className="col-xs-6"><strong>Outcome :</strong> {props.dev.dvOutCome}</div>
-			            <div className="col-xs-6"><strong>Category :</strong> {props.dev.dvCat}</div>
-			        </div>
-			    </div>
 			    <hr/>
 			    <div className="row">
 			        <div className="dpheading"><b>Describe the Deviation</b>

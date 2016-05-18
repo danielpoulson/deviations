@@ -57,7 +57,7 @@ export default class ChangeForm extends Component {
     return (
       <form onSubmit={handleSubmit} className="form-horizontal">
         <div className="pull-right">
-          <button className="btn btn-warning" onClick={onCloseDev}>Close Deviation</button>
+          <button className="btn btn-warning dp-margin-10-LR" onClick={onCloseDev}>Close Deviation</button>
           <button className="btn btn-info" onClick={onPrintDev}>Print Deviation</button>
         </div>
         <ComboBox
