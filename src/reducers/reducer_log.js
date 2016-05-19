@@ -1,6 +1,10 @@
 import { ADD_LOG, GET_LOG, RESET_LOG } from 'actions/actions_logger';
 import { GET_DEV, NEW_DEVIATION } from 'actions/actions_deviations';
 
+function counter(num) {
+	return num++;
+}
+
 export default function (state = [], action) {
 	 switch (action.type) {
 
@@ -18,10 +22,11 @@ export default function (state = [], action) {
 
 	 	case GET_DEV: {
 	 		const data = action.payload.data.dvLog;
+	 		let _count = 0;
 	 		
 	 		const _data = data.map(obj => {
 				const newObj = {
-					_id: obj._id,
+					_id: obj._id ? obj._id : _count++,
 					LogType: 'DEV',
 					LogMessage: obj.dvLogType,
 					LogBy: obj.dvLogBy,
