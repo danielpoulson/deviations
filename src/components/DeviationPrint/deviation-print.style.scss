@@ -1,12 +1,26 @@
-:local(.fmclogo) {
-	content:url('../../images/RED_SOLID.jpg');
-};
-
 :local(.Chemlogo) {
 	padding-top: 10px;
 	height: 49px;
 }
 
+:local(.devdescribe) {
+  margin-top: 20px;
+  border-bottom: solid 1px;
+}
+
+:local(.devColLeft) {
+  width: 650px;
+  padding-top: 5px;
+}
+
+:local(.devColRight) {
+  width: 500px;
+  padding-top: 5px;
+}
+
+:local(.taskTable) {
+  margin-left: 10px;
+}
 /*-------------- Report -------------------*/
 
 @page {
@@ -34,25 +48,22 @@
   	footer {
     	display: none;
   	}
+
+    button {
+      display: none;
+    }
 }
 
 
 /*Over write bootsrap defaults*/
-.report-body {
+:local(.report-body) {
 	font-size: 10pt;
-	margin-left: -15px;
-	margin-bottom: 30px;
- 	.report-paragraph  {
-	    padding-top: 10px;
-	    padding-bottom: 15px;
-	}
+  border: 1px solid;
 }
 
-.report-header {
+:local(.reportHeader) {
     font-weight: bold;
-    font-size: 18pt;
-    margin-left: -15px;
-    padding-bottom: 10px;
+    font-size: 14pt;
     margin-bottom: 10px;
 }
 

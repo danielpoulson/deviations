@@ -14,7 +14,7 @@ const TaskTable = (props) => {
         <thead className = "print-table-head">
           <tr>
             <th> Project Id and Task Name </th>
-            <th> Target Date </th>
+            <th> Target</th>
             <th> Champion </th>
             <th> Status </th>
           </tr>

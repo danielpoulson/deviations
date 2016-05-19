@@ -6,12 +6,13 @@ class DeviationPrintContainer extends Component {
 	render() {
 		return (
 			<div>
-				<DeviationPrint dev = {this.props.deviation} />
+				<DeviationPrint dev={this.props.deviation} task={this.props.task} />
 			</div>
 		);
 	}
 }
 
 export default connect(state => ({
-  deviation: state.deviation
+  deviation: state.deviation,
+  task: state.tasks.ctlist,
 }))(DeviationPrintContainer);
