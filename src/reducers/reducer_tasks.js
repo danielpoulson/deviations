@@ -1,4 +1,6 @@
 import { ADD_TASK, EDIT_TASK, DELETE_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS } from 'actions/actions_tasks';
+import _ from 'lodash';
+
 const initialState = {
   alldata: [],
   paged: [],
@@ -119,7 +121,7 @@ export default function (state, action) {
       per_page = action.data.numPage || 15;
       page = action.data.page_num || 1;
       offset = (page - 1) * per_page;
-      searchText = action.data.search;
+      searchText = action.data.search || '';
       const searcheddata = searchData(state.alldata, searchText, column);
       paged = searcheddata.slice(offset, offset + per_page);
 

@@ -108,7 +108,7 @@ export default function (state, action) {
       per_page = action.data.numPage || 15;
       page = action.data.page_num || 1;
       offset = (page - 1) * per_page;
-      searchText = action.data.search;
+      searchText = action.data.search || '';
       const searcheddata = searchData(state.alldata, searchText, column);
       paged = searcheddata.slice(offset, offset + per_page);
 

@@ -21,7 +21,7 @@ function searchIndex(data, index) {
 }
 
 export default function (state = [], action) {
-  
+
   let _data = [];
 
   switch (action.type) {

@@ -61,15 +61,16 @@ export default function (state, action) {
         loading: action.data.loading
       };
 
-    case SET_VIEW:
+    case SET_VIEW: {
       const _showAll = !state.ShowAll;
-      
+
       return {
         ...state,
         ShowAll: _showAll,
       };
+    }
 
-    case SET_USER_DASHBOARD:
+    case SET_USER_DASHBOARD: {
       const countDeviationsUser = action.payload.data ? action.payload.data.deviationCount : 0;
       const countTasksUser = action.payload.data ? action.payload.data.taskCount : 0;
       const allOpenTasks = action.payload.data ? action.payload.data.allTaskCount : 0;
@@ -80,7 +81,8 @@ export default function (state, action) {
         countTasksUser,
         allOpenTasks,
         allOpenDeviations
-      }
+      };
+    }
 
     default:
       return state;

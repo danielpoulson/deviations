@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
 
   form: formReducer.plugin({
     devform: (state, action) => { // <------ 'account' is name of form given to reduxForm()
-      switch(action.type) {
+      switch (action.type) {
         case NEW_DEVIATION:
           return undefined;       // <--- blow away form data
         default:
