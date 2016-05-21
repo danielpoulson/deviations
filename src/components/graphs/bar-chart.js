@@ -1,7 +1,7 @@
 import React from 'react';
 import d3 from 'd3';
 import _ from 'lodash';
-import { changeData } from './data';
+import { changeData } from '../../../bin/data';
 
 export default class BarChart extends React.Component{
 
@@ -23,7 +23,7 @@ export default class BarChart extends React.Component{
 			.range([height, 0]);
 
 		var color = d3.scale.ordinal()
-			.range(["rgba(230, 115, 115, 0.83)", "rgba(244, 67, 54, 0.85)"]);
+			.range(["rgba(94, 194, 166, 0.95)", "rgba(50, 82, 110, 0.95)"]);
 
 		var xAxis = d3.svg.axis()
 			.scale(x0)
@@ -81,11 +81,11 @@ export default class BarChart extends React.Component{
 			.attr("class", "y axis")
 			.call(yAxis)
 			.append("text")
-			.attr("transform", "rotate(-90)")
-			.attr("y", 2)
-			.attr("dy", ".71em")
-			.style("text-anchor", "end")
-			.text("Change Controls");
+			.attr("transform", "rotate(-90)");
+			// .attr("y", 2)
+			// .attr("dy", ".71em");
+			// .style("text-anchor", "end")
+			// .text("Change Controls");
 
 		// Adding in x grid lines
 		// svg.append("g")
@@ -130,7 +130,7 @@ export default class BarChart extends React.Component{
 			.data(_category.slice().reverse())
 			.enter().append("g")
 			.attr("class", "legend")
-			.attr("transform", "translate(0,-10)");
+			.attr("transform", "translate(0,-20)");
 
 		legend.append("rect")
 			.attr("x", width - 18)
@@ -141,7 +141,7 @@ export default class BarChart extends React.Component{
 
 		legend.append("text")
 			.attr("x", width - 24)
-			.attr("y", function(d, i){ return i *  20 + 9;})
+			.attr("y", function(d, i){ return i *  20 + 8;})
 			.attr("dy", ".35em")
 			.style("text-anchor", "end")
 			.text(function(d) { return d; });

@@ -114,7 +114,7 @@ export default class TaskForm extends React.Component {
               <div className="col-sm-offset-2 col-sm-10">
                   <div className="checkbox">
                       <label>
-                          <input type="checkbox" {...TKCapa} />Preventative Action
+                          <input type="checkbox" {...TKCapa} checked={TKCapa.value === 1} />Preventative Action
                       </label>
                   </div>
               </div>

@@ -1,3 +1,5 @@
+import { dayDiff } from './helpers';
+
 export function getExt(ext) {
   let styled = '';
 
@@ -33,6 +35,18 @@ export function getExt(ext) {
   }
 
   return styled;
+}
+
+export function getTraffic(date) {
+  const _diff = dayDiff(date, 0);
+
+  if (_diff > 0 ) {
+    return 'fa fa-exclamation-triangle fa-lg';
+  } else 
+  if (_diff <= 0 && _diff > -7) {
+    return 'fa fa-warning fa-lg';
+  }
+  return 'fa fa-check-square fa-lg';
 }
 
 export function getStatus(status) {

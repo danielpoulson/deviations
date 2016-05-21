@@ -9,6 +9,7 @@ export const DELETE_TASK = 'DELETE_TASK';
 export const LOAD_PAGE_TASKS = 'LOAD_PAGE_TASKS';
 export const GET_PROJECT_TASKS = 'GET_PROJECT_TASKS';
 export const GET_ALL_TASKS = 'GET_ALL_TASKS';
+export const SET_CAPA = 'SET_CAPA';
 
 
 export function getTasks(data) {
@@ -112,4 +113,10 @@ export function exportTasks(search) {
   return {
     type: 'EXPORT_TASKS',
   };
+}
+
+export function setCapa() {
+  return {
+    type: SET_CAPA
+  }
 }

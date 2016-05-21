@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import d3 from 'd3';
 import tip from 'd3-tip';
 import _ from 'lodash';
-import { myData } from './data';
+import { myData } from '../../../bin/data';
 import './styles.scss'
 
 d3.tip = tip;
@@ -98,6 +98,22 @@ export default class LineGraph extends Component{
     svg.append("g")         // Add the Y Axis
       .attr("class", "axis")
       .call(yAxis);
+
+    // This function is used to make grid lines
+    function make_y_axis() {
+      return d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(5)
+    }
+
+        // Adding in y grid lines
+    svg.append("g")
+      .attr("class", "grid")
+      .call(make_y_axis()
+        .tickSize(-w, 0, 0)
+        .tickFormat("")
+      );
 
   }
 

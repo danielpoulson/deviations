@@ -1,48 +1,48 @@
 export const myData = [
   {
     date: "Nov 15",
-    count: 1
+    count: 25
   },
   {
     date: "Dec 15",
-    count: 1
+    count: 26
   },
   {
     date: "Jan 16",
-    count: 1
+    count: 24
   },
   {
     date: "Feb 16",
-    count: 7
+    count: 21
   },
   {
     date: "Mar 16",
-    count: 20
+    count: 24
   },
   {
     date: "Apr 16",
-    count: 46
+    count: 25
   },
   {
     date: "May 16",
-    count: 10
+    count: 27
   }
 ];
 
 export const changeData = [
   {
     "Years": 2014,
-    "closed": 114,
-    "open": 116
+    "closed": 325,
+    "open": 325
   },
   {
     "Years": 2015,
-    "closed": 56,
-    "open": 66
+    "closed": 226,
+    "open": 209
   },
   {
     "Years": 2016,
-    "closed": 8,
-    "open": 32
+    "closed": 73,
+    "open": 49
   }
 ]

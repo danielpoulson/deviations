@@ -11,3 +11,14 @@ export function calculateDay(date, closed) {
     
     return _dayDiff;
 }
+
+export function dayDiff(date) {
+    let _dayDiff = 0;
+    if (date) {
+        const currentTime = Math.ceil(new Date() / (1000 * 3600 * 24));
+        const logTime = Math.ceil(new Date(date) / (1000 * 3600 * 24));
+        _dayDiff = currentTime - logTime;
+    }
+    
+    return _dayDiff;
+}

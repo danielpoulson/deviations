@@ -91,7 +91,7 @@ export default class Home extends Component {
             <BarChart />
           </div>
           <div className="col-sm-6">
-            <h3>Overdue Tasks</h3>
+            <h3>Deviations Open > 30 days</h3>
             <LineChart />
           </div>
         </div>

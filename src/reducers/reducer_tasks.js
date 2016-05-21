@@ -1,16 +1,18 @@
-import { ADD_TASK, EDIT_TASK, DELETE_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS } from 'actions/actions_tasks';
+import { ADD_TASK, EDIT_TASK, DELETE_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS , SET_CAPA} from 'actions/actions_tasks';
 import _ from 'lodash';
 
 const initialState = {
   alldata: [],
   paged: [],
+  showCapaOnly: false,
 };
 
 function searchIndex(data, index) {
   return data.filter((item) => item._id !== index);
 }
 
-function searchData(data, searchText, sortColumn) {
+function searchData(data, searchText, sortColumn, showCapaOnly) {
+
   function search(item) {
     const reg1 = new RegExp(`${searchText}.*`, 'i');
 
@@ -20,13 +22,25 @@ function searchData(data, searchText, sortColumn) {
     return false;
   }
 
+  function filterCapa(item) {
+
+    if (showCapaOnly) {
+      if (item.TKCapa >= 1 ) {
+        return true;
+      }
+      return false; 
+    }
+
+    return true;
+  }
+
   if (searchText === null) {
     return _.sortBy(data, sortColumn);
   }
 
   let _sortColumn = '';
   _sortColumn = sortColumn || 'TKTarg';
-  const newList = _.chain(data).filter(search).sortBy(_sortColumn).value();
+  const newList = _.chain(data).filter(search).filter(filterCapa).sortBy(_sortColumn).value();
   return newList;
 }
 
@@ -118,22 +132,34 @@ export default function (state, action) {
 
     case LOAD_PAGE_TASKS: {
       const column = action.data.column || state.sorted;
+      const showCapaOnly = action.data.showCapaOnly;
       per_page = action.data.numPage || 15;
       page = action.data.page_num || 1;
       offset = (page - 1) * per_page;
       searchText = action.data.search || '';
-      const searcheddata = searchData(state.alldata, searchText, column);
+      const searcheddata = searchData(state.alldata, searchText, column, showCapaOnly);
       paged = searcheddata.slice(offset, offset + per_page);
+      console.log(`Reducer = ${showCapaOnly}`);
 
       return {
         ...state,
         sorted: column,
         searchText,
+        showCapaOnly,
         page,
         per_page,
         total: searcheddata.length,
         total_pages: Math.ceil(alldata.length / per_page),
         paged
+      };
+    }
+
+    case SET_CAPA: {
+      const showCapaOnly = !state.showCapaOnly;
+
+      return {
+        ...state,
+        showCapaOnly,
       };
     }
     default:

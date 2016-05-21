@@ -53,6 +53,7 @@ router.get('/logout', function (req, res) {
  router.post('/export/deviations', deviations.dumpDeviations);
 
  router.get('/api/userdashboard/:user', deviations.getUserDashboard);
+ router.get('/api/olddashboard', deviations.getDashboard);
 //*************Deviation Routes************************
 
 //*************Logger Routes************************

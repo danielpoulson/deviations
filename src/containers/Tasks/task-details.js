@@ -21,6 +21,7 @@ class TaskDetail extends React.Component {
     hideDelete: null,
     newTask: false,
     taskId: '',
+    taskTitle: '',
     status: [
       { id: 1, name: 'Task - Not Started (New)' },
       { id: 2, name: 'Task - On Track' },
@@ -35,6 +36,7 @@ class TaskDetail extends React.Component {
     const _hideDelete = this.props.main.user.role !== 'admin' || this.props.newTask === true ? 'hidden' : 'btn btn-danger';
     this.setState({ taskId: _taskId });
     this.setState({ hideDelete: _hideDelete });
+    this.setState({ taskTitle: this.props.main.MainId });
   }
 
   cancelTask = (event) => {
@@ -93,13 +95,13 @@ class TaskDetail extends React.Component {
       paddingBottom: 50,
     };
 
-    const taskTitle = this.state.taskTitle ? this.state.taskTitle : 'New Task';
+    const taskTitle = this.state.taskTitle ? `Deviation Task - ${this.state.taskTitle}` : 'New Task';
 
     return (
         <div>
           <div className="">
             <div className="section-header">
-              <p className="section-header-text-sub">{taskTitle}</p>
+              <div className="section-header-text-minor"><h3>{taskTitle}</h3></div>
             </div>
           </div>
 

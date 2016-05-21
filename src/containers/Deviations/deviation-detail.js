@@ -266,7 +266,7 @@ class DeviationDetail extends Component {
     <div>
           <div className="">
             <div className="section-header">
-              <p className="section-header-text-sub">{_title}</p>
+              <div className="section-header-text-minor"><h3>{_title} </h3></div>
             </div>
           </div>
           <ul className="nav nav-tabs dpHand">

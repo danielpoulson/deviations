@@ -160,13 +160,13 @@ exports.getUserDashboard = function(req, res){
 exports.getDashboard = function(req, res) {
     //TODO: This block is a bit of a mess not really sure what is the best approach for making all these calls. D.Poulson 05/04/2015
     var dashArray = {
-        year1: "2013",
-        y1open : 253,
-        y1Closed : 250,
-        year2: "2014",
+        year1: "2014",
+        y1open : 325,
+        y1Closed : 325,
+        year2: "2015",
         y2open : 325,
         y2Closed : 315,
-        year3: "2015",
+        year3: "2016",
         y3open : 69,
         y3Closed : 35,
         devClosed1 : 0,
@@ -201,8 +201,15 @@ exports.getDashboard = function(req, res) {
         return Deviation.count({dvNo:{$in : [/^DV15.*$/]}}).exec();
         //TODO: Remove static variables
     }).then(function(totalDev){
-        dashArray.y3open = totalDev;
+        dashArray.y2open = totalDev;
         return Deviation.count({dvClosed:1, dvNo:{$in : [/^DV15.*$/]}}).exec();
+    }).then(function(closedDev){
+        dashArray.y2Closed = closedDev;
+        return Deviation.count({dvNo:{$in : [/^DV16.*$/]}}).exec();
+        //TODO: Remove static variables
+    }).then(function(totalDev){
+        dashArray.y3open = totalDev;
+        return Deviation.count({dvClosed:1, dvNo:{$in : [/^DV16.*$/]}}).exec();
     }).then(function(closedDev){
         dashArray.y3Closed = closedDev;
         res.status(200).send(dashArray);

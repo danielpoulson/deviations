@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
-import { getStatus } from 'utils/status';
+import { getStatus, getTraffic } from 'utils/status';
 
 const TaskRow = (props) => {
   const task = props.task;
@@ -10,12 +10,13 @@ const TaskRow = (props) => {
   const minColChamp = {
     minWidth: 140
   }
+  const capa = task.TKCapa === 1 ? 'fa fa-info-circle' : '';
   return (
     <tr onClick={props.getTask}>
-      <td>{task.DevId} - {task.TKName}</td>
+      <td>{task.DevId} - {task.TKName} <i className={capa}></i></td>
       <td style={minColTarget}>{moment(task.TKTarg).format('DD/MM/YYYY')}</td>
       <td style={minColChamp}>{task.TKChamp}</td>
-      <td><i className={getStatus(task.TKStat)}></i></td>
+      <td><i className={getTraffic(task.TKTarg)}></i></td>
     </tr>
   );
 };

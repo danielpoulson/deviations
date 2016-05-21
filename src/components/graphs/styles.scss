@@ -28,7 +28,7 @@ path {
 }
 
 .cc-graph {
-  background-color: #f4f4f4;
+  background-color: white;
   margin: 10px 5px;
   padding: 20px 0px;
   border: solid #b2b2b2 1px;
@@ -39,8 +39,11 @@ path {
 	margin-bottom: 5px;
 }
 
+// .rectclass {
+//  stroke: $main-red;
+// }
 .rectclass {
-	stroke: $main-red;
+
 }
 
 .dot {

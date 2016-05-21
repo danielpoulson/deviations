@@ -145,7 +145,7 @@ export default class Deviations extends Component {
         <div className="">
           <div className="section-header">
             <div className="col-sm-6 pull-left">
-              <p className="section-header-text-main">Deviation Control - {_changeTitle} </p>
+              <h1 className="section-header-text-main">Deviation Control - {_changeTitle} </h1>
             </div>
             <SearchBox
               searchText={this.state.txtSearch}
