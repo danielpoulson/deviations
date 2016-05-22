@@ -186,22 +186,24 @@ class DeviationDetail extends Component {
     _data.dvSupplier= this.props.devform.dvSupplier.value;
     _data.dvDOM= this.props.devform.dvDOM.value;
     _data.dvDescribe= this.props.devform.dvDescribe.value;
-    _data.dvInvest= this.props.devform.dvInvest.value;
-    _data.dvOutCome= this.props.devform.dvOutCome.value;
-    _data.dvCustSend= this.props.devform.dvCustSend.value;
-    _data.dvCat = this.props.devform.dvCat.value;
-
+  
     if(_data.dvNo !== 'new') {
       _data._id = this.props.deviation._id;
       _data.dvAssign= this.props.devform.dvAssign.value;
       _data.dvClass = this.props.devform.dvClass.value;
       _data.dvCreated = this.props.devform.dvCreated.value;
+      _data.dvInvest= this.props.devform.dvInvest.value;
+      _data.dvOutCome= this.props.devform.dvOutCome.value;
+      _data.dvCustSend= this.props.devform.dvCustSend.value;
+      _data.dvCat = this.props.devform.dvCat.value;
+      _data.dvNotChanged = this.props.devform.dvAssign.value === this.props.devform.dvAssign.initial;
 
       this.props.editDeviation(_data);
 
     } else {
       _data.dvAssign = 'Quality Assurance';
       _data.dvClass = 'Not Assigned';
+      _data.dvNotChanged = false;
       this.props.addDeviation(_data);
       
     }
@@ -253,7 +255,7 @@ class DeviationDetail extends Component {
     <div>
           <div className="">
             <div className="section-header">
-              <div className="section-header-text-minor"><h3>{_title} </h3></div>
+              <div className="section-header-text-minor"><p>{_title} </p></div>
             </div>
           </div>
           <ul className="nav nav-tabs dpHand">

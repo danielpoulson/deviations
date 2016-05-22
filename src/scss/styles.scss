@@ -1,5 +1,6 @@
 $tab-color: #ED1B2C;
 $wild: #FF6384;
+$grey: #3F3F3F;
 
 /* 1. Navigation Bar */
 /* 2. Header */
@@ -244,7 +245,7 @@ html {
 
 .dpFooter {
     margin-top: 15px;
-    height: 50px;
+    height: 30px;
     background: #F8F8F8;
     text-align: center;
     padding-top: 15px;
@@ -253,21 +254,26 @@ html {
 /*---------------Footer ------------------*/
 
 .section-header {
-    height: 65px;
+    height: 40px;
     margin-bottom: 20px;
-    border-bottom: 5px solid #000;
+    border-bottom: 5px solid $grey;
     .col-sm-6 {
         padding-left: 0px;
     }
 }
 
 .section-header-text-main {
-    font-size: 2.4em;
+    font-size: 1.8em;
+    font-weight: bold;
     padding-top: -10px;
+    color: $grey;
 }
 
 .section-header-text-minor {
-    padding-top: 10px;
+    padding-top: 5px;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: $grey;
 }
 
 .section-header-text-sub {

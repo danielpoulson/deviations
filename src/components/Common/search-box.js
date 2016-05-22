@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const SearchBox = ({ searchText, onChange }) => {
-  const divStyle = { paddingRight: 15 };
+  const divStyle = { paddingRight: 15, marginTop: -10 };
   const spanStyle = {
     background: '#71ABFF',
     color: '#FFFFFF',

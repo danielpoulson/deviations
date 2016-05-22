@@ -101,7 +101,7 @@ class TaskDetail extends React.Component {
         <div>
           <div className="">
             <div className="section-header">
-              <div className="section-header-text-minor"><h3>{taskTitle}</h3></div>
+              <div className="section-header-text-minor"><p>{taskTitle}</p></div>
             </div>
           </div>
 

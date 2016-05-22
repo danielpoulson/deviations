@@ -4,6 +4,8 @@ var files = require('../controllers/files');
 var logger = require('../controllers/loggers');
 var tasks = require('../controllers/tasks');
 var users = require('../controllers/users');
+var mailer = require('../config/mailer.js');
+var dateFunc = require('../config/date-function');
 var fs = require('fs');
 
 exports.getDeviations = function(req, res) {
@@ -33,15 +35,42 @@ exports.updateDeviation = function(req, res) {
     // These two functions below do the following functions
     // 1. push the logged event to the logger function
     logger._createlog(_dev.dvLog);
+
     // 2. The delete function on the objects removes the dvLog key so the old records are not overwritten.
     delete _dev.dvLog;
+
+    if(!_dev.dvNotChanged){
+        createEmail(_dev);
+    }
+
+    delete _dev.dvNotChanged;
 
     Deviation.update({dvNo:req.params.id}, {$set: _dev}, function (err) {
         if (err) {
             console.log({reason:err.toString()});
         }
-        res.send(200);
+        res.sendStatus(200);
     });
+
+
+};
+
+function createEmail(body){
+    var _DateCreated = dateFunc.dpFormatDate(body.dvCreated);
+    var emailType = "Deviation";
+    var emailActivity = `<b>Deviation - </b><em>${body.dvNo}</em> </br>
+        <b> Deviation Description:</b><i>${body.dvMatName} <b> Date Created</b> ${_DateCreated}</i>`;
+// TODO: Not the worlds nicest Promise using a timeout need to rework and improve.
+    var p = new Promise(function(resolve, reject) {
+        var toEmail = users.getUserEmail(body.dvAssign);
+       setTimeout(() => resolve(toEmail), 2000);
+    }).then(function(res){
+        var _toEmail = res[0].email;
+        mailer.sendMail(_toEmail, emailType, emailActivity);
+    }).catch(function (err) {
+      console.log(err);
+    });
+
 };
 
 

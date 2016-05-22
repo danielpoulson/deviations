@@ -5,7 +5,7 @@ const FileExport = () => (
   <div>
     <div className="section-header">
         <div className="col-sm-6 pull-left">
-          <h1 className="section-header-text-main">File Export Page </h1>
+          <p className="section-header-text-main">File Export Page </p>
         </div>
     </div>
     <FileList

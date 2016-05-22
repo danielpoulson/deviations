@@ -110,7 +110,7 @@ class Tasks extends Component {
         <div className="">
           <div className="section-header">
             <div className="col-sm-6 pull-left">
-              <h1 className="section-header-text-main">Active Task List </h1>
+              <p className="section-header-text-main">Active Task List </p>
             </div>
             <SearchBox
               searchText={this.state.txtSearch}

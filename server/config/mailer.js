@@ -23,7 +23,7 @@ exports.sendMail = function(toEmail, emailType, emailActivity) {
     + emailType + '</h3></br>' + emailActivity + '</br>' + html + '</body></html>';
 
     nodemailerMailgun.sendMail({
-        from: 'changecontrol@fmc.com',
+        from: 'deviations@fmc.com',
         to: toEmail, // An array if you have multiple recipients.
         subject: emailSubject,
         html: html,
