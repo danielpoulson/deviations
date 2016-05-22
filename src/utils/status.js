@@ -37,16 +37,23 @@ export function getExt(ext) {
   return styled;
 }
 
-export function getTraffic(date) {
-  const _diff = dayDiff(date, 0);
+export function getTraffic(date, taskstatus) {
+  let _status = 'fa fa-check-square fa-lg';
+  
+  if (taskstatus === 5) {
+    _status = 'fa fa-flag-checkered fa-lg' ;
+  } else {
+    const _diff = dayDiff(date, 0);
 
-  if (_diff > 0 ) {
-    return 'fa fa-exclamation-triangle fa-lg';
-  } else 
-  if (_diff <= 0 && _diff > -7) {
-    return 'fa fa-warning fa-lg';
+    if (_diff > 0 ) {
+      _status = 'fa fa-exclamation-triangle fa-lg';
+    } else 
+    if (_diff <= 0 && _diff > -7) {
+      _status = 'fa fa-warning fa-lg';
+    }
   }
-  return 'fa fa-check-square fa-lg';
+
+  return _status;
 }
 
 export function getStatus(status) {

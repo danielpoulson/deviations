@@ -16,7 +16,7 @@ const TaskRow = (props) => {
       <td>{task.DevId} - {task.TKName} <i className={capa}></i></td>
       <td style={minColTarget}>{moment(task.TKTarg).format('DD/MM/YYYY')}</td>
       <td style={minColChamp}>{task.TKChamp}</td>
-      <td><i className={getTraffic(task.TKTarg)}></i></td>
+      <td><i className={getTraffic(task.TKTarg, task.TKStat)}></i></td>
     </tr>
   );
 };

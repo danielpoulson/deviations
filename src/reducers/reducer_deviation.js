@@ -4,11 +4,10 @@ export default function (state = null, action) {
 
   switch (action.type) {
     case GET_DEV:
-      if (!action.payload.data) {
-        return null;
-      }
+      const _dev = action.payload.data || {};
+      state = {};
 
-      return action.payload.data;
+      return _dev;
 
     case CREATE_LOG: {
       const _addLog = state.CC_LOG;

@@ -61,22 +61,8 @@ class DeviationDetail extends Component {
         'other',
         ''
       ],
-      classifies: [
-        'Contamination',
-        'Customer Complaint',
-        'Documentation',
-        'Formulation Difficulty',
-        'Leakers',
-        'Not Assigned',
-        'Out of Specification',
-        'Operator Error',
-        'Procedure',
-        'Transport Issue',
-        'Stock Discrepancy',
-        'Other',
-        ''
-      ]
-    };
+      classifies: [ 'Contamination', 'Customer Complaint', 'Documentation', 'Formulation Difficulty', 'Leakers', 'Not Assigned',
+      'Out of Specification', 'Operator Error', 'Procedure', 'Transport Issue', 'Stock Discrepancy', 'Other', '' ]};
 
     this.onApprove = this.onApprove.bind(this);
     this.onFinal = this.onFinal.bind(this);
@@ -200,14 +186,14 @@ class DeviationDetail extends Component {
     _data.dvSupplier= this.props.devform.dvSupplier.value;
     _data.dvDOM= this.props.devform.dvDOM.value;
     _data.dvDescribe= this.props.devform.dvDescribe.value;
+    _data.dvInvest= this.props.devform.dvInvest.value;
+    _data.dvOutCome= this.props.devform.dvOutCome.value;
+    _data.dvCustSend= this.props.devform.dvCustSend.value;
+    _data.dvCat = this.props.devform.dvCat.value;
 
     if(_data.dvNo !== 'new') {
       _data._id = this.props.deviation._id;
       _data.dvAssign= this.props.devform.dvAssign.value;
-      _data.dvInvest= this.props.devform.dvInvest.value;
-      _data.dvOutCome= this.props.devform.dvOutCome.value;
-      _data.dvCustSend= this.props.devform.dvCustSend.value;
-      _data.dvCat = this.props.devform.dvCat.value;
       _data.dvClass = this.props.devform.dvClass.value;
       _data.dvCreated = this.props.devform.dvCreated.value;
 
@@ -215,6 +201,7 @@ class DeviationDetail extends Component {
 
     } else {
       _data.dvAssign = 'Quality Assurance';
+      _data.dvClass = 'Not Assigned';
       this.props.addDeviation(_data);
       
     }

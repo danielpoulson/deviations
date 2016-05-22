@@ -13,7 +13,7 @@ const TaskTable = (props) => {
       <table className = "table table-hover project-table dp_point">
         <thead className = "print-table-head">
           <tr>
-            <th> Project Id and Task Name </th>
+            <th> Deviation Id and Task Name </th>
             <th> Target</th>
             <th> Champion </th>
             <th> Status </th>
