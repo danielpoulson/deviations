@@ -46,21 +46,8 @@ class DeviationDetail extends Component {
         { id: 4, name: 'Closed' },
         { id: 5, name: 'Cancelled' }
       ],
-      outcomes: [
-        'Accept',
-        'Rework',
-        'Repair',
-        'Reject',
-        ''
-      ],
-      categories: [
-        'Bulk',
-        'Finished Goods',
-        'Packaging / Labels',
-        'Raw Materials',
-        'other',
-        ''
-      ],
+      outcomes: [ 'Accept', 'Rework', 'Repair', 'Reject', ''],
+      categories: [ 'Bulk', 'Finished Goods', 'Packaging / Labels', 'Raw Materials', 'other', ''],
       classifies: [ 'Contamination', 'Customer Complaint', 'Documentation', 'Formulation Difficulty', 'Leakers', 'Not Assigned',
       'Out of Specification', 'Operator Error', 'Procedure', 'Transport Issue', 'Stock Discrepancy', 'Other', '' ]};
 
@@ -203,7 +190,6 @@ class DeviationDetail extends Component {
     } else {
       _data.dvAssign = 'Quality Assurance';
       _data.dvClass = 'Not Assigned';
-      _data.dvNotChanged = false;
       this.props.addDeviation(_data);
       
     }

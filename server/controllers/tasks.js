@@ -3,6 +3,9 @@ var Deviation = require('mongoose').model('Deviation');
 var fs = require('fs');
 var files = require('../controllers/files');
 var json2csv = require('json2csv');
+var users = require('../controllers/users');
+var mailer = require('../config/mailer.js');
+var dateFunc = require('../config/date-function');
 var moment = require('moment');
 var momentLocalizer = require('react-widgets/lib/localizers/moment');
 
@@ -27,9 +30,9 @@ exports.updateTask = function(req, res) {
     Task.findByIdAndUpdate({_id:req.params.id}, {$set: req.body}, function (err) {
         if (err) return handleError(err);
         res.send(200);
-        // if(newOwner){
-        //   createEmail(req.body);
-        // }
+        if(newOwner){
+          createEmail(req.body);
+        }
     });
 };
 
@@ -51,7 +54,26 @@ exports.createTask = function(req, res, next) {
             return res.send({reason:err.toString()});
         }
         res.status(200).send(task);
+        createEmail(req.body);
     });
+};
+
+function createEmail(body){
+    var _targetDate = dateFunc.dpFormatDate(body.TKTarg);
+    var emailType = "Deviation - Task";
+    var emailActivity = `<b>Associated Deviation - </b><em>${body.DevId}</em> </br>
+        <b>Task to Complete:</b><i>${body.TKName} <b>Date Due</b> ${_targetDate}</i>`;
+// TODO: Not the worlds nicest Promise using a timeout need to rework and improve.
+    var p = new Promise(function(resolve, reject) {
+        var toEmail = users.getUserEmail(body.TKChamp);
+       setTimeout(() => resolve(toEmail), 2000);
+    }).then(function(res){
+        var _toEmail = res[0].email;
+        mailer.sendMail(_toEmail, emailType, emailActivity);
+    }).catch(function (err) {
+      console.log(err);
+    });
+
 };
 
 exports.getTaskById = function(req, res) {
