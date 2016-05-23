@@ -40,11 +40,8 @@ class Tasks extends Component {
   onloading(){
     const search = this.props.tasks.searchText;
     const showCapaOnly = this.props.tasks.showCapaOnly;
-    console.log(`const = ${showCapaOnly}`);
     this.setState({ txtSearch: search });
     this.setState({ _showCapaOnly: showCapaOnly });
-    console.log(`state = ${this.state._showCapaOnly}`);
-    console.log(`props = ${this.props.tasks.showCapaOnly}`);
     this.onChange(1, showCapaOnly, search);
   }
 

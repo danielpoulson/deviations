@@ -11,6 +11,7 @@ exports.downloadFile = function (req, res) {
     var fileType = filename.substring(0,3);
     var file = '';
 
+// TODO LOW EASY: duplicated file = '.././uploads/' + filename;???.    
     if(fileType == 'exp'){
         filename = filename.slice(6);
         file = '.././uploads/' + filename;
@@ -21,6 +22,7 @@ exports.downloadFile = function (req, res) {
     res.download(file, filename, function(err){
       if (err) {
         console.log(err);
+        res.status(500).send(err);
       } else {
             if(fileType == 'exp'){
 
@@ -30,7 +32,7 @@ exports.downloadFile = function (req, res) {
                 });
             }
       }
-
+        res.sendStatus(200);
     });
 };
 
@@ -59,7 +61,7 @@ exports.uploadFile = function (req, res) {
 
     File.update({fsFileName: fileData.fsFileName}, fileData, {upsert: true}, function (err) {
         if (err) {
-            res.status(200);
+            res.sendStatus(200);
             console.log(err.toString());
         }
 
@@ -79,6 +81,8 @@ function addExportFile(fileData){
       if (err) return console.log(err);
     });
 
+    res.sendStatus(200);
+
 };
 
 exports.getFiles = function (req, res) {
@@ -94,7 +98,7 @@ exports.deletefile = function (req, res) {
     var id = req.params.id;
 
     fileDeletion(id);
-    res.status(200);
+    res.sendStatus(204);
 
 };
 

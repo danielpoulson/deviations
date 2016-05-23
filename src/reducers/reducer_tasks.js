@@ -139,7 +139,6 @@ export default function (state, action) {
       searchText = action.data.search || '';
       const searcheddata = searchData(state.alldata, searchText, column, showCapaOnly);
       paged = searcheddata.slice(offset, offset + per_page);
-      console.log(`Reducer = ${showCapaOnly}`);
 
       return {
         ...state,

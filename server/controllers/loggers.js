@@ -4,7 +4,7 @@ exports.createLog = function(req, res, next) {
     // TODO: This fucntion returns a status of 200 even if the write to log fails
     const _logs = req.body;
     _createlog(_logs);
-    res.status(200);
+    res.sendStatus(200);
 };
 
 function _createlog(_logs) {
@@ -15,6 +15,7 @@ function _createlog(_logs) {
             }
             console.log(err);
         }
+        res.sendStatus(200);
     });
 }
 

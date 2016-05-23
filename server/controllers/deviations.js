@@ -111,7 +111,6 @@ exports.createDeviation = function(req, res) {
             return res.send({reason:err.toString()});
         }
         res.status(200).send(deviation);
-        createEmail(_dev);
         });
     });
 
