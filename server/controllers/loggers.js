@@ -15,7 +15,6 @@ function _createlog(_logs) {
             }
             console.log(err);
         }
-        res.sendStatus(200);
     });
 }
 
