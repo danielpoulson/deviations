@@ -63,8 +63,9 @@ class TaskDetail extends React.Component {
       _data._id = this.state.taskId;
       _data.TKStat = typeof _data.TKStat === 'object' ? _data.TKStat.id : _data.TKStat;
       _data.DevId = _DevId;
-      // Coverts from true : 1 and flase to 0
+      // Coverts from true : 1 and false to 0
       _data.TKCapa = _data.TKCapa ? +_data.TKCapa : 0;
+      console.log(_data.TKCapa);
       this.props.editTask(_data);
     } else {
       _data.TKStat = _data.TKStat.id || 1;
