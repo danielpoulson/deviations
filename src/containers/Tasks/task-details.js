@@ -80,11 +80,6 @@ class TaskDetail extends React.Component {
         formIsValid = false;
     }
 
-    if (typeof this.state.task.TKStart == 'undefined'){
-        this.state.errors.TKStart = "Please enter a Start date!!";
-         formIsValid = false;
-     }
-
     if (typeof this.state.task.TKTarg == 'undefined'){
         this.state.errors.TKTarg = "Please enter a target date!!";
          formIsValid = false;
@@ -101,6 +96,8 @@ class TaskDetail extends React.Component {
     }
 
     this.setState({errors: this.state.errors});
+
+    console.log(this.state.errors);
 
     return formIsValid;
   }

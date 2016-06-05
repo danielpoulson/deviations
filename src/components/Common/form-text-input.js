@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 
+
 class TextInput extends React.Component {
   render() {
 
@@ -10,7 +11,7 @@ class TextInput extends React.Component {
     const _inputdiv = this.props.inputdiv;
     const _labelstyle = this.props.labelstyle;
 
-    if (this.props.error && error.length > 0) {
+    if (this.props.error && this.props.error.length > 0) {
       wrapperClass += " " + 'has-error';
     }
 

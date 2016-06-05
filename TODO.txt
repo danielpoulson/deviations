@@ -1,1 +1,4 @@
 //TODO: MED (MAJOR) User management section - Add, Edit, delete
+//TODO: MED (MAJOR) Convert the deviation form from redux from to normal form
+//TODO: HIGH (Medium) Fix error handling for the Task Detail form 
+//TODO: HIGH (Medium) Clean up / remove redux form implementation
