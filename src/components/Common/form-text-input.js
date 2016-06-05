@@ -5,13 +5,13 @@ class TextInput extends React.Component {
 
     const spanStyle = { color: 'red' };
 
-    const wrapperClass = 'form-group';
+    let wrapperClass = 'form-group';
     const _inputstyle = 'form-control' || this.props.inputstyle;
     const _inputdiv = this.props.inputdiv;
     const _labelstyle = this.props.labelstyle;
 
-    if (this.props.touched && this.props.error && this.props.error.length > 0) {
-      `${wrapperClass} has-error`;
+    if (this.props.error && error.length > 0) {
+      wrapperClass += " " + 'has-error';
     }
 
     return (
@@ -25,7 +25,7 @@ class TextInput extends React.Component {
             ref={this.props.name}
             value={this.props.value || ''}
             onChange={this.props.onChange} />
-          {this.props.touched && this.props.error && <div style={spanStyle} className="input">{this.props.error}</div> }
+          {this.props.error && <div className="alert alert-danger">{this.props.error}</div>}
         </div>
       </fieldset>
     );

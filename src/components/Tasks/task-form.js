@@ -5,7 +5,9 @@ import DateTimePicker from 'components/Common/date-picker';
 import ComboBox from 'components/Common/combo-box';
 import SelectInput from 'components/Common/select-input';
 
-const TaskForm = ({task, status, users, onSubmit, hideDelete, deleteTask, onChange, onDateChange, onCancel, submitting}) => {
+const TaskForm = ({
+  errors, task, status, users, onSubmit, hideDelete, deleteTask,
+  onChange, onDateChange, onCheckChange, onCancel, submitting}) => {
 
   return (
       <form className="form form-horizontal" >
@@ -17,6 +19,7 @@ const TaskForm = ({task, status, users, onSubmit, hideDelete, deleteTask, onChan
           placeholder="Enter Task Name (Required)"
           labelstyle="col-sm-2 control-label"
           inputdiv="col-sm-9"
+          error={errors.TKName}
         />
 
         <DateTimePicker
@@ -26,6 +29,7 @@ const TaskForm = ({task, status, users, onSubmit, hideDelete, deleteTask, onChan
           inputdiv="col-sm-2"
           value={task.TKTarg}
           onChange={onDateChange.bind(null, "TKTarg")}
+          error={errors.TKTarg}
         />
 
         <DateTimePicker
@@ -43,9 +47,10 @@ const TaskForm = ({task, status, users, onSubmit, hideDelete, deleteTask, onChan
           labelstyle="col-sm-2 control-label"
           inputdiv="col-sm-3"
           value={task.TKStat}
-          defaultOption={status[0]}
+          defaultOption="Select Status"
           options={status}
-          onChange={onChange}/>
+          onChange={onChange}
+          error={errors.TKStat}/>
 
         <SelectInput
           name="TKChamp"
@@ -53,15 +58,17 @@ const TaskForm = ({task, status, users, onSubmit, hideDelete, deleteTask, onChan
           labelstyle="col-sm-2 control-label"
           inputdiv="col-sm-3"
           value={task.TKChamp}
-          defaultOption={users[0]}
+          defaultOption="Select Task Owner"
           options={users}
-          onChange={onChange}/>
+          onChange={onChange}
+          error={errors.TKChamp}/>
 
         <div className="form-group">
             <div className="col-sm-offset-2 col-sm-10">
                 <div className="checkbox">
                     <label>
-                        <input type="checkbox" checked={task.TKCapa === 1} />Preventative Action
+                        <input type="checkbox" name="TKCapa" checked={task.TKCapa} 
+                          onChange={onCheckChange}/>Preventative Action
                     </label>
                 </div>
             </div>
@@ -100,7 +107,7 @@ TaskForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   hideDelete: PropTypes.string,
-  submitting: PropTypes.boolean,
+  submitting: PropTypes.bool,
   status: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
 	};
