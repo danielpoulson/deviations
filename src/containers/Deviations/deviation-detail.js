@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {getValues} from 'redux-form';
-import DeviationDetailForm from 'components/Deviations/deviation-detail.form';
-import DeviationInvestForm from 'components/Deviations/deviation-invest.form';
+import DevDetailForm from 'components/Deviations/deviation-detail.form';
+import DevInvestForm from 'components/Deviations/deviation-invest.form';
 import TaskList from 'components/Tasks/task-list';
 import FileList from 'containers/Files/file-list';
 import DeviationLog from 'components/Deviations/deviation-log';
@@ -29,6 +29,7 @@ class DeviationDetail extends Component {
       deviationTitle: 'Get the main title',
       _dvNo: '',
       dirty: false,
+      deviation: Object.assign({}, props.deviation),
       DetailTab: 'show',
       InvestTab: 'hidden',
       errors: {},
@@ -58,6 +59,8 @@ class DeviationDetail extends Component {
     this.onPrintDev = this.onPrintDev.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
     this.saveDetail = this.saveDetail.bind(this);
+    this.updateDevState = this.updateDevState.bind(this);
+    this.updateDevStateDate = this.updateDevStateDate.bind(this);
   }
 
   componentWillMount() {
@@ -69,6 +72,13 @@ class DeviationDetail extends Component {
 
     if(dvNo === 'new'){
       this.setState({ notnew: false });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.deviation._id != nextProps.deviation._id) {
+      // Necessary to populate form when existing course is loaded directly.
+      this.setState({deviation: Object.assign({}, nextProps.deviation)});
     }
   }
 
@@ -208,6 +218,20 @@ class DeviationDetail extends Component {
     this.setState({ [value]: 'show' });
   }
 
+  updateDevState(event) {
+    const field = event.target.name;
+    let task = this.state.task;
+    task[field] = event.target.value;
+    return this.setState({task: task});
+  }
+
+  updateDevStateDate(field, value) {
+    // this.setState({dirty: true});
+    let task = this.state.task;
+    task[field] = value;
+    return this.setState({task: task});
+  }
+
 
   render() {
 
@@ -267,9 +291,13 @@ class DeviationDetail extends Component {
           <div className={this.state.DetailTab}>
             <div className="panel panel-default">
               <div className="panel-body">
-                <DeviationDetailForm 
-                  onSubmit={this.saveDetail}
-                  onCancel={this.cancelDeviation} />
+                <DevDetailForm
+                  dev={this.state.deviation}
+                  onSave={this.saveDetail}
+                  onCancel={this.cancelDeviation}
+                  onChange={this.updateDevState}
+                  onDateChange={this.updateDevStateDate}
+                  errors={this.state.errors} />
               </div>
             </div>
           </div>
@@ -277,8 +305,9 @@ class DeviationDetail extends Component {
           <div className={this.state.InvestTab}>
             <div className="panel panel-default">
               <div className="panel-body">
-                {this.state.notnew && <DeviationInvestForm 
-                  onSubmit={this.saveDetail}
+                {this.state.notnew && <DevInvestForm
+                  dev={this.state.deviation} 
+                  onSave={this.saveDetail}
                   onCloseDev={this.onCloseDev}
                   onPrintDev={this.onPrintDev}
                   status={this.state.status}
@@ -286,7 +315,10 @@ class DeviationDetail extends Component {
                   categories={this.state.categories}
                   classifies={this.state.classifies}
                   users={this.props.users}
-                  onCancel={this.cancelDeviation} />}
+                  onCancel={this.cancelDeviation}
+                  onChange={this.updateDevState}
+                  onDateChange={this.updateDevStateDate}
+                  errors={this.state.errors} />}
               </div>
             </div>
           </div>

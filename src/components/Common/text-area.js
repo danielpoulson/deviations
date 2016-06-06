@@ -12,19 +12,20 @@ const TextArea = (props) => {
 
 
   return (
-    <fieldset className={wrapperClass}>
+    <div className={wrapperClass}>
       <label className={_labelstyle} htmlFor={props.name}>{props.label}</label>
       <div className={_inputdiv}>
         <textarea type="text"
           name={props.name}
           className={_inputstyle}
           placeholder={props.placeholder}
+          ref={props.name}
           value={props.value}
           rows={props.rows}
           onChange={props.onChange} />
-        <div className="input">{props.error}</div>
+        <div className="input">{props.error}</div> 
       </div>
-    </fieldset>
+    </div>
   );
 };
 

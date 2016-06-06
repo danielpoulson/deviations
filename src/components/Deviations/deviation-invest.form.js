@@ -1,38 +1,100 @@
 import React, { Component, PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
 import Input from 'components/Common/form-text-input';
 import TextArea from 'components/Common/text-area';
 import DateTimePicker from 'components/Common/date-picker';
-import ComboBox from 'components/Common/combo-box';
+import SelectInput from 'components/Common/select-input';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
-export const fields = [ 'dvAssign', 'dvInvest', 'dvOutCome', 'dvCustSend', 'dvCat', 'dvClass'];
 
-const newdata = {  // used to populate "account" reducer when "Load" is clicked
 
-};
+const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
+   onChange, onCancel, onDateChange, errors, categories, classifies, users}) => { 
 
-const validate = values => {
-  const errors = {};
+  return (
+    <form className="form form-horizontal" >
+      <div className="pull-right">
+        <button className="btn btn-warning dp-margin-10-LR" onClick={onCloseDev}>Close Deviation</button>
+        <button className="btn btn-info" onClick={onPrintDev}>Print Deviation</button>
+      </div>
 
-  return errors;
-};
+      <SelectInput
+        name="dvAssign"
+        label="Assigned to:"
+        labelstyle="col-sm-2 control-label"
+        inputdiv="col-sm-3"
+        value={dev.dvAssign}
+        defaultOption="Assign To Owner"
+        options={users}
+        onChange={onChange}
+        error={errors.dvAssign}/>
 
-@reduxForm({
-  form: 'devform',
-  fields,
-  destroyOnUnmount: false,
-  validate,
-},
-  state => ({
-    initialValues: state.deviation ? state.deviation : newdata, // will pull state into form's initialValues
-  })
-)
+      <TextArea
+        name="dvInvest"
+        label="Current Situation"
+        value={dev.dvInvest || ''}
+        rows="6"
+        onChange={onChange}
+        error={errors.dvInvest}
+        labelstyle="col-sm-2 control-label"
+        inputdiv="col-sm-10" />
 
-export default class ChangeForm extends Component {
-  static propTypes = {
-    fields: PropTypes.object.isRequired,
+      <SelectInput
+        name="dvOutCome"
+        label="Outcomes:"
+        labelstyle="col-sm-2 control-label"
+        inputdiv="col-sm-3"
+        value={dev.dvOutCome}
+        defaultOption="Assign an outcome"
+        options={outcomes}
+        onChange={onChange}
+        error={errors.dvOutCome}/>
+
+      <DateTimePicker
+        name="dvCustSend"
+        label="Date sent to customer"
+        labelstyle="col-sm-2 control-label"
+        inputdiv="col-sm-2"
+        value={dev.dvCustSend}
+        onChange={onDateChange.bind(null, "dvCustSend")}
+        error={errors.dvCustSend}/> 
+
+      <SelectInput
+        name="dvCat"
+        label="Categories:"
+        labelstyle="col-sm-2 control-label"
+        inputdiv="col-sm-3"
+        value={dev.dvCat}
+        defaultOption="Assign categories"
+        options={categories}
+        onChange={onChange}
+        error={errors.dvCat}/>
+
+      <SelectInput
+        name="dvClass"
+        label="Categories:"
+        labelstyle="col-sm-2 control-label"
+        inputdiv="col-sm-3"
+        value={dev.dvClass}
+        defaultOption="Assign a Classification"
+        options={classifies}
+        onChange={onChange}
+        error={errors.dvClass}/>
+
+
+      <div className="pull-right">
+        <button className="btn btn-primary" onClick={onSave} >
+          Save Investigation
+        </button>
+        <button className="btn btn-default dp-margin-10-LR" onClick={onCancel}>
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
+}
+
+DevInvestForm.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCloseDev: PropTypes.func.isRequired,
@@ -40,85 +102,6 @@ export default class ChangeForm extends Component {
     resetForm: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
     status: PropTypes.array.isRequired,
-  };
+};
 
-  render() {
-    const {
-      fields: { dvAssign, dvInvest, dvOutCome, dvCustSend, dvCat, dvClass },
-      handleSubmit,
-      onCloseDev,
-      onPrintDev,
-      status,
-      outcomes,
-      categories,
-      classifies,
-      users,
-      } = this.props;
-    return (
-      <form onSubmit={handleSubmit} className="form-horizontal">
-        <div className="pull-right">
-          <button className="btn btn-warning dp-margin-10-LR" onClick={onCloseDev}>Close Deviation</button>
-          <button className="btn btn-info" onClick={onPrintDev}>Print Deviation</button>
-        </div>
-        <ComboBox
-          label="Assigned To"
-          data={users}
-          defaultValue={users[0]}
-          labelstyle="col-sm-2 control-label"
-          inputdiv="col-sm-3"
-          {...dvAssign}
-        />
-
-        <TextArea
-          name="dvInvest"
-          label="Investigation"
-          value={dvInvest.value || ''}
-          rows="6"
-          labelstyle="col-sm-2 control-label"
-          inputdiv="col-sm-10"
-          {...dvInvest}
-        />
-
-        <ComboBox
-          label="Outcomes"
-          data={outcomes}
-          labelstyle="col-sm-2 control-label"
-          inputdiv="col-sm-3"
-          {...dvOutCome}
-        />
-
-        <DateTimePicker
-          label="Date sent to customer"
-          labelstyle="col-sm-2 control-label"
-          inputdiv="col-sm-2"
-          {...dvCustSend}
-        />
-
-        <ComboBox
-          label="Categories"
-          data={categories}
-          labelstyle="col-sm-2 control-label"
-          inputdiv="col-sm-3"
-          {...dvCat}
-        />
-
-        <ComboBox
-          label="Classification"
-          data={classifies}
-          labelstyle="col-sm-2 control-label"
-          inputdiv="col-sm-3"
-          {...dvClass}
-        />
-
-        <div className="pull-right">
-          <button type="submit" className="btn btn-primary" >
-            Save Investigation
-          </button>
-          <button className="btn btn-default dp-margin-10-LR" onClick={this.props.onCancel}>
-            Cancel
-          </button>
-        </div>
-      </form>
-    );
-  }
-}
+export default DevInvestForm;
