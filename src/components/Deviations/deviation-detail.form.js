@@ -102,7 +102,6 @@ const DevDetailForm = ({dev, onSave, onCancel, onChange, onDateChange, errors}) 
 }
 
 DevDetailForm.propTypes = {
-    fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func,
     onCancel: PropTypes.func,
   };

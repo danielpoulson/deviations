@@ -41,16 +41,45 @@ class DeviationDetail extends Component {
       TasksTab: 'hidden',
       tCount: 0,
       status: [
-        { id: 1, name: 'Review' },
-        { id: 2, name: 'Approved' },
-        { id: 3, name: 'On-hold' },
-        { id: 4, name: 'Closed' },
-        { id: 5, name: 'Cancelled' }
+        { value: 1, text: 'Review' },
+        { value: 2, text: 'Approved' },
+        { value: 3, text: 'On-hold' },
+        { value: 4, text: 'Closed' },
+        { value: 5, text: 'Cancelled' },
       ],
-      outcomes: [ 'Accept', 'Rework', 'Repair', 'Reject', ''],
-      categories: [ 'Bulk', 'Finished Goods', 'Packaging / Labels', 'Raw Materials', 'other', ''],
-      classifies: [ 'Contamination', 'Customer Complaint', 'Documentation', 'Formulation Difficulty', 'Leakers', 'Not Assigned',
-      'Out of Specification', 'Operator Error', 'Procedure', 'Transport Issue', 'Stock Discrepancy', 'Other', '' ]};
+      outcomes: [ 
+        { value: 'Accept', text: 'Accept'},
+        { value: 'Rework', text: 'Rework'},
+        { value: 'Repair', text: 'Repair'},
+        { value: 'Reject', text: 'Reject'},
+        { value: '', text: ''}
+      ],
+      categories: [ 
+        { value: 'Bulk', text: 'Bulk'},
+        { value: 'Finished Goods', text: 'Finished Goods'},
+        { value: 'Packaging / Labels', text: 'Packaging / Labels'},
+        { value: 'Raw Materials', text: 'Raw Materials'},
+        { value: 'other', text: 'other'},
+        { value: '', text: ''}
+      ],
+      classifies: [
+        { value: 'Contamination', text: 'Contamination'},
+        { value: 'Customer Complaint', text: 'Customer Complaint'},
+        { value: 'Documentation', text: 'Documentation'},
+        { value: 'Formulation Difficulty', text: 'Formulation Difficulty'},
+        { value: 'Leakers', text: 'Leakers'},
+        { value: 'Not Assigned', text: 'Not Assigned'},
+        { value: 'out of Specification', text: 'out of Specification'},
+        { value: 'Operator Error', text: 'Operator Error'},
+        { value: 'Procedure', text: 'Procedure'},
+        { value: 'Transport Issue', text: 'Transport Issue'}, 
+        { value: 'Stock Discrepancy', text: 'Stock Discrepancy'},
+        { value: 'Other', text: 'Other'},
+        { value: 'Packaging / Labels', text: 'Packaging / Labels'},
+        { value: 'Raw Materials', text: 'Raw Materials'},
+        { value: 'other', text: 'other'},
+        { value: '', text: ''}
+      ]};
 
     this.onApprove = this.onApprove.bind(this);
     this.onFinal = this.onFinal.bind(this);
@@ -260,6 +289,9 @@ class DeviationDetail extends Component {
       active: this.state.LogTab === 'show',
       hidden: this.props.main.MainId === 'new'
     });
+
+    console.log("this.state.deviaton");
+    console.log(this.state.deviaton);
 
     // TODO The title for a new deviation is undefined - undefined needs to state "New Deviaiton"
 

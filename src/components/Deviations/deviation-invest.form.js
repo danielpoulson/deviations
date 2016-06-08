@@ -18,7 +18,8 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
         <button className="btn btn-info" onClick={onPrintDev}>Print Deviation</button>
       </div>
 
-      <SelectInput
+
+    <SelectInput
         name="dvAssign"
         label="Assigned to:"
         labelstyle="col-sm-2 control-label"
@@ -28,6 +29,7 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
         options={users}
         onChange={onChange}
         error={errors.dvAssign}/>
+
 
       <TextArea
         name="dvInvest"
@@ -39,7 +41,7 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
         labelstyle="col-sm-2 control-label"
         inputdiv="col-sm-10" />
 
-      <SelectInput
+    <SelectInput
         name="dvOutCome"
         label="Outcomes:"
         labelstyle="col-sm-2 control-label"
@@ -57,9 +59,9 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
         inputdiv="col-sm-2"
         value={dev.dvCustSend}
         onChange={onDateChange.bind(null, "dvCustSend")}
-        error={errors.dvCustSend}/> 
+        error={errors.dvCustSend}/>
 
-      <SelectInput
+    <SelectInput
         name="dvCat"
         label="Categories:"
         labelstyle="col-sm-2 control-label"
@@ -68,11 +70,11 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
         defaultOption="Assign categories"
         options={categories}
         onChange={onChange}
-        error={errors.dvCat}/>
+        error={errors.dvCat}/> 
 
-      <SelectInput
+    <SelectInput
         name="dvClass"
-        label="Categories:"
+        label="Classification:"
         labelstyle="col-sm-2 control-label"
         inputdiv="col-sm-3"
         value={dev.dvClass}
@@ -80,7 +82,6 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
         options={classifies}
         onChange={onChange}
         error={errors.dvClass}/>
-
 
       <div className="pull-right">
         <button className="btn btn-primary" onClick={onSave} >
@@ -95,11 +96,10 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
 }
 
 DevInvestForm.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCloseDev: PropTypes.func.isRequired,
     onPrintDev: PropTypes.func.isRequired,
-    resetForm: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
     status: PropTypes.array.isRequired,
 };

@@ -19,7 +19,6 @@ const TextArea = (props) => {
           name={props.name}
           className={_inputstyle}
           placeholder={props.placeholder}
-          ref={props.name}
           value={props.value}
           rows={props.rows}
           onChange={props.onChange} />

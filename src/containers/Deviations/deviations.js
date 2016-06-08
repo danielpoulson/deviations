@@ -69,9 +69,8 @@ export default class Deviations extends Component {
     this.props.loadPage(action);
   };
 
-  onGetDeviation(i) {
+  onGetDeviation(i) { 
     const _id = i;
-    // const _id = this.props.changelist[i].CC_No;
     this.props.resetLog();
     this.props.resetDeviation();
     this.props.setMain({ MainId: _id, CurrentMode: 'deviation', loading: true });
