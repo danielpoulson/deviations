@@ -2,3 +2,11 @@
 //TODO: MED (MAJOR) Convert the deviation form from redux from to normal form
 //TODO: HIGH (Medium) Fix error handling for the Task Detail form 
 //TODO: HIGH (Medium) Clean up / remove redux form implementation
+
+Next step :
+1. error - Warning: flattenChildren(...): Encountered two children with the same key
+2. Save new deviation
+3. Check all other fucntionality works closed dev etc
+4. Add form validation
+
+Then remove other uses of redux form

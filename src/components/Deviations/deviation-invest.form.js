@@ -18,8 +18,7 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
         <button className="btn btn-info" onClick={onPrintDev}>Print Deviation</button>
       </div>
 
-
-    <SelectInput
+      <SelectInput
         name="dvAssign"
         label="Assigned to:"
         labelstyle="col-sm-2 control-label"

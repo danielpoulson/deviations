@@ -42,13 +42,13 @@ const DevDetailForm = ({dev, onSave, onCancel, onChange, onDateChange, errors}) 
         error={errors.dvBatchNo}/>
 
       <DateTimePicker
-        name="dvDom"
+        name="dvDOM"
         label="DOM:"
         labelstyle="col-sm-2 control-label"
         inputdiv="col-sm-2"
-        value={dev.dvDom}
-        onChange={onDateChange.bind(null, "dvDom")}
-        error={errors.dvDom}/> 
+        value={dev.dvDOM}
+        onChange={onDateChange.bind(null, "dvDOM")}
+        error={errors.dvDOM}/> 
 
       <TextArea
         name="dvDescribe"

@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {getValues} from 'redux-form';
 import DevDetailForm from 'components/Deviations/deviation-detail.form';
 import DevInvestForm from 'components/Deviations/deviation-invest.form';
 import TaskList from 'components/Tasks/task-list';
 import FileList from 'containers/Files/file-list';
 import DeviationLog from 'components/Deviations/deviation-log';
+import {usersFormattedForDropdown} from '../../selectors/selectors';
 import classNames from 'classnames';
 import toastr from 'toastr';
 
@@ -183,59 +183,32 @@ class DeviationDetail extends Component {
     this.context.router.push('/deviations');
   };
 
-  saveDetail() {
-    let _data = {};
+  saveDetail(event, closed) {
+    event.preventDefault();
+
+    // if(!this.taskFormIsValid()) {
+    //   return; 
+    // }
+
+    let _dev = this.state.deviation;
 
     if (this.state._dvNo !== 'new') {
-      _data.dvLog = this.logMessage('Deviation Edit');     
+      _dev.dvLog = this.logMessage('Deviation Edit');
+      _dev.dvNotChanged = this.state.dvAssign !== this.props.deviation.dvAssign;
+      _dev.dvClosed = 0;
+      this.props.editDeviation(_dev);    
     } else {
-      _data.dvLog = this.logMessage('Deviation Created');
-    }
-
-    _data.dvClosed = 0;
-
-    this.saveDeviation(_data)
-
-  }
-
-
-// TODO: LOW Remove CC_ActDept : this.prop.main.user.dept
-  saveDeviation (_data, closed) {
-
-    _data.dvNo = this.state._dvNo;
-
-    // Save on new or edit
-    _data.dvMatNo= this.props.devform.dvMatNo.value;
-    _data.dvMatName= this.props.devform.dvMatName.value;
-    _data.dvCust= this.props.devform.dvCust.value;
-    _data.dvBatchNo= this.props.devform.dvBatchNo.value;
-    _data.dvSupplier= this.props.devform.dvSupplier.value;
-    _data.dvDOM= this.props.devform.dvDOM.value;
-    _data.dvDescribe= this.props.devform.dvDescribe.value;
-  
-    if(_data.dvNo !== 'new') {
-      _data._id = this.props.deviation._id;
-      _data.dvAssign= this.props.devform.dvAssign.value;
-      _data.dvClass = this.props.devform.dvClass.value;
-      _data.dvCreated = this.props.devform.dvCreated.value;
-      _data.dvInvest= this.props.devform.dvInvest.value;
-      _data.dvOutCome= this.props.devform.dvOutCome.value;
-      _data.dvCustSend= this.props.devform.dvCustSend.value;
-      _data.dvCat = this.props.devform.dvCat.value;
-      _data.dvNotChanged = this.props.devform.dvAssign.value === this.props.devform.dvAssign.initial;
-
-      this.props.editDeviation(_data);
-
-    } else {
-      _data.dvAssign = 'Quality Assurance';
-      _data.dvClass = 'Not Assigned';
-      this.props.addDeviation(_data);
-      
+      _dev.dvLog = this.logMessage('Deviation Created');
+      _dev.dvClosed = 0;
+      _dev.dvAssign = 'Quality Assurance';
+      _dev.dvClass = 'Not Assigned';
+      this.props.addDeviation(_dev);
     }
 
     toastr.success('Deviation has been saved', 'Deviation Detail', { timeOut: 1000 });
     this.setState({ dirty: false });
     this.context.router.push('/deviations');
+
   }
 
   showTab(value) {
@@ -249,16 +222,16 @@ class DeviationDetail extends Component {
 
   updateDevState(event) {
     const field = event.target.name;
-    let task = this.state.task;
-    task[field] = event.target.value;
-    return this.setState({task: task});
+    let _dev = this.state.deviation;
+    _dev[field] = event.target.value;
+    return this.setState({deviation: _dev});
   }
 
   updateDevStateDate(field, value) {
     // this.setState({dirty: true});
-    let task = this.state.task;
-    task[field] = value;
-    return this.setState({task: task});
+    let _dev = this.state.deviation;
+    _dev[field] = value;
+    return this.setState({deviation: _dev});
   }
 
 
@@ -381,14 +354,18 @@ DeviationDetail.propTypes = {
 
 };
 
-export default connect(state => ({
-  deviation: state.deviation,
-  devform: state.form.devform,
-  main: state.main,
-  log: state.log,
-  tasklist: state.tasks.ctlist,
-  ctTotal: state.tasks.ctTotal,
-  users: state.users
-}), {
+function mapStateToProps(state, ownProps) {
+
+  return {
+    deviation: state.deviation,
+    main: state.main,
+    log: state.log,
+    tasklist: state.tasks.ctlist,
+    ctTotal: state.tasks.ctTotal,
+    users: usersFormattedForDropdown(state.users)
+  };
+};
+
+export default connect(mapStateToProps, {
   addDeviation, createLog, editDeviation, closeDeviation, getDeviation, getProjectTasks, setMain
 })(DeviationDetail);
