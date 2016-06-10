@@ -10,3 +10,9 @@ Next step :
 4. Add form validation
 
 Then remove other uses of redux form
+
+Change Over
+-------------------
+1. User names are in consistent and the db will need to be modified.
+Note: Work around in the getAllUsers controller\users to create a fullname if one is missing
+users will still not be able to log in uptil the paswords are adjusted.

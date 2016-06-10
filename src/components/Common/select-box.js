@@ -20,6 +20,7 @@ const SelectBox = (props) => {
           options={props.data}
           onChange={props.onChange}
           value={props.value} />
+          <span class="rw-select"><button class="rw-btn-calendar rw-btn" type="button"><i class="rw-i rw-i-calendar"></i></button></span>
         <div className="input">{props.error}</div>
       </div>
     </div>

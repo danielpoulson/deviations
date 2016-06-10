@@ -6,7 +6,7 @@ exports.getAllUsers = function(req, res) {
     var status = req.params.status;
 
     User
-        .find({})
+        .find({fullname: { $exists: true}})
         .select({fullname : 1, "_id" : 0})
         .sort({fullname : 1})
         .exec(function(err, collection) {

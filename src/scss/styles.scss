@@ -11,6 +11,48 @@ $grey: #3F3F3F;
 
 /* ------------  Bootstrap Overrides ---------*/
 
+select {
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+}
+
+.styled select {
+  background: transparent;
+  width: 220px;
+  height: 34px;
+  margin-left: -15px;
+}
+.styled {
+  margin-left: 15px;
+  padding-right: 10px;  
+  width: 220px;
+  height: 34px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: url(http://www.stackoverflow.com/favicon.ico) 95% / 10% no-repeat #eee;
+}
+
+.styled select:-moz-focusring { color: transparent;
+                        text-shadow: 0 0 0 #6A6C70; }
+
+.pinkold {
+  background: transparent;
+  width: 150px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  height: 34px;
+}
+.blueold{
+  margin: 50px;
+  width: 120px;
+  height: 34px;
+  border: 1px solid #111;
+  border-radius: 3px;
+  overflow: hidden;
+  background: url(http://www.stackoverflow.com/favicon.ico) 96% / 20% no-repeat #eee;
+}
+
 html {
     overflow: -moz-scrollbars-vertical; 
     overflow-y: scroll;

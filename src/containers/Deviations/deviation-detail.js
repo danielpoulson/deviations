@@ -263,9 +263,6 @@ class DeviationDetail extends Component {
       hidden: this.props.main.MainId === 'new'
     });
 
-    console.log("this.state.deviaton");
-    console.log(this.state.deviaton);
-
     // TODO The title for a new deviation is undefined - undefined needs to state "New Deviaiton"
 
     return (
@@ -327,7 +324,8 @@ class DeviationDetail extends Component {
               </div>
             </div>
           </div>
-
+          
+          
           {this.state.notnew && <DeviationLog
             logTab={this.state.LogTab}
             onApprove={this.onApprove}

@@ -4,7 +4,7 @@ const SelectInput = ({name, label, inputdiv, labelstyle, onChange, defaultOption
   return (
     <div className="form-group">
       <label className={labelstyle} htmlFor={name}>{label}</label>
-      <div className={inputdiv}>
+      <div className={`${inputdiv} styled`}>
         {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
         <select
           name={name}
@@ -17,6 +17,7 @@ const SelectInput = ({name, label, inputdiv, labelstyle, onChange, defaultOption
           })
           }
         </select>
+
         {error && <div className="alert alert-danger">{error}</div>}
       </div>
     </div>
