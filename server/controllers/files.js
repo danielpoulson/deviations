@@ -22,7 +22,6 @@ exports.downloadFile = function (req, res) {
     res.download(file, filename, function(err){
       if (err) {
         console.log(err);
-        res.status(500).send(err);
       } else {
             if(fileType == 'exp'){
 
@@ -32,7 +31,6 @@ exports.downloadFile = function (req, res) {
                 });
             }
       }
-        res.sendStatus(200);
     });
 };
 
@@ -40,10 +38,9 @@ exports.uploadFile = function (req, res) {
     var fileData = {};
     var docName = req.body.docName;
 
-    const myRe = /C{2}\d{6}\s[-]\s/;
+    //TODO (5) Minor Functionally only works for Deviations.
+    const myRe = /DV\d{6}\s[-]\s/;
     var myArray = myRe.exec(docName);
-
-    //TODO LOW Minor Functionally only works for changes.
 
     if(myArray) {
         fileData.fsFileName = docName.split('.').shift().substr(11);
@@ -80,8 +77,6 @@ function addExportFile(fileData){
     File.create(fileData, function (err, small) {
       if (err) return console.log(err);
     });
-
-    res.sendStatus(200);
 
 };
 

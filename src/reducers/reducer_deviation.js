@@ -1,6 +1,12 @@
 import { GET_DEV, CREATE_LOG, NEW_DEVIATION } from 'actions/actions_deviations';
 
-export default function (state = null, action) {
+const initialState = {
+  dvNo: '',
+  dvMatName: '',
+  dvMatNo: ''
+};
+
+export default function (state = initialState, action) {
 
   switch (action.type) {
     case GET_DEV:
@@ -27,7 +33,7 @@ export default function (state = null, action) {
     }
 
     case NEW_DEVIATION:
-      return {};
+      return initialState;
 
     default:
       return state;

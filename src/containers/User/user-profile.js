@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import UserProfileForm from 'components/User/user-profile-form';
 import UserSelect from 'components/User/user-select';
+import {usersFormattedForDropdown} from '../../selectors/selectors';
+import {userFormIsValid} from './user-form-validation';
 import toastr from 'toastr';
 
 import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from 'actions/actions_users';
@@ -20,6 +22,8 @@ class UserProfile extends Component {
 
     this.state = {
       isNewUser: false,
+      user: Object.assign({}, props.user),
+      errors: {}
     };
 
     this.saveUser = this.saveUser.bind(this);
@@ -27,10 +31,18 @@ class UserProfile extends Component {
     this.newUser = this.newUser.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.updateUserState = this.updateUserState.bind(this);
   }
 
-  onChange(value) {
-    this.props.getUser(value);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.user._id != nextProps.user._id) {
+      // Necessary to populate form when existing course is loaded directly.
+      this.setState({user: Object.assign({}, nextProps.user)});
+    }
+  }
+
+  onChange(event) {
+    this.props.getUser(event.target.value);
   }
 
   newUser() {
@@ -54,17 +66,34 @@ class UserProfile extends Component {
     this.props.resetUser();
   }
 
-  saveUser(data) {
+  saveUser(event) {
+    event.preventDefault();
+    let _user = this.state.user;
+
+    let validation = userFormIsValid(_user);
+    this.setState({errors: validation.errors});
+
+    if(!validation.formIsValid) {
+      return; 
+    }
+
     if (this.state.isNewUser) {
-      this.props.createUser(data);
+      this.props.createUser(_user);
       this.setState({ isNewUser: false });
       toastr.success('New user account has been created', 'User Account', { timeOut: 1000 });
     } else {
-      this.props.saveUser(data);
+      this.props.saveUser(_user);
       toastr.success('User account has been saved', 'User Account', { timeOut: 1000 });
     }
     this.props.resetUser();
     this.props.getUsers();
+  }
+
+  updateUserState(event) {
+    const field = event.target.name;
+    let user = this.state.user;
+    user[field] = event.target.value;
+    return this.setState({user: user});
   }
 
   render() {
@@ -84,7 +113,7 @@ class UserProfile extends Component {
       paddingTop: 15,
     };
 
-    const roleSelect = ['user', 'admin'];
+    const roleSelect = [{value: 'user', text: 'user'}, {value: 'admin', text: 'admin'}];
 
     return (
 
@@ -101,10 +130,13 @@ class UserProfile extends Component {
             }
           <div style={formStyle}>
             <UserProfileForm
+              errors={this.state.errors}
+              user={this.state.user}
               newUser={this.state.isNewUser}
-              onSubmit={this.saveUser}
+              onSave={this.saveUser}
               deleteUser={this.deleteUser}
               onCancel={this.onCancel}
+              onChange={this.updateUserState}
               roleSelect={roleSelect} />
           </div>
         </div>
@@ -127,5 +159,12 @@ UserProfile.propTypes = {
 
 };
 
-export default connect(state => ({ users: state.users, user: state.user }),
+function mapStateToProps(state, ownProps) {
+  return {
+    user: state.user,  
+    users: usersFormattedForDropdown(state.users)
+  };
+};
+
+export default connect(mapStateToProps,
 { getUser, createUser, resetUser, saveUser, deleteUser, getUsers })(UserProfile);

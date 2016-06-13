@@ -1,7 +1,7 @@
 const Logger = require('mongoose').model('Logger');
 
 exports.createLog = function(req, res, next) {
-    // TODO: This fucntion returns a status of 200 even if the write to log fails
+    // TODO: (5) This fucntion returns a status of 200 even if the write to log fails
     const _logs = req.body;
     _createlog(_logs);
     res.sendStatus(200);

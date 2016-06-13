@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import TextArea from 'components/Common/text-area';
 import TextInputTask from 'components/Common/form-text-input';
 import DateTimePicker from 'components/Common/date-picker';
-import ComboBox from 'components/Common/combo-box';
 import SelectInput from 'components/Common/select-input';
 
 const TaskForm = ({
@@ -102,7 +101,6 @@ const TaskForm = ({
 TaskForm.propTypes = {
   onChange: PropTypes.func,
   errors: PropTypes.object,
-  fields: PropTypes.object,
   handleSubmit: PropTypes.func,
   onCancel: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,

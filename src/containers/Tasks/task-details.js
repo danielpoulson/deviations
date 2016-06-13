@@ -59,9 +59,9 @@ class TaskDetail extends React.Component {
 
   deleteTask = (event) => {
     event.preventDefault();
-    this.props.setLoading({ loading: false });
+    this.props.mainActions.setLoading({ loading: false });
     const _id = this.state.taskId;
-    this.props.deleteTask(_id);
+    this.props.taskActions.deleteTask(_id);
     toastr.error('Task has been deleted', 'Task Detail', { timeOut: 1000 });
     this.taskNav(this.props.main.MainId);
   };
@@ -96,8 +96,6 @@ class TaskDetail extends React.Component {
     }
 
     this.setState({errors: this.state.errors});
-
-    console.log(this.state.errors);
 
     return formIsValid;
   }

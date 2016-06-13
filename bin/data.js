@@ -25,7 +25,7 @@ export const myData = [
   },
   {
     date: "May 16",
-    count: 27
+    count: 31
   }
 ];
 
@@ -42,7 +42,7 @@ export const changeData = [
   },
   {
     "Years": 2016,
-    "closed": 73,
-    "open": 49
+    "closed": 92,
+    "open": 66
   }
 ]

@@ -1,6 +1,8 @@
 import { GET_USER, RESET_USER } from 'actions/actions_users';
 
-export default function (state = null, action) {
+const initialState = { _id: ''};
+
+export default function (state = initialState, action) {
 
   switch (action.type) {
     case GET_USER: {

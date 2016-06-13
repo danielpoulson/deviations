@@ -19,6 +19,52 @@ exports.getAllUsers = function(req, res) {
     });
 };
 
+exports.formatDB = function(req, res) {
+
+    User.aggregate(
+     [
+       { $project: 
+        { 
+          username: { $toLower: "$username" },
+          fullname: { $concat: [ "$firstName", " ", "$lastName" ] },
+          role: "$roles",
+          email: 1,
+          password: "$username"
+        }
+      }
+     ]
+    ).exec(function (err, users) {
+      var _users = users.map(function(user) {
+        mainCreate(user);
+      });
+
+      res.send(200);
+    });
+
+};
+
+function mainCreate (user) {
+
+  var userData = user;
+
+  userData.username = userData.username.toLowerCase();
+  userData.passwordHash = crypto.hash(userData.password);
+  //create new model
+  var _user = new User(userData);
+
+  _user.isNew = false;
+
+  //save model to MongoDB
+  _user.save(function (err) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log("User saved");
+    }
+  });
+};
+
 exports.updateUser = function (req, res, next) {
     const password = req.body.password;
     const userData = {};

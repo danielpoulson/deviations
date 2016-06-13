@@ -6,6 +6,8 @@ import TaskList from 'components/Tasks/task-list';
 import FileList from 'containers/Files/file-list';
 import DeviationLog from 'components/Deviations/deviation-log';
 import {usersFormattedForDropdown} from '../../selectors/selectors';
+import {devFormIsValid} from './dev-form-validation';
+import {statusData, outcomesData, categoriesData, classifiesData} from './select-data';
 import classNames from 'classnames';
 import toastr from 'toastr';
 
@@ -40,46 +42,11 @@ class DeviationDetail extends Component {
       tasks: [],
       TasksTab: 'hidden',
       tCount: 0,
-      status: [
-        { value: 1, text: 'Review' },
-        { value: 2, text: 'Approved' },
-        { value: 3, text: 'On-hold' },
-        { value: 4, text: 'Closed' },
-        { value: 5, text: 'Cancelled' },
-      ],
-      outcomes: [ 
-        { value: 'Accept', text: 'Accept'},
-        { value: 'Rework', text: 'Rework'},
-        { value: 'Repair', text: 'Repair'},
-        { value: 'Reject', text: 'Reject'},
-        { value: '', text: ''}
-      ],
-      categories: [ 
-        { value: 'Bulk', text: 'Bulk'},
-        { value: 'Finished Goods', text: 'Finished Goods'},
-        { value: 'Packaging / Labels', text: 'Packaging / Labels'},
-        { value: 'Raw Materials', text: 'Raw Materials'},
-        { value: 'other', text: 'other'},
-        { value: '', text: ''}
-      ],
-      classifies: [
-        { value: 'Contamination', text: 'Contamination'},
-        { value: 'Customer Complaint', text: 'Customer Complaint'},
-        { value: 'Documentation', text: 'Documentation'},
-        { value: 'Formulation Difficulty', text: 'Formulation Difficulty'},
-        { value: 'Leakers', text: 'Leakers'},
-        { value: 'Not Assigned', text: 'Not Assigned'},
-        { value: 'out of Specification', text: 'out of Specification'},
-        { value: 'Operator Error', text: 'Operator Error'},
-        { value: 'Procedure', text: 'Procedure'},
-        { value: 'Transport Issue', text: 'Transport Issue'}, 
-        { value: 'Stock Discrepancy', text: 'Stock Discrepancy'},
-        { value: 'Other', text: 'Other'},
-        { value: 'Packaging / Labels', text: 'Packaging / Labels'},
-        { value: 'Raw Materials', text: 'Raw Materials'},
-        { value: 'other', text: 'other'},
-        { value: '', text: ''}
-      ]};
+      status: statusData,
+      outcomes: outcomesData,
+      categories: categoriesData,
+      classifies: classifiesData
+    };
 
     this.onApprove = this.onApprove.bind(this);
     this.onFinal = this.onFinal.bind(this);
@@ -121,26 +88,16 @@ class DeviationDetail extends Component {
 
   onCloseDev(e) {
     e.preventDefault();
-    const _devform = this.props.devform;
-    const _data = {
-      dvNo: this.state._dvNo,
-      dvAssign: _devform.dvAssign.value,
-      dvBatchNo: _devform.dvBatchNo.value,
-      dvCat: _devform.dvCat.value,
-      dvClass: _devform.dvClass.value,
-      dvCreated: _devform.dvCreated.value,
-      dvCust: _devform.dvCust.value,
-      dvCustSend: _devform.dvCustSend.value,
-      dvDOM: _devform.dvDOM.value,
-      dvDescribe: _devform.dvDescribe.value,
-      dvInvest: _devform.dvInvest.value,
-      dvMatName: _devform.dvMatName.value,
-      dvMatNo: _devform.dvMatNo.value,
-      dvOutCome: _devform.dvOutCome.value,
-      dvSupplier: _devform.dvSupplier.value,
-      dvClosed: 1,
+
+    if(this.props.main.user.role !== 'admin') {
+      toastr.warning('Only QA can closed a deviation! If deviation is complete notify QA.',
+        'Deviation Detail', { timeOut: 2000 });
+      return; 
     }
 
+    let _data = this.state.deviation;
+    
+    _data.dvClosed = 1;
     _data.dvLog = this.logMessage('Deviation Completed');
 
     this.props.closeDeviation(_data);
@@ -185,16 +142,18 @@ class DeviationDetail extends Component {
 
   saveDetail(event, closed) {
     event.preventDefault();
-
-    // if(!this.taskFormIsValid()) {
-    //   return; 
-    // }
-
     let _dev = this.state.deviation;
+
+    let validation = devFormIsValid(_dev);
+    this.setState({errors: validation.errors});
+
+    if(!validation.formIsValid) {
+      return; 
+    }
 
     if (this.state._dvNo !== 'new') {
       _dev.dvLog = this.logMessage('Deviation Edit');
-      _dev.dvNotChanged = this.state.dvAssign !== this.props.deviation.dvAssign;
+      _dev.dvNotChanged = _dev.dvAssign === this.props.deviation.dvAssign;
       _dev.dvClosed = 0;
       this.props.editDeviation(_dev);    
     } else {
@@ -237,7 +196,7 @@ class DeviationDetail extends Component {
 
   render() {
 
-    const _title = this.props.deviation !== null ? `${this.props.deviation.dvNo} - ${this.props.deviation.dvMatName}` : 'New - Deviation';
+    const _title = this.props.deviation.dvNo !== '' ? `${this.state.deviation.dvNo} - ${this.state.deviation.dvMatName}` : 'New - Deviation';
 
     const detailTabClass = classNames({
       active: this.state.DetailTab === 'show'
@@ -263,7 +222,7 @@ class DeviationDetail extends Component {
       hidden: this.props.main.MainId === 'new'
     });
 
-    // TODO The title for a new deviation is undefined - undefined needs to state "New Deviaiton"
+    // TODO (1) The title for a new deviation is undefined - undefined needs to state "New Deviaiton"
 
     return (
     <div>

@@ -9,8 +9,6 @@ export function createLog(data) {
   axios.post(url, data);
   data._id = Math.random() * (1000000 - 0) + 0;
 
-  console.log(data);
-
   return {
     type: ADD_LOG,
     payload: data,

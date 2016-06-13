@@ -22,7 +22,7 @@ const TextArea = (props) => {
           value={props.value}
           rows={props.rows}
           onChange={props.onChange} />
-        <div className="input">{props.error}</div> 
+          {props.error && <div className="alert alert-danger">{props.error}</div>}
       </div>
     </div>
   );

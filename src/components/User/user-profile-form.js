@@ -1,131 +1,93 @@
 import React, { PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
 import TextInputTask from 'components/Common/form-text-input';
-import ComboBox from 'components/Common/combo-box';
-export const fields = ['_id', 'fullname', 'username', 'email', 'dept', 'role', 'password'];
+import SelectInput from 'components/Common/select-input';
 
-const newdata = {  // used to populate "account" reducer when "Load" is clicked
-  role: 'user',
-};
+const UserProfileForm = ({ errors, user, handleSubmit, deleteUser, onChange, onCancel, onSave, roleSelect, newUser}) => {
 
-const validate = values => {
-  const errors = {};
+  return (
+    <div>
+      <form className="form form-horizontal">
 
-  if (!values.username) {
-    errors.username = 'This field is required';
-  } else if (values.username.length < 5) {
-    errors.username = 'Must more than 6 characters';
-  }
+        <TextInputTask
+          name="username"
+          label="Username"
+          value={user.username}
+          onChange={onChange}
+          placeholder="Enter Username (Required)"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-3"
+          error={errors.username}
+        />
 
-  if (!values.fullname) {
-    errors.fullname = 'This field is required';
-  } else if (values.fullname.length < 8) {
-    errors.fullname = 'Must more than 8 characters';
-  }
+        <TextInputTask
+          name="fullname"
+          label="Fullname"
+          value={user.fullname}
+          onChange={onChange}
+          placeholder="Enter Users Fullname (Required)"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-3"
+          error={errors.fullname}
+        />
 
-  if (!values.email) {
-    errors.email = 'This field is required';
-  } else if (values.email.length < 8) {
-    errors.email = 'Must more than 8 characters';
-  }
+        <TextInputTask
+          name="email"
+          label="Email"
+          value={user.email}
+          onChange={onChange}
+          placeholder="Enter Users email (Required)"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-3"
+          error={errors.email}
+        />
 
-  return errors;
-};
+        <SelectInput
+          name="role"
+          label="Role"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-3"
+          value={user.role}
+          defaultOption="Select Role"
+          options={roleSelect}
+          onChange={onChange}
+          error={errors.role}/>
 
-@reduxForm({
-  form: 'user',
-  fields,
-  validate
-}, state => ({
-  initialValues: state.user ? state.user : newdata,
-})
-)
+        <TextInputTask
+          name="password"
+          label="Password"
+          value={user.password}
+          onChange={onChange}
+          placeholder="***************"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-3"
+          error={errors.password}
+        />
 
-export default class UserProfileForm extends React.Component {
-
-  render() {
-    const {
-      fields: { fullname, username, email, role, password },
-        handleSubmit,
-        deleteUser,
-        onCancel,
-        roleSelect,
-        newUser,
-      } = this.props;
-
-    return (
-      <div>
-        <form className="form form-horizontal" onSubmit={handleSubmit}>
-
-          <TextInputTask
-            name="username"
-            label="User Name"
-            placeholder="Enter Users username (Required)"
-            labelstyle="col-sm-2 control-label"
-            inputdiv="col-sm-3"
-            {...username}
-          />
-
-          <TextInputTask
-            name="fullname"
-            label="Full Name"
-            placeholder="Enter Users fullname (Required)"
-            labelstyle="col-sm-2 control-label"
-            inputdiv="col-sm-3"
-            {...fullname}
-          />
-
-          <TextInputTask
-            name="email"
-            label="Email"
-            placeholder="Enter Users email (Required)"
-            labelstyle="col-sm-2 control-label"
-            inputdiv="col-sm-3"
-            {...email}
-          />
-
-          <ComboBox
-            label="Role"
-            data={roleSelect}
-            defaultValue={role[0]}
-            labelstyle="col-sm-2 control-label"
-            inputdiv="col-sm-3"
-            { ...role  }
-          />
-
-          <TextInputTask
-            name="password"
-            label="Password"
-            placeholder="***************"
-            labelstyle="col-sm-2 control-label"
-            inputdiv="col-sm-3"
-            type="password"
-            { ...password }
-          />
-
-          <div className="col-sm-9 col-md-offset-2">
-            <button type="submit" className="btn btn-success pull-left">
-              Save
-            </button>
-            <button className="btn btn-info dp-margin-10-LR" onClick={onCancel}>
-              Cancel
-            </button>
-            <button className="btn btn-danger dp-margin-10-LR" disabled={newUser} onClick={deleteUser}>
-              Delete
-            </button>
-          </div>
-          </form>
-      </div>
-		);
-  }
+        <div className="col-sm-9 col-md-offset-2">
+          <button type="submit" className="btn btn-success pull-left" onClick={onSave}>
+            Save
+          </button>
+          <button className="btn btn-info dp-margin-10-LR" onClick={onCancel}>
+            Cancel
+          </button>
+          <button className="btn btn-danger dp-margin-10-LR" disabled={newUser} onClick={deleteUser}>
+            Delete
+          </button>
+        </div>
+        </form>
+    </div>
+  );
 }
 
 UserProfileForm.propTypes = {
-  fields: PropTypes.object,
   errors: PropTypes.object,
-  handleSubmit: PropTypes.func,
+  onChange: PropTypes.func,
+  errors: PropTypes.object,
+  onSave: PropTypes.func,
   onCancel: PropTypes.func,
   deleteUser: PropTypes.func.isRequired,
   newUser: PropTypes.bool,
   roleSelect: PropTypes.array.isRequired,
 };
+
+export default UserProfileForm;

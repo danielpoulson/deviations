@@ -29,6 +29,10 @@ export default class BookoutButton extends React.Component {
   };
 
   deleteFile = () => {
+    if (this.props.user.role !== 'admin') {
+      return;
+    }
+
     const _log = {  
       SourceId: this.props.source,
       LogType: 'FILE',
@@ -51,18 +55,17 @@ export default class BookoutButton extends React.Component {
     if (this.props.fsBooked > 0) {
       if (this.props.user.role === 'admin') {
 
-        text = 'Delete';
-        action = this.deleteFile;
+        text = 'Delete';   
         classButton = 'btn btn-danger btn-xs';
         classSpan = 'glyphicon glyphicon-trash';
 
       } else {
-
         text = 'Booked Out';
         classButton = 'btn btn-danger btn-xs';
-        classSpan = 'glyphicon glyphicon-trash disabled';
-
+        classSpan = 'fa fa-hand-paper-o';
       }
+
+      action = this.deleteFile;
 
     } else {
       text = 'Book out';

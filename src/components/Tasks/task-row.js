@@ -10,7 +10,7 @@ const TaskRow = (props) => {
   const minColChamp = {
     minWidth: 140
   }
-  const capa = task.TKCapa === 1 ? 'fa fa-info-circle' : '';
+  const capa = task.TKCapa === 1 ? 'fa fa-product-hunt' : '';
   return (
     <tr onClick={props.getTask}>
       <td>{task.DevId} - {task.TKName} <i className={capa}></i></td>

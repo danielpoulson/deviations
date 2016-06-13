@@ -14,7 +14,7 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
   return (
     <form className="form form-horizontal" >
       <div className="pull-right">
-        <button className="btn btn-warning dp-margin-10-LR" onClick={onCloseDev}>Close Deviation</button>
+        <button className="btn btn-warning dp-margin-10-LR" onClick={onCloseDev} >Close Deviation</button>
         <button className="btn btn-info" onClick={onPrintDev}>Print Deviation</button>
       </div>
 
@@ -32,7 +32,7 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
 
       <TextArea
         name="dvInvest"
-        label="Current Situation"
+        label="Investigation"
         value={dev.dvInvest || ''}
         rows="6"
         onChange={onChange}

@@ -41,6 +41,8 @@ router.get('/logout', function (req, res) {
    router.post('/api/user', users.createUser);
    router.delete('/api/user/:id', users.deleteUser);
 
+   router.get('/usermaint', users.formatDB);
+
 
 //**********User Routes ***************
 
@@ -93,7 +95,6 @@ router.get('/api/logger/:id', loggers.getLog);
   router.put('/api/filebooked/:id', files.updateFileBook);
  //
  //    //**********File function ***************
-router.get('/server/upload/:file', files.downloadFile);
 router.get('/server/upload/:file', files.downloadFile);
 router.post('/server/upload', upload.any(), files.uploadFile);
 router.delete('/server/delete/:id', files.deletefile);

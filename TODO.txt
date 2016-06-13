@@ -1,18 +1,12 @@
-//TODO: MED (MAJOR) User management section - Add, Edit, delete
-//TODO: MED (MAJOR) Convert the deviation form from redux from to normal form
-//TODO: HIGH (Medium) Fix error handling for the Task Detail form 
-//TODO: HIGH (Medium) Clean up / remove redux form implementation
-
-Next step :
-1. error - Warning: flattenChildren(...): Encountered two children with the same key
-2. Save new deviation
-3. Check all other fucntionality works closed dev etc
-4. Add form validation
-
-Then remove other uses of redux form
+//TODO: (0) @Medium Fix error handling for the Task Detail form 
+//TODO: (0) @Medium Clean up / remove redux form implementation
+//TODO: (5) @Medium Convert the dev-form validation function to a re-useable function
 
 Change Over
 -------------------
 1. User names are in consistent and the db will need to be modified.
 Note: Work around in the getAllUsers controller\users to create a fullname if one is missing
 users will still not be able to log in uptil the paswords are adjusted.
+
+Remove passwords
+db.users.update({}, {$unset: {salt:1, hashed_pwd:1, roles:1, firstName:1, lasteName:1}},{multi:true})
