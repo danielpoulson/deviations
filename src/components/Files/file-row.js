@@ -8,7 +8,17 @@ import BookoutButton from 'components/Common/bookout-button';
 const FileRow = (props) => {
 
   const file = props.file;
-  const fullFileName = `${file.fsDevNo} - ${file.fsFileName}.${file.fsFileExt}`;
+  const myRe = /DV\d{6}\s[-]\s/;
+  const hasDVprefix = myRe.exec(file.fsFileName);
+  let fullFileName = '';
+
+  // This is adding in as older file names are prefix with the devition number
+  // This prevents the deviation number to be added twice.
+  if(hasDVprefix) {
+      fullFileName = `${file.fsFileName}.${file.fsFileExt}`;
+  } else {
+      fullFileName = `${file.fsDevNo} - ${file.fsFileName}.${file.fsFileExt}`;
+  }
 
   return (
     <tr>

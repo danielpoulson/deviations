@@ -16,6 +16,7 @@ exports.downloadFile = function (req, res) {
         filename = filename.slice(6);
         file = '.././uploads/' + filename;
     } else {
+
         file = '.././uploads/' + filename;
     }
 
@@ -23,13 +24,13 @@ exports.downloadFile = function (req, res) {
       if (err) {
         console.log(err);
       } else {
-            if(fileType == 'exp'){
+        if(fileType == 'exp'){
 
-                File.find({fsFilePath : filename})
-                    .exec(function (err, collection) {
-                    fileDeletion(collection[0]._id);
-                });
-            }
+            File.find({fsFilePath : filename})
+                .exec(function (err, collection) {
+                fileDeletion(collection[0]._id);
+            });
+        }
       }
     });
 };

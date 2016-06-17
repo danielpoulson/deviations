@@ -41,7 +41,7 @@ router.get('/logout', function (req, res) {
    router.post('/api/user', users.createUser);
    router.delete('/api/user/:id', users.deleteUser);
 
-   router.get('/usermaint', users.formatDB);
+   // router.get('/usermaint', users.formatDB);
 
 
 //**********User Routes ***************

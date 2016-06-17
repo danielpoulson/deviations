@@ -12,7 +12,7 @@ class FileZone extends React.Component {
 
     files.forEach((file) => {
 
-      const myRe = /C{2}\d{6}\s[-]\s/;
+      const myRe = /DV\d{6}\s[-]\s/;
       const _fileName = file.name;
       let _newFileName = '';
       const myArray = myRe.exec(_fileName);

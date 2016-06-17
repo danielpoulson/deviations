@@ -140,7 +140,7 @@ function getDeviationList(int) {
                         var TKName = obj.TKName;
                         var TKTarg = moment(obj.TKTarg).format("DD/MM/YY");
                         var TKChamp = obj.TKChamp;
-                        let TKStat = null;
+                        var TKStat = null;
                         var DevId = obj.DevId;
 
                         switch (obj.TKStat) {
