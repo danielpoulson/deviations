@@ -38,7 +38,7 @@ TextArea.propTypes = {
   inputdiv: PropTypes.string,
   inputstyle: PropTypes.string,
   labelstyle: PropTypes.string,
-  rows: PropTypes.string,
+  rows: PropTypes.string
 };
 
 export default TextArea;

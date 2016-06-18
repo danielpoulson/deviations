@@ -29,11 +29,11 @@ SelectInput.propTypes = {
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   defaultOption: PropTypes.string,
-  value: PropTypes.any,
   error: PropTypes.string,
   inputdiv: PropTypes.string,
   labelstyle: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.object)
+  options: PropTypes.arrayOf(PropTypes.object),
+  value: PropTypes.string
 };
 
 export default SelectInput;

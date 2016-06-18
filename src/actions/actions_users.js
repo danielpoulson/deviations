@@ -14,7 +14,7 @@ export function getUsers() {
 
   return {
     type: GET_USERS,
-    payload: request,
+    payload: request
   };
 
 }
@@ -25,14 +25,14 @@ export function getUser(id) {
 
   return {
     type: GET_USER,
-    payload: request,
+    payload: request
   };
 
 }
 
 export function resetUser() {
   return {
-    type: RESET_USER,
+    type: RESET_USER
   };
 }
 
@@ -42,7 +42,7 @@ export function createUser(data) {
 
   return {
     type: USER_CREATED,
-    fullname: data.fullname,
+    fullname: data.fullname
   };
 }
 
@@ -52,7 +52,7 @@ export function saveUser(data) {
 
   return {
     type: SAVE_USER,
-    data,
+    data
   };
 }
 
@@ -65,6 +65,6 @@ export function deleteUser(data) {
   // See user-profile ondeleteUser
   return {
     type: DELETED_USER,
-    fullname,
+    fullname
   };
 }

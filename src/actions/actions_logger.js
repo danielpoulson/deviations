@@ -11,7 +11,7 @@ export function createLog(data) {
 
   return {
     type: ADD_LOG,
-    payload: data,
+    payload: data
   };
 }
 
@@ -21,7 +21,7 @@ export function getLog(data) {
 
   return {
     type: GET_LOG,
-    payload: request,
+    payload: request
   };
 }
 

@@ -308,7 +308,11 @@ class DeviationDetail extends Component {
 }
 
 DeviationDetail.propTypes = {
-
+  dev: PropTypes.object.isRequired
+  onSave: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func.isRequired,
+  errors: PropTypes.object,
 };
 
 function mapStateToProps(state, ownProps) {

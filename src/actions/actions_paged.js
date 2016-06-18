@@ -4,7 +4,7 @@ export function loadPage(data) {
 
   return {
     type: LOAD_PAGE,
-    data,
+    data
   };
 
 }

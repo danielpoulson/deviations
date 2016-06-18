@@ -38,6 +38,7 @@ export default class Deviations extends Component {
     this.onSearchText = this.onSearchText.bind(this);
     this.onSortByClick = this.onSortByClick.bind(this);
     this.onGetDeviation = this.onGetDeviation.bind(this);
+    this.linkClick = this.linkClick.bind(this);
   }
 
   componentWillMount() {
@@ -180,7 +181,7 @@ export default class Deviations extends Component {
               activePage = {this.state.activePage}
               numPage = {this.props.deviations.per_page}
               count = {this.props.deviations.total}
-              getPage = {this.linkClick.bind(this)} />
+              getPage = {this.linkClick} />
           </div>
         </div>
 

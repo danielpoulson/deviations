@@ -19,7 +19,7 @@ export function getDeviations(data) {
 
   return {
     type: GET_DEVS,
-    payload: request,
+    payload: request
   };
 
 }
@@ -31,7 +31,7 @@ export function getDeviation(data) {
 
   return {
     type: GET_DEV,
-    payload: request,
+    payload: request
   };
 
 }
@@ -44,7 +44,7 @@ export function addDeviation(data) {
 
   return {
     type: ADD_DEV,
-    payload: request,
+    payload: request
   };
 
 }
@@ -56,7 +56,7 @@ export function closeDeviation(data){
 
   return {
     type: DELETE_DEV,
-    payload: _data.dvNo,
+    payload: _data.dvNo
   };
 }
 
@@ -68,7 +68,7 @@ export function editDeviation(data) {
 
   return {
     type: EDIT_DEV,
-    payload: _data,
+    payload: _data
   };
 
 }
@@ -78,14 +78,14 @@ export function editDeviation(data) {
 export function resetDeviation(){
   return {
     type: NEW_DEVIATION
-  }
+  };
 }
 
 export function loadPage(data) {
   return {
 
     type: LOAD_PAGE_DEVS,
-    data,
+    data
   };
 
 }
@@ -96,7 +96,7 @@ export function createLog(data) {
 
   return {
     type: CREATE_LOG,
-    payload: data,
+    payload: data
   };
 
 }
@@ -107,7 +107,7 @@ export function bookoutFile(data) {
 
   return {
     type: BOOKOUT_FILE,
-    payload: data,
+    payload: data
   };
 
 }
@@ -117,6 +117,6 @@ export function exportDeviations(search) {
   axios.post(url, search);
 
   return {
-    type: 'EXPORT_DEVS',
+    type: 'EXPORT_DEVS'
   };
 }

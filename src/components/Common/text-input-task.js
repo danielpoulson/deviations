@@ -39,7 +39,7 @@ TextInputTask.propTypes = {
   dpInputCol: PropTypes.string,
   dpLabelCol: PropTypes.string,
   touched: PropTypes.bool,
-  type: PropTypes.string,
+  type: PropTypes.string
 };
 
 export default TextInputTask;

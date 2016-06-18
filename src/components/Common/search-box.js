@@ -5,7 +5,7 @@ const SearchBox = ({ searchText, onChange }) => {
   const spanStyle = {
     background: '#71ABFF',
     color: '#FFFFFF',
-    border: '1px solid #71ABFF',
+    border: '1px solid #71ABFF'
   };
   return (
     <div className="col-sm-6 pull-right input-group " style={divStyle}>
@@ -23,7 +23,7 @@ const SearchBox = ({ searchText, onChange }) => {
 
 SearchBox.propTypes = {
   searchText: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func
 };
 
 export default SearchBox;

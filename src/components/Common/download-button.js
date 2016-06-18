@@ -3,8 +3,13 @@ import toastr from 'toastr';
 
 
 export default class DownloadButton extends React.Component {
+  constructor(props) {
+    super(props);
 
-  onDownload = () => {
+    this.onDownload = this.onDownload.bind(this);
+  }
+
+  onDownload() {
 
     if (window.ActiveXObject || 'ActiveXObject' in window) {
       // Always true if browser is Internet Explorer
@@ -12,13 +17,11 @@ export default class DownloadButton extends React.Component {
     } else {
 
       window.location.href = `/server/upload/${this.props.fileLoad}`;
-      console.log('get file');
       if (this.props.export === 'hidden') {
-        console.log('Exoprt is hidden');
         this.props.removeFile(this.props.fileId);
       }
     }
-  };
+  }
 
   render() {
     return (
@@ -31,8 +34,8 @@ export default class DownloadButton extends React.Component {
 }
 
 DownloadButton.propTypes = {
-  fileLoad: React.PropTypes.any,
+  fileLoad: React.PropTypes.string,
   export: React.PropTypes.string,
   removeFile: React.PropTypes.func,
-  fileId: React.PropTypes.string,
+  fileId: React.PropTypes.string
 };

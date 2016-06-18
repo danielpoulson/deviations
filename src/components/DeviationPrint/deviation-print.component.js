@@ -27,37 +27,36 @@ export default function DeviationPrint (props) {
 					</tr>
 					<tr>
 						<td className={`${devColLeft}`}><strong>Outcome :</strong> {props.dev.dvOutCome}</td>
-						<td className={`${devColRight}`}><strong>Category :</strong> {props.dev.dvCat}</td>
+					<	td className={`${devColRight}`}><strong>Category :</strong> {props.dev.dvCat}</td>
 					</tr>
 				</tbody>
 			</table>
-	   	    <div >
-		    	<div className={`${devdescribe}`}><b>Describe the Deviation</b></div>
-		    	<div className="">{props.dev.dvDescribe}</div>
-		    </div>
+			<div>
+				<div className={`${devdescribe}`}><b>Describe the Deviation</b></div>
+				<div className="">{props.dev.dvDescribe}</div>
+			</div>
 
-	        <div className={`${devdescribe}`}><b>Investigation</b></div>
-	        <div >{props.dev.dvInvest}</div>
+			<div className={`${devdescribe}`}><b>Investigation</b></div>
+			<div >{props.dev.dvInvest}</div>
 
 			<div className="page-break">
-			    <div className="row logo-page-break"><img src="./src/images/RED_SOLID.jpg" className={Chemlogo} />
-			    </div>
-			    <div className={devdescribe}>
-			        <div className="h4">Deviation Task and CAPA Actions</div>
-			    </div>
-			    <div>
-			        <TaskList
-			            tasklist = {props.task}
-			            type = "All" />
-			    </div>
+				<div className="row logo-page-break"><img src="./src/images/RED_SOLID.jpg" className={Chemlogo} />
+			</div>
+			<div className={devdescribe}>
+				<div className="h4">Deviation Task and CAPA Actions</div>
+			</div>
+			<div>
+				<TaskList
+				tasklist = {props.task}
+				type = "All" />
+			</div>
 			</div>
 		</div>
 	);
 }
 
 DeviationPrint.propTypes = {
-}
-
-DeviationPrint.defaultProps = {
-}
+	dev: PropTypes.object.isRequired,
+	task: PropTypes.array
+};
 

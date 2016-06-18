@@ -19,7 +19,7 @@ class TextInput extends React.Component {
       <fieldset className={wrapperClass}>
         <label className={_labelstyle} htmlFor={this.props.name}>{this.props.label}</label>
         <div className={_inputdiv}>
-          <input type={this.props.type ? this.props.type : 'text' }
+          <input type={this.props.type ? this.props.type : 'text'}
             name={this.props.name}
             className={_inputstyle}
             placeholder={this.props.placeholder}
@@ -47,5 +47,5 @@ TextInput.propTypes = {
   inputstyle: PropTypes.string,
   labelstyle: PropTypes.string,
   touched: PropTypes.bool,
-  type: PropTypes.string,
+  type: PropTypes.string
 };

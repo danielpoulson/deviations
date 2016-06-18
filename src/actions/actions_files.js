@@ -13,7 +13,7 @@ export function getFiles(data) {
 
   return {
     type: GET_FILES,
-    payload: request,
+    payload: request
   };
 
 }
@@ -22,7 +22,7 @@ export function addFile(data) {
 
   return {
     type: ADD_FILE,
-    payload: data,
+    payload: data
   };
 
 }
@@ -33,7 +33,7 @@ export function deleteFile(id) {
 
   return {
     type: DELETE_FILE,
-    payload: id,
+    payload: id
   };
 
 }
@@ -42,7 +42,7 @@ export function removeFile(id) {
 
   return {
     type: DELETE_FILE,
-    payload: id,
+    payload: id
   };
 
 }
@@ -53,7 +53,7 @@ export function bookoutFile(id) {
 
   return {
     type: BOOKOUT_FILE,
-    payload: id,
+    payload: id
   };
 
 }

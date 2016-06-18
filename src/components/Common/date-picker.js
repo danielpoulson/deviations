@@ -42,7 +42,7 @@ DatePicker.propTypes = {
   error: PropTypes.string,
   labelstyle: PropTypes.string,
   value: PropTypes.any,
-  touched: PropTypes.bool,
+  touched: PropTypes.bool
 };
 
 export default DatePicker;

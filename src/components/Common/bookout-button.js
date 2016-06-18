@@ -2,10 +2,16 @@ import React from 'react';
 import toastr from 'toastr';
 
 export default class BookoutButton extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onBookout = this.onBookout.bind(this);
+    this.deleteFile = this.deleteFile.bind(this);
+  }
 
   // TODO: LOW Remove CC_ActDept : this.props.user.dept
   // Not sure if this is needed or not.
-  onBookout = () => {
+  onBookout() {
       // TODO MED 3 If download does not complete donot delete from server.
     if (window.ActiveXObject || 'ActiveXObject' in window) {
       // Always true if browser is Internet Explorer
@@ -18,7 +24,7 @@ export default class BookoutButton extends React.Component {
         LogMessage: `File booked out - ${this.props.fileLoad}`,
         LogBy: this.props.user.fullname,
         LogDate: new Date()
-      }
+      };
 
       window.location.href = `/server/upload/${this.props.fileLoad}`;
 
@@ -26,9 +32,9 @@ export default class BookoutButton extends React.Component {
       this.props.bookoutFile(this.props.fileId);
 
     }
-  };
+  }
 
-  deleteFile = () => {
+  deleteFile() {
     if (this.props.user.role !== 'admin') {
       return;
     }
@@ -43,7 +49,7 @@ export default class BookoutButton extends React.Component {
 
     this.props.createLog(_log);
     this.props.deleteFile(this.props.fileId);
-  };
+  }
 
   render() {
 
@@ -86,5 +92,5 @@ BookoutButton.propTypes = {
   bookoutFile: React.PropTypes.func,
   fileLoad: React.PropTypes.string,
   createLog: React.PropTypes.func,
-  deleteFile: React.PropTypes.func,
+  deleteFile: React.PropTypes.func
 };
