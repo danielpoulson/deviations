@@ -6,7 +6,7 @@
     "clean": "rimraf dist",
     "build": "webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js",
     "build:production": "npm run clean && npm run build",
-    "lint": "eslint src/components/Deviations",
+    "lint": "eslint src/components",
     "start": "NODE_ENV=development node bin/server.js",
     "startProduction": "NODE_ENV=production node bin/server.js",
     "test": "karma start",

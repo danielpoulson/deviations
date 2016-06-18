@@ -100,11 +100,15 @@ const DevDetailForm = ({dev, onSave, onCancel, onChange, onDateChange, errors}) 
       </div>
     </form>
   );
-}
+};
 
 DevDetailForm.propTypes = {
-    handleSubmit: PropTypes.func,
-    onCancel: PropTypes.func,
+    onDateChange: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    dev: React.PropTypes.object.isRequired,
+    errors: React.PropTypes.object.isRequired
   };
 
 export default DevDetailForm;

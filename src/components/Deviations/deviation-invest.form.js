@@ -92,15 +92,22 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
       </div>
     </form>
   );
-}
+};
 
 DevInvestForm.propTypes = {
+    dev: React.PropTypes.object.isRequired,
+    categories: React.PropTypes.array.isRequired,
+    classifies: React.PropTypes.array.isRequired,
+    outcomes: React.PropTypes.array.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onDateChange: PropTypes.func.isRequired,
     onCloseDev: PropTypes.func.isRequired,
     onPrintDev: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
     status: PropTypes.array.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 export default DevInvestForm;

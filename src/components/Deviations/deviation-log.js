@@ -6,7 +6,7 @@ const DeviationLog = (props) => {
 
   const _log = props.log;
   let logs = [];
-  const listStyleLi = { padding: 5 }
+  const listStyleLi = {padding: 5};
 
   if (_log !== null && Object.keys(_log).length !== 0) {
     const sortlogs = _log.sort(function (a, b) {
@@ -41,7 +41,7 @@ DeviationLog.propTypes = {
   logTab: PropTypes.string,
   onApprove: PropTypes.func,
   onFinal: PropTypes.func,
-  onCancel: PropTypes.func,
+  onCancel: PropTypes.func
 };
 
 export default DeviationLog;

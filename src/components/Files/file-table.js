@@ -5,9 +5,10 @@ const FileTable = (props) => {
 
   const _files = props.files;
   const hidden = props.export;
+  let files = [];
 
   if (Object.keys(_files).length > 0) {
-    var files = _files.map((file) => <FileRow key={file._id} file={file}
+    files = _files.map((file) => <FileRow key={file._id} file={file}
       user={props.user}
       export={hidden}
       createLog={props.createLog}
@@ -42,7 +43,7 @@ FileTable.propTypes = {
   createLog: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   removeFile: PropTypes.func.isRequired,
-  bookoutFile: PropTypes.func.isRequired,
+  bookoutFile: PropTypes.func.isRequired
 };
 
 export default FileTable;

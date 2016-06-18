@@ -4,8 +4,12 @@ import toastr from 'toastr';
 import Request from 'superagent';
 
 class FileZone extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onDrop = this.onDrop.bind(this);
+  }
   // TODO: MED 2 Change function of the filezone drop function to multiply files
-  onDrop = (files) => {
+  onDrop(files) {
     const dvNo = this.props.dvNo;
     const addFile = this.props.addFile;
     const req = Request.post('/server/upload');
@@ -32,7 +36,7 @@ class FileZone extends React.Component {
     req.end((err, res) => addFile(res.body));
 
     toastr.success('File has been uploaded', 'File Upload', { timeOut: 1000 });
-  };
+  }
 
   render() {
 
@@ -49,7 +53,7 @@ class FileZone extends React.Component {
 FileZone.propTypes = {
   dvNo: PropTypes.string,
   addFile: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 
 };
 

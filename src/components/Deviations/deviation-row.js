@@ -6,7 +6,7 @@ import { dvextract, dvtoprow, dvbtmrow } from './deviations-list.scss';
 const DeviationRow = (props) => {
   const _dev = props.deviation;
   const rowStyle = {
-    border: 'none',
+    border: 'none'
   };
 
   let topRow = {};
@@ -21,7 +21,7 @@ const DeviationRow = (props) => {
 
   return (
     <tbody className="dpHand">
-  		<tr style={topRow} onClick = { props.getDeviation.bind(null, props.deviation.dvNo)} >
+      <tr style={topRow} onClick = {props.getDeviation.bind(null, props.deviation.dvNo)} >
         <td className={dvextract}>{_dev.dvNo}</td>
         <td className={dvextract}>{_dev.dvMatNo}</td>
         <td className={dvextract}>{_dev.dvMatName}</td>
@@ -29,7 +29,7 @@ const DeviationRow = (props) => {
         <td>{calculateDay(_dev.dvCreated, _dev.dvClosed)}</td>
         <td className={dvextract}>{_dev.dvAssign}</td>
       </tr>
-      <tr  className={bottomRow} onClick = { props.getDeviation.bind(null, props.deviation.dvNo)}>
+      <tr  className={bottomRow} onClick = {props.getDeviation.bind(null, props.deviation.dvNo)}>
         <td className={dvextract} style={rowStyle} colSpan="6">{_dev.dvExtract}</td>
       </tr>
     </tbody>
@@ -38,7 +38,8 @@ const DeviationRow = (props) => {
 
 DeviationRow.propTypes = {
   getDeviation: PropTypes.func,
-  deviaton: PropTypes.object,
+  deviation: PropTypes.object,
+  detailView: React.PropTypes.string.isRequired
 };
 
 export default DeviationRow;

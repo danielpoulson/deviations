@@ -55,7 +55,7 @@ FileRow.propTypes = {
   user: PropTypes.object.isRequired,
   createLog: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
-  bookoutFile: PropTypes.func.isRequired,
+  bookoutFile: PropTypes.func.isRequired
 };
 
 export default FileRow;

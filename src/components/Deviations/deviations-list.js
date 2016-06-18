@@ -6,34 +6,35 @@ import { devtable } from './deviations-list.scss';
 const DeviationList = (props) => {
 
   const _devs = props.devlist;
+  let deviations = [];
 
   const th1Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'dvNo',
+    'fa fa-sort-asc': props.colSelected === 'dvNo'
   });
 
   const th2Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'dvMatNo',
+    'fa fa-sort-asc': props.colSelected === 'dvMatNo'
   });
 
   const th3Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'dvMatName',
+    'fa fa-sort-asc': props.colSelected === 'dvMatName'
   });
 
   const th4Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'dvCust',
+    'fa fa-sort-asc': props.colSelected === 'dvCust'
   });
 
   const th5Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'dvLog',
+    'fa fa-sort-asc': props.colSelected === 'dvLog'
   });
 
   const th6Class = classNames({
-    'fa fa-sort-asc': props.colSelected === 'dvAssign',
+    'fa fa-sort-asc': props.colSelected === 'dvAssign'
   });
 
   if (_devs !== undefined) {
 
-    var deviations = _devs.map((dev) => <DeviationRow key={dev.dvNo} deviation={dev}
+    deviations = _devs.map((dev) => <DeviationRow key={dev.dvNo} deviation={dev}
       getDeviation = {props.getDeviation} detailView = {props.detailView}
     />);
   }
@@ -77,6 +78,7 @@ DeviationList.propTypes = {
   getDeviation: React.PropTypes.func,
   sortByClick: React.PropTypes.func,
   colSelected: React.PropTypes.string,
+  detailView: React.PropTypes.string.isRequired
 };
 
 export default DeviationList;
