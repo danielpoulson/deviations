@@ -45,4 +45,4 @@ export const changeData = [
     "closed": 8,
     "open": 32
   }
-]
+];

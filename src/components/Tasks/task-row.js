@@ -6,10 +6,10 @@ const TaskRow = (props) => {
   const task = props.task;
   const minColTarget = {
     minWidth: 100
-  }
+  };
   const minColChamp = {
     minWidth: 140
-  }
+  };
   const capa = task.TKCapa === 1 ? 'fa fa-product-hunt' : '';
   return (
     <tr onClick={props.getTask}>
@@ -23,7 +23,7 @@ const TaskRow = (props) => {
 
 TaskRow.propTypes = {
   task: PropTypes.object,
-  getTask: PropTypes.func.isRequired,
+  getTask: PropTypes.func.isRequired
 };
 
 export default TaskRow;

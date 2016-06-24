@@ -6,14 +6,17 @@ import { getTask } from 'actions/actions_tasks';
 import { getDeviation } from 'actions/actions_deviations';
 import { setMain } from 'actions/actions_main';
 
-@connect(null, { getTask, getDeviation, setMain })
-
 class TaskList extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {};
 
-  handleClick = (i) => {
+    this.handleClick = this.handleClick.bind(this);
+    this.newTask = this.newTask.bind(this);
+
+  }
+
+  handleClick(i) {
     if (this.props.type === 'All') {
       const dvNo = this.props.tasklist[i].DevId;
       this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true });
@@ -24,12 +27,12 @@ class TaskList extends Component {
       this.props.getTask(_id);
       this.context.router.push(`/task/${_id}`);
     }
-  };
+  }
 
-  newTask = () => {
+  newTask() {
     this.props.getTask('new');
     this.context.router.push('/task/new');
-  };
+  }
 
   render() {
 
@@ -60,7 +63,12 @@ TaskList.propTypes = {
   tasklist: PropTypes.array,
   setMain: PropTypes.func,
   getChange: PropTypes.func,
-  getTask: PropTypes.func,
+  getDeviation: PropTypes.func,
+  getTask: PropTypes.func
 };
 
-export default TaskList;
+TaskList.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+export default connect(null, { getTask, getDeviation, setMain })(TaskList);

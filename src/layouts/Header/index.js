@@ -8,28 +8,29 @@ import { getUserDashboard, login } from 'actions/actions_main';
 /* component styles */
 import './styles.scss';
 
-@connect(
-  state => ({ fullname: state.main.user.fullname }), { getUserDashboard, login }
-)
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: {}
+    };
+  
+    this.onLogin = this.onLogin.bind(this);
+    this.setStateLogin = this.setStateLogin.bind(this);
+}
 
-export class Header extends Component {
-
-  state = {
-    login: {},
-  };
-
-  onLogin = (e) => {
+  onLogin(e) {
     e.preventDefault();
     this.props.login(this.state.login);
     // this.props.getUserDashboard(this.state.login.username);
-  };
+  }
 
-  setStateLogin = (evt) => {
+  setStateLogin(evt) {
     const name = evt.target.name;
     const value = evt.target.value;
     this.state.login[name] = value;
     return this.setState({ login: this.state.login });
-  };
+  }
 
   render() {
     const textStyle = {
@@ -69,5 +70,9 @@ export class Header extends Component {
 
 Header.propTypes = {
   login: React.PropTypes.object,
-  fullname: React.PropTypes.string,
+  fullname: React.PropTypes.string
 };
+
+export default connect(
+  state => ({ fullname: state.main.user.fullname }), { getUserDashboard, login }
+)(Header);

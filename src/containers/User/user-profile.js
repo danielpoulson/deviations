@@ -9,13 +9,6 @@ import toastr from 'toastr';
 import { getUser, getUsers, createUser, resetUser, saveUser, deleteUser } from 'actions/actions_users';
 
 class UserProfile extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  };
-
-  static childContextTypes = {
-    location: React.PropTypes.object,
-  };
 
   constructor(props) {
     super(props);
@@ -157,6 +150,14 @@ UserProfile.propTypes = {
   saveUser: PropTypes.func,
   deleteUser: PropTypes.func,
 
+};
+
+UserProfile.contextTypes = {
+  router: React.PropTypes.object.isRequired,
+};
+
+UserProfile.childContextTypes = {
+  location: React.PropTypes.object,
 };
 
 function mapStateToProps(state, ownProps) {

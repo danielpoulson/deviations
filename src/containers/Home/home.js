@@ -9,51 +9,51 @@ import LineChart from 'components/graphs/line-chart';
 /* component styles */
 import { tile, dashboard } from './styles.scss';
 
-@connect(
-  state => ({ fullname: state.main.user.fullname,
-    countDeviationsUser: state.main.countDeviationsUser,
-    allOpenDeviations: state.main.allOpenDeviations,
-    allOpenTasks: state.main.allOpenTasks,
-    countTasksUser: state.main.countTasksUser }), { getUserDashboard, loadPage, loadPageTask}
-)
+class Home extends Component {
 
-export default class Home extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {};
+
+    this.getTasks = this.getTasks.bind(this);
+    this.getDeviations = this.getDeviations.bind(this);
+    this.getAllTasks = this.getAllTasks.bind(this);
+    this.getAllDeviations = this.getAllDeviations.bind(this);
+
+  }
 
   componentWillMount(){
     const username = sessionStorage.getItem('username');
     this.props.getUserDashboard(username);
   }
 
-  getTasks = () => {
+  getTasks() {
     const action = {};
     action.search = this.props.fullname || null;
     this.props.loadPageTask(action);
     this.context.router.push('/tasks');
-  };
+  }
 
-  getDeviations = () => {
+  getDeviations() {
     const action = {};
     action.search = this.props.fullname || null;
     this.props.loadPage(action);
     this.context.router.push('/deviations');
-  };
+  }
 
-  getAllTasks = () => {
+  getAllTasks() {
     const action = {};
     action.search = null;
     this.props.loadPageTask(action);
     this.context.router.push('/tasks');
-  };
+  }
 
-  getAllDeviations = () => {
+  getAllDeviations() {
     const action = {};
     action.search = null;
     this.props.loadPage(action);
     this.context.router.push('/deviations');
-  };
+  }
 
   render(){
     return(
@@ -99,3 +99,15 @@ export default class Home extends Component {
     )
   }
 };
+
+Home.contextTypes = {
+  router: React.PropTypes.object.isRequired,
+};
+
+export default connect(
+  state => ({ fullname: state.main.user.fullname,
+    countDeviationsUser: state.main.countDeviationsUser,
+    allOpenDeviations: state.main.allOpenDeviations,
+    allOpenTasks: state.main.allOpenTasks,
+    countTasksUser: state.main.countTasksUser }), { getUserDashboard, loadPage, loadPageTask}
+)(Home);

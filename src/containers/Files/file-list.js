@@ -50,7 +50,7 @@ class FileList extends Component {
   }
 
   render() {
-    var tableStyle = {
+    const tableStyle = {
       marginTop: 20,
       marginLeft: 10
     };
@@ -94,7 +94,7 @@ FileList.propTypes = {
   removeFile: PropTypes.func,
   setFiletabCount: PropTypes.func,
   dvNo: PropTypes.string,
-  user: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default connect(state => ({ files: state.files, user: state.main.user }),

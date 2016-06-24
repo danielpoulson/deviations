@@ -15,18 +15,10 @@ import { getUsers } from 'actions/actions_users';
 
 
 /* application components */
-import { Header } from 'layouts/Header';
+import Header from 'layouts/Header';
 import { Footer } from 'layouts/Footer';
 
-@connect(null, { getAllTasks, setUser, getUsers })
-
-export class App extends Component {
-  static propTypes = {
-    children: React.PropTypes.any,
-    getAllTasks: React.PropTypes.func,
-    getUsers: React.PropTypes.func,
-    setUser: React.PropTypes.func,
-  };
+class App extends Component {
 
   componentWillMount() {
     const authorised = sessionStorage.getItem('authorised');
@@ -53,3 +45,12 @@ export class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  children: React.PropTypes.any,
+  getAllTasks: React.PropTypes.func,
+  getUsers: React.PropTypes.func,
+  setUser: React.PropTypes.func
+};
+
+export default connect(null, { getAllTasks, setUser, getUsers })(App);

@@ -96,18 +96,22 @@ const TaskForm = ({
         </div>
       </form>
 	);
-}
+};
 
 TaskForm.propTypes = {
   onChange: PropTypes.func,
+  task: PropTypes.object.isRequired,
   errors: PropTypes.object,
   handleSubmit: PropTypes.func,
   onCancel: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func.isRequired,
+  onCheckChange: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   hideDelete: PropTypes.string,
   submitting: PropTypes.bool,
   status: PropTypes.array.isRequired,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.array.isRequired
 	};
 
 export default TaskForm;

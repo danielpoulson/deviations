@@ -25,6 +25,8 @@ class Tasks extends Component {
     this.onSearchText = this.onSearchText.bind(this);
     this.linkClick = this.linkClick.bind(this);
     this.exportTask = this.exportTask.bind(this);
+    this.showCapa = this.showCapa.bind(this);
+    this.onSortByClick = this.onSortByClick.bind(this);
 
   }
 
@@ -45,13 +47,13 @@ class Tasks extends Component {
     this.onChange(1, showCapaOnly, search);
   }
 
-  showCapa = () => {
+  showCapa() {
     let _CapaOnly = !this.state._showCapaOnly;
     this.setState({ _showCapaOnly: _CapaOnly });
 
     this.setState({ activePage: 0 });
     this.onChange(0, _CapaOnly, this.state.txtSearch);
-  };
+  }
 
   onChange(page_num, showCapaOnly, searchText, column) {
     const action = {};
@@ -70,10 +72,10 @@ class Tasks extends Component {
     this.onChange(0, this.state._showCapaOnly, value);
   }
 
-  onSortByClick = (column) => {
+  onSortByClick(column) {
     this.setState({ activePage: 0 });
     this.onChange(0, this.state._showCapaOnly, this.state.txtSearch, column);
-  };
+  }
 
   linkClick(i) {
     // TODO: LOW (BUG) Pagination Adding 1 to the page mumber as it uses the base of 0
@@ -153,7 +155,7 @@ Tasks.propTypes = {
   tasks: PropTypes.object,
   exportTasks: PropTypes.func,
   getAllTasks: PropTypes.func,
-  loadPageTask: PropTypes.func,
+  loadPageTask: PropTypes.func
 };
 
 export default connect(state => ({ tasks: state.tasks, user: state.main.user }),

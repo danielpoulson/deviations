@@ -12,7 +12,12 @@ class DeviationPrintContainer extends Component {
 	}
 }
 
+DeviationPrintContainer.propTypes = {
+	deviation: React.PropTypes.object,
+	task: React.PropTypes.array
+};
+
 export default connect(state => ({
   deviation: state.deviation,
-  task: state.tasks.ctlist,
+  task: state.tasks.ctlist
 }))(DeviationPrintContainer);

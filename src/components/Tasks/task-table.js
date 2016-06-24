@@ -3,9 +3,10 @@ import TaskRow from './task-row';
 
 const TaskTable = (props) => {
   const _tasks = props.tasklist;
+  let tasks = [];
 
   if (_tasks !== undefined) {
-    var tasks = _tasks.map((task, i) => <TaskRow key={task._id} task={task} getTask={props.handleClick.bind(null, i)} />);
+    tasks = _tasks.map((task, i) => <TaskRow key={task._id} task={task} getTask={props.handleClick.bind(null, i)} />);
   }
 
   return (
@@ -27,7 +28,7 @@ const TaskTable = (props) => {
 
 TaskTable.propTypes = {
   tasklist: PropTypes.array,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired
 };
 
 export default TaskTable;

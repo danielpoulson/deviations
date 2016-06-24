@@ -30,6 +30,8 @@ class TaskDetail extends React.Component {
       ],
     };
 
+    this.cancelTask = this.cancelTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
     this.saveTask = this.saveTask.bind(this);
     this.updateTaskState = this.updateTaskState.bind(this);
     this.updateTaskStateDate = this.updateTaskStateDate.bind(this);
@@ -51,20 +53,20 @@ class TaskDetail extends React.Component {
     }
   }
 
-  cancelTask = (event) => {
+  cancelTask(event) {
     event.preventDefault();
     this.props.mainActions.setLoading({ loading: false });
     this.taskNav(this.props.main.MainId);
-  };
+  }
 
-  deleteTask = (event) => {
+  deleteTask(event) {
     event.preventDefault();
     this.props.mainActions.setLoading({ loading: false });
     const _id = this.state.taskId;
     this.props.taskActions.deleteTask(_id);
     toastr.error('Task has been deleted', 'Task Detail', { timeOut: 1000 });
     this.taskNav(this.props.main.MainId);
-  };
+  }
 
   taskFormIsValid() {
     var formIsValid = true;

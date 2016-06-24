@@ -17,13 +17,6 @@ import { getProjectTasks } from 'actions/actions_tasks';
 import { setMain } from 'actions/actions_main';
 
 class DeviationDetail extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
-
-  static childContextTypes = {
-    location: React.PropTypes.object
-  };
 
   constructor(props) {
     super(props);
@@ -48,6 +41,7 @@ class DeviationDetail extends Component {
       classifies: classifiesData
     };
 
+    this.cancelDeviation = this.cancelDeviation.bind(this);
     this.onApprove = this.onApprove.bind(this);
     this.onFinal = this.onFinal.bind(this);
     this.onCancel = this.onCancel.bind(this);
@@ -108,7 +102,7 @@ class DeviationDetail extends Component {
   }
 
   onPrintDev(e) {
-    e.preventDefault()
+    e.preventDefault();
     this.context.router.push('/printdeviation');
   }
 
@@ -135,10 +129,10 @@ class DeviationDetail extends Component {
 
   }
 
-  cancelDeviation = (e) => {
+  cancelDeviation(e) {
     e.preventDefault();
     this.context.router.push('/deviations');
-  };
+  }
 
   saveDetail(event, closed) {
     event.preventDefault();
@@ -308,11 +302,31 @@ class DeviationDetail extends Component {
 }
 
 DeviationDetail.propTypes = {
-  dev: PropTypes.object.isRequired,
-  onSave: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onDateChange: PropTypes.func.isRequired,
+  addDeviation: PropTypes.func,
+  closeDeviation: PropTypes.func,
+  ctTotal: PropTypes.number,
+  dev: PropTypes.object,
+  deviation: PropTypes.object,
+  editDeviation: PropTypes.func,
+  getDeviation: PropTypes.func,
+  getProjectTasks: PropTypes.func,
+  location: PropTypes.object,
+  log: PropTypes.array,
+  main: PropTypes.object,
+  onSave: PropTypes.func,
+  onChange: PropTypes.func,
+  onDateChange: PropTypes.func,
   errors: PropTypes.object,
+  tasklist: PropTypes.array,
+  users: PropTypes.array
+};
+
+DeviationDetail.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+DeviationDetail.childContextTypes = {
+  location: React.PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {
@@ -325,7 +339,7 @@ function mapStateToProps(state, ownProps) {
     ctTotal: state.tasks.ctTotal,
     users: usersFormattedForDropdown(state.users)
   };
-};
+}
 
 export default connect(mapStateToProps, {
   addDeviation, createLog, editDeviation, closeDeviation, getDeviation, getProjectTasks, setMain

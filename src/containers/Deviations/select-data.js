@@ -3,7 +3,7 @@ const status = [
         { value: 2, text: 'Approved' },
         { value: 3, text: 'On-hold' },
         { value: 4, text: 'Closed' },
-        { value: 5, text: 'Cancelled' },
+        { value: 5, text: 'Cancelled' }
     ];
 
 const outcomes = [ 

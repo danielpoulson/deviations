@@ -11,17 +11,7 @@ import { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, 
 import { setMain, setView } from 'actions/actions_main';
 import { resetLog, getLog } from 'actions/actions_logger';
 
-@connect(state => ({ deviations: state.deviations, ShowAll: state.main.ShowAll, user: state.main.user }),
-  { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation, setMain, setView, resetLog, getLog })
-
-export default class Deviations extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
-
-  static childContextTypes = {
-    location: React.PropTypes.object
-  };
+class Deviations extends Component {
 
   constructor(props) {
     super(props);
@@ -33,12 +23,18 @@ export default class Deviations extends Component {
       numPage: 15,
       txtSearch: '',
       showAll: false,
-      detailView: false,
+      detailView: false
     };
+
+    this.allDeviations = this.allDeviations.bind(this);
+    this.exportDeviation = this.exportDeviation.bind(this);
+    this.newDeviation = this.newDeviation.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onSearchText = this.onSearchText.bind(this);
     this.onSortByClick = this.onSortByClick.bind(this);
     this.onGetDeviation = this.onGetDeviation.bind(this);
     this.linkClick = this.linkClick.bind(this);
+    this.showDetailed = this.showDetailed.bind(this);
   }
 
   componentWillMount() {
@@ -61,14 +57,14 @@ export default class Deviations extends Component {
     this.onChange(0, value);
   }
 
-  onChange = (page_num, searchText, column) => {
+  onChange(page_num, searchText, column) {
     const action = {};
     action.page_num = page_num || 1;
     action.search = searchText || null;
     action.numPage = this.state.numPage;
     action.column = column;
     this.props.loadPage(action);
-  };
+  }
 
   onGetDeviation(i) { 
     const _id = i;
@@ -91,7 +87,7 @@ export default class Deviations extends Component {
     this.setState({ activePage: i });
   }
 
-  allDeviations = () => {
+  allDeviations() {
     let _showAll = this.state.showAll;
     _showAll = !_showAll;
     this.setState({ showAll: _showAll });
@@ -105,9 +101,9 @@ export default class Deviations extends Component {
     this.setState({ txtSearch: null });
     this.setState({ activePage: 0 });
     Toastr.success(`Only showing active changes - ${this.state.showAll}`, 'Deviation Detail', { timeOut: 1000 });
-  };
+  }
 
-  exportDeviation = () => {
+  exportDeviation() {
     const info = {
       fsDevNo: 'exp',
       fsAddedBy: this.props.user.username,
@@ -117,21 +113,21 @@ export default class Deviations extends Component {
     };
 
     this.props.exportDeviations(info);
-  };
+  }
 
-  newDeviation = () => {
+  newDeviation() {
     // this.props.getDeviation(null);
     this.props.resetDeviation();
     this.props.setMain({ MainId: 'new', CurrentMode: 'deviation', loading: false });
     this.context.router.push('/deviation/new');
-  };
+  }
 
-  showDetailed = () => {
+  showDetailed() {
     this.setState({detailView: !this.state.detailView});
   }
 
   render() {
-    var _changeTitle = 'Register';
+    let _changeTitle = 'Register';
     let butText;
 
 
@@ -171,7 +167,7 @@ export default class Deviations extends Component {
               onClick={this.allDeviations} >
               {butText}
             </button>
-            <span style={{paddingLeft: 20}} class="checkbox">
+            <span style={{paddingLeft: 20}} className="checkbox">
               <label><input onClick={this.showDetailed} type="checkbox" /> Show Detail View</label>
             </span>
           </div>
@@ -202,10 +198,27 @@ export default class Deviations extends Component {
 
 Deviations.propTypes = {
   changes: PropTypes.array,
+  deviation: PropTypes.object,
   exportDeviations: PropTypes.func,
   getDeviations: PropTypes.func,
   getDeviation: PropTypes.func,
+  getLog: PropTypes.func,
   loadPage: PropTypes.func,
+  resetLog: PropTypes.func,
+  resetDeviation: PropTypes.func,
   setMain: PropTypes.func,
-  user: PropTypes.object,
+  setView: PropTypes.func,
+  showAll: PropTypes.func,
+  user: PropTypes.object
 };
+
+Deviations.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+Deviations.childContextTypes = {
+  location: React.PropTypes.object
+};
+
+export default connect(state => ({ deviations: state.deviations, ShowAll: state.main.ShowAll, user: state.main.user }),
+  { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation, setMain, setView, resetLog, getLog })(Deviations);

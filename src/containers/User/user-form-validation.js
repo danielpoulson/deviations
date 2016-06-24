@@ -27,4 +27,4 @@ export function userFormIsValid(user) {
   }
 
   return { formIsValid, errors };
-};
+}

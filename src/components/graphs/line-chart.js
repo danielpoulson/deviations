@@ -3,7 +3,7 @@ import d3 from 'd3';
 import tip from 'd3-tip';
 import _ from 'lodash';
 import { myData } from '../../../bin/data';
-import './styles.scss'
+import './styles.scss';
 
 d3.tip = tip;
 
@@ -14,35 +14,35 @@ export default class LineGraph extends Component{
   }
 
   updateChart(){
-    var margin = {top: 30, right: 20, bottom: 30, left: 50};
-    var w = 500 - margin.left - margin.right;
-    var h = 300 - margin.top - margin.bottom;
-    var data = myData;
+    const margin = {top: 30, right: 20, bottom: 30, left: 50};
+    const w = 500 - margin.left - margin.right;
+    const h = 300 - margin.top - margin.bottom;
+    const data = myData;
 
-    var dates = _.map(data, 'date');
-    var counts = _.map(data, 'count');
+    const dates = _.map(data, 'date');
+    const counts = _.map(data, 'count');
 
     /* Initialize tooltip */
-    var tip = d3.tip()
+    const tip = d3.tip()
       .attr('class', 'd3-tip')
       .offset([-10, 0])
       .html(function(d) {
         return "<strong>Overdue:</strong> <span>" + d.count + "</span>";
-      })
+      });
 
-    var x = d3.scale.ordinal()
+    const x = d3.scale.ordinal()
       .rangePoints([0, w]);
 
-    var y = d3.scale.linear()
+    const y = d3.scale.linear()
       .range([h, 0]);
 
-    var xAxis = d3.svg.axis().scale(x)
+    const xAxis = d3.svg.axis().scale(x)
       .orient("bottom").ticks(5);
 
-    var yAxis = d3.svg.axis().scale(y)
+    const yAxis = d3.svg.axis().scale(y)
         .orient("left").ticks(5);
 
-    var line = d3.svg.line()
+    const line = d3.svg.line()
       .interpolate('linear')
       .x(function (d) {
         return x(d.date);
@@ -52,7 +52,7 @@ export default class LineGraph extends Component{
       });
 
 
-    var svg = d3
+    const svg = d3
       .select('#chart')
       .append('svg')
       .attr("width", w + margin.left + margin.right)
@@ -66,10 +66,10 @@ export default class LineGraph extends Component{
     x.domain(dates);
     y.domain([0, d3.max(counts)]);
 
-    var path = svg.append("path")
+    const path = svg.append("path")
       .attr("d", line(data));
 
-    var totalLength = path.node().getTotalLength();
+    const totalLength = path.node().getTotalLength();
 
     path
       .attr("stroke-dasharray", totalLength + " " + totalLength)
@@ -88,7 +88,7 @@ export default class LineGraph extends Component{
       .attr("cx", function(d) { return x(d.date); })
       .attr("cy", function(d) { return y(d.count); })
       .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)
+      .on('mouseout', tip.hide);
 
     svg.append("g")         // Add the X Axis
         .attr("class", "axis")
@@ -104,7 +104,7 @@ export default class LineGraph extends Component{
       return d3.svg.axis()
         .scale(y)
         .orient("left")
-        .ticks(5)
+        .ticks(5);
     }
 
         // Adding in y grid lines
@@ -119,6 +119,6 @@ export default class LineGraph extends Component{
 
 
   render(){
-  			return <div id="chart"></div>
-  		}
+    return <div id="chart"></div>;
+  }
 }

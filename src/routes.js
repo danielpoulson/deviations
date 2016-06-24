@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 /* containers */
-import { App } from 'containers/App';
+import App from 'containers/App';
 import Home from 'containers/Home/home';
 import Deviations from 'containers/Deviations/deviations';
 import DeviationDetail from 'containers/Deviations/deviation-detail';

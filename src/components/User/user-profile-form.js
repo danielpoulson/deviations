@@ -77,17 +77,18 @@ const UserProfileForm = ({ errors, user, handleSubmit, deleteUser, onChange, onC
         </form>
     </div>
   );
-}
+};
 
 UserProfileForm.propTypes = {
   errors: PropTypes.object,
   onChange: PropTypes.func,
-  errors: PropTypes.object,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   deleteUser: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   newUser: PropTypes.bool,
   roleSelect: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 export default UserProfileForm;

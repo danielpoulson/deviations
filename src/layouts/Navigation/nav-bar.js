@@ -7,20 +7,7 @@ import { logoutUser } from 'actions/actions_main';
 
 import { styles } from './styles.scss';
 
-@connect(
-  state => ({ username: state.main.user.username }),
-  { getFiles, logoutUser }
-)
-
-export class NavBar extends React.Component {
-
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  };
-
-  static childContextTypes = {
-    location: React.PropTypes.object,
-  };
+class NavBar extends React.Component {
 
   constructor(props) {
     super(props);
@@ -30,29 +17,32 @@ export class NavBar extends React.Component {
       tasksTab: null,
       filesTab: null,
     };
+
+    this.onLogoutUser = this.onLogoutUser.bind(this);
+    this.getFileList = this.getFileList.bind(this);
+    this.setActiveItem = this.setActiveItem.bind(this);
   }
 
-  onLogoutUser = () => {
+  onLogoutUser() {
     sessionStorage.setItem('authorised', false);
     sessionStorage.setItem('username', false);
     this.props.logoutUser();
     this.context.router.push('/');
+  }
 
-  };
-
-  getFileList = () => {
+  getFileList() {
     this.props.getFiles('exp');
     this.context.router.push('/export');
-  };
+  }
 
-  setActiveItem = (e) => {
+  setActiveItem(e) {
     const tabPressed = e.target.offsetParent.id;
     this.setState({ homeTab: null });
     this.setState({ devTab: null });
     this.setState({ tasksTab: null });
     this.setState({ filesTab: null });
     this.setState({ [tabPressed]: 'active' });
-  };
+  }
 
   render() {
     return (
@@ -86,7 +76,18 @@ export class NavBar extends React.Component {
 NavBar.propTypes = {
   username: PropTypes.string,
   getFiles: PropTypes.func,
-  logoutUser: PropTypes.func,
+  logoutUser: PropTypes.func
 };
 
-export default NavBar;
+NavBar.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+NavBar.childContextTypes = {
+  location: React.PropTypes.object
+};
+
+export default connect(
+  state => ({ username: state.main.user.username }),
+  { getFiles, logoutUser }
+)(NavBar);
