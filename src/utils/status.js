@@ -57,7 +57,7 @@ export function getTraffic(date, taskstatus) {
 }
 
 export function getStatus(status) {
-  var styled = '';
+  let styled = '';
 
   switch (status) {
     case 1:
@@ -83,7 +83,7 @@ export function getStatus(status) {
 }
 
 export function getStatCC(status) {
-  var styled = '';
+  let styled = '';
 
   switch (status) {
     case 1:

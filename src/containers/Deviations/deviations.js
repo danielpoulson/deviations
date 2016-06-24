@@ -167,7 +167,7 @@ class Deviations extends Component {
               onClick={this.allDeviations} >
               {butText}
             </button>
-            <span style={{paddingLeft: 20}} className="checkbox">
+            <span style={{paddingLeft: 20}}>
               <label><input onClick={this.showDetailed} type="checkbox" /> Show Detail View</label>
             </span>
           </div>
@@ -198,7 +198,7 @@ class Deviations extends Component {
 
 Deviations.propTypes = {
   changes: PropTypes.array,
-  deviation: PropTypes.object,
+  deviations: PropTypes.object,
   exportDeviations: PropTypes.func,
   getDeviations: PropTypes.func,
   getDeviation: PropTypes.func,
@@ -208,7 +208,7 @@ Deviations.propTypes = {
   resetDeviation: PropTypes.func,
   setMain: PropTypes.func,
   setView: PropTypes.func,
-  showAll: PropTypes.func,
+  ShowAll: PropTypes.bool,
   user: PropTypes.object
 };
 

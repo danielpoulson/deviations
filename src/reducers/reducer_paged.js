@@ -13,7 +13,7 @@ export default function (state = [], action) {
         per_page,
         total: state.length,
         total_pages: Math.ceil(state.length / per_page),
-        data: paginatedItems,
+        data: paginatedItems
       };
     }
 

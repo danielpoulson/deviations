@@ -15,19 +15,19 @@ class TaskDetail extends React.Component {
     this.state = {
       dirty: false,
       errors: {},
-      hideDelete: null,
+      hideDelete: props.main.user.role !== 'admin' || props.newTask === true ? 'hidden' : 'btn btn-danger',
       newTask: false,
       task: Object.assign({}, props.task),
-      taskId: '',
-      taskTitle: '',
+      taskId: props.location.pathname.split('/')[2],
+      taskTitle: props.main.MainId,
       submitting: false,
       status: [
         { value: 1, text: 'Task - Not Started (New)' },
         { value: 2, text: 'Task - On Track' },
         { value: 3, text: 'Task - In Concern' },
         { value: 4, text: 'Task - Behind Schedule' },
-        { value: 5, text: 'Task - Completed' },
-      ],
+        { value: 5, text: 'Task - Completed' }
+      ]
     };
 
     this.cancelTask = this.cancelTask.bind(this);
@@ -39,11 +39,6 @@ class TaskDetail extends React.Component {
   }
 
   componentDidMount() {
-    const _taskId = this.props.location.pathname.split('/')[2];
-    const _hideDelete = this.props.main.user.role !== 'admin' || this.props.newTask === true ? 'hidden' : 'btn btn-danger';
-    this.setState({ taskId: _taskId });
-    this.setState({ hideDelete: _hideDelete });
-    this.setState({ taskTitle: this.props.main.MainId });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -69,35 +64,36 @@ class TaskDetail extends React.Component {
   }
 
   taskFormIsValid() {
-    var formIsValid = true;
-    this.state.errors = {}; //Clears any previous errors
+    let formIsValid = true;
+    // this.state.errors = {}; //Clears any previous errors
+    let _errors = {};
 
     if (this.state.task.TKName) {
         if (this.state.task.TKName.length < 10) {
-        this.state.errors.TKName = "Task description must be greater than 10 characters!";
-        formIsValid = false;
+        _errors.TKName = "Task description must be greater than 10 characters!";
+        this.setState({formIsValid: false});
         }
     } else {
-        this.state.errors.TKName = "Task description cannot be empty!";
-        formIsValid = false;
+        _errors.TKName = "Task description cannot be empty!";
+        this.setState({formIsValid: false});
     }
 
     if (typeof this.state.task.TKTarg == 'undefined'){
-        this.state.errors.TKTarg = "Please enter a target date!!";
-         formIsValid = false;
+        _errors.TKTarg = "Please enter a target date!!";
+         this.setState({formIsValid: false});
      }
 
     if (this.state.task.TKChamp) {
         if (this.state.task.TKChamp.length < 7) {
-        this.state.errors.TKChamp = "Task owner must be greater than 7 characters!";
-        formIsValid = false;
+        _errors.TKChamp = "Task owner must be greater than 7 characters!";
+        this.setState({formIsValid: false});
         }
     } else {
-        this.state.errors.TKChamp = "Task owner cannot be empty!";
-        formIsValid = false;
+        _errors.TKChamp = "Task owner cannot be empty!";
+        this.setState({formIsValid: false});
     }
 
-    this.setState({errors: this.state.errors});
+    this.setState({errors: _errors});
 
     return formIsValid;
   }
@@ -164,7 +160,7 @@ class TaskDetail extends React.Component {
       border: 'solid 1px',
       borderRadius: 4,
       paddingTop: 10,
-      paddingBottom: 50,
+      paddingBottom: 50
     };
 
     const taskTitle = this.state.taskTitle ? `Deviation Task - ${this.state.taskTitle}` : 'New Task';
@@ -201,11 +197,15 @@ TaskDetail.propTypes = {
   location: PropTypes.object,
   deleteTask: PropTypes.func,
   main: PropTypes.object,
+  mainActions: PropTypes.object,
   newTask: PropTypes.func,
   setLoading: PropTypes.func,
   editTask: PropTypes.func,
   addTask: PropTypes.func,
-  users: PropTypes.array,
+  task: PropTypes.array,
+  taskActions: PropTypes.object,
+  tasks: PropTypes.object,
+  users: PropTypes.array
 };
 
 //Pull in the React Router context so router is available on this.context.router.
@@ -214,14 +214,8 @@ TaskDetail.contextTypes = {
 };
 
 TaskDetail.childContextTypes = {
-    location: React.PropTypes.object,
+    location: React.PropTypes.object
 };
-
-function getTaskById(cour, id) {
-  const course = courses.filter(course => course.id == id);
-  if (course) return course[0]; //since filter returns an array, have to grab the first.
-  return null;
-}
 
 function mapStateToProps(state, ownProps) {
   const taskId = ownProps.params.id;
@@ -231,7 +225,7 @@ function mapStateToProps(state, ownProps) {
     task: state.task, 
     users: usersFormattedForDropdown(state.users)
   };
-};
+}
 
 function mapDispatchToProps(dispatch) {
   return {

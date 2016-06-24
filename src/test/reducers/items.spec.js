@@ -2,7 +2,7 @@ import expect from 'expect';
 import { items } from 'reducers/items';
 
 const initialState = {
-  items: [],
+  items: []
 };
 
 describe('Items reducer:', () => {
@@ -16,13 +16,13 @@ describe('Items reducer:', () => {
     const stateAfterAdd = {
       items: [{
         text: 'test'
-      }],
+      }]
     };
     const fields = { name: { value: 'test' } };
     expect(
       items(initialState, {
         type: 'ADD_ITEM',
-        fields,
+        fields
       })
     ).toEqual(stateAfterAdd);
   });
@@ -31,7 +31,7 @@ describe('Items reducer:', () => {
     const stateWithItem = {
       items: [{
         text: 'test'
-      }],
+      }]
     };
     expect(
       items(stateWithItem, {

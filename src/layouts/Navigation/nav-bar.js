@@ -15,7 +15,7 @@ class NavBar extends React.Component {
       homeTab: 'active',
       devTab: null,
       tasksTab: null,
-      filesTab: null,
+      filesTab: null
     };
 
     this.onLogoutUser = this.onLogoutUser.bind(this);

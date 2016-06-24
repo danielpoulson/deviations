@@ -96,12 +96,23 @@ class Home extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
+}
+
+Home.propTypes = {
+  allOpenDeviations: React.PropTypes.number,
+  allOpenTasks: React.PropTypes.number,
+  countDeviationsUser: React.PropTypes.number,
+  countTasksUser: React.PropTypes.number,
+  fullname: React.PropTypes.string.isRequired,
+  getUserDashboard: React.PropTypes.func,
+  loadPage: React.PropTypes.func,
+  loadPageTask: React.PropTypes.func
 };
 
 Home.contextTypes = {
-  router: React.PropTypes.object.isRequired,
+  router: React.PropTypes.object.isRequired
 };
 
 export default connect(

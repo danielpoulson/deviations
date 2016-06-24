@@ -4,7 +4,7 @@ import _ from 'lodash';
 const initialState = {
   alldata: [],
   paged: [],
-  showCapaOnly: false,
+  showCapaOnly: false
 };
 
 function searchIndex(data, index) {
@@ -65,11 +65,11 @@ export default function (state, action) {
       _data = action.payload.data;
       alldata = [
         ...state.alldata,
-        _data,
+        _data
       ];
       return {
         ...state,
-        alldata,
+        alldata
       };
 
     case EDIT_TASK: {
@@ -81,11 +81,11 @@ export default function (state, action) {
         ...state.alldata.slice(0, index),
         // Copy the object before mutating
         Object.assign({}, _data),
-        ...state.alldata.slice(index + 1),
+        ...state.alldata.slice(index + 1)
       ];
       return {
         ...state,
-        alldata,
+        alldata
       };
     }
 
@@ -98,7 +98,7 @@ export default function (state, action) {
         ...state,
         alldata,
         ctlist,
-        ctTotal,
+        ctTotal
       };
     }
 
@@ -109,7 +109,7 @@ export default function (state, action) {
       return {
         ...state,
         ctlist,
-        ctTotal,
+        ctTotal
       };
 
     case GET_TASKS:
@@ -127,7 +127,7 @@ export default function (state, action) {
         total: alldata.length,
         total_pages: Math.ceil(alldata.length / per_page),
         paged,
-        alldata,
+        alldata
       };
 
     case LOAD_PAGE_TASKS: {
@@ -158,7 +158,7 @@ export default function (state, action) {
 
       return {
         ...state,
-        showCapaOnly,
+        showCapaOnly
       };
     }
     default:

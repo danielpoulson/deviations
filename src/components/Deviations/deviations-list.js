@@ -78,7 +78,7 @@ DeviationList.propTypes = {
   getDeviation: React.PropTypes.func,
   sortByClick: React.PropTypes.func,
   colSelected: React.PropTypes.string,
-  detailView: React.PropTypes.string.isRequired
+  detailView: React.PropTypes.bool
 };
 
 export default DeviationList;

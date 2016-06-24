@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 const initialState = {
   alldata: [],
-  paged: [],
+  paged: []
 };
 
 function searchData(data, searchText, sortColumn) {
@@ -52,13 +52,13 @@ export default function (state, action) {
       _data = action.payload.data;
       alldata = [
         ...state.alldata,
-        _data,
+        _data
       ];
       paged = alldata;
       return {
         ...state,
         alldata,
-        paged,
+        paged
       };
 
     case EDIT_DEV:
@@ -69,11 +69,11 @@ export default function (state, action) {
         ...state.alldata.slice(0, index),
         // Copy the object before mutating
         Object.assign({}, _data),
-        ...state.alldata.slice(index + 1),
+        ...state.alldata.slice(index + 1)
       ];
       return {
         paged,
-        alldata,
+        alldata
       };
 
     case DELETE_DEV: {
@@ -81,7 +81,7 @@ export default function (state, action) {
       const deleted = searchIndex(state.alldata, dvNo);
       return {
         ...state,
-        alldata: deleted,
+        alldata: deleted
       };
     }
 
@@ -100,7 +100,7 @@ export default function (state, action) {
         total: alldata.length,
         total_pages: Math.ceil(alldata.length / per_page),
         paged,
-        alldata,
+        alldata
       };
 
     case LOAD_PAGE_DEVS: {
@@ -120,7 +120,7 @@ export default function (state, action) {
         per_page,
         total: searcheddata.length,
         total_pages: Math.ceil(alldata.length / per_page),
-        paged,
+        paged
       };
     }
 

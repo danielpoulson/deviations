@@ -9,11 +9,12 @@ const initialState = {
 export default function (state = initialState, action) {
 
   switch (action.type) {
-    case GET_DEV:
-      const _dev = action.payload.data || {};
-      state = {};
-
-      return _dev;
+    case GET_DEV: {
+          const _dev = action.payload.data || {};
+          state = {};
+    
+          return _dev;
+    }
 
     case CREATE_LOG: {
       const _addLog = state.CC_LOG;

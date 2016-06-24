@@ -27,18 +27,18 @@ class Header extends Component {
 
   setStateLogin(evt) {
     const name = evt.target.name;
-    const value = evt.target.value;
-    this.state.login[name] = value;
-    return this.setState({ login: this.state.login });
+    let login = this.state.login;
+    login[name] = evt.target.value;
+    return this.setState({ login: login });
   }
 
   render() {
     const textStyle = {
-      color: 'white',
+      color: 'white'
     };
 
     const loginStyle = {
-      marginTop: 5,
+      marginTop: 5
     };
 
 
@@ -50,7 +50,7 @@ class Header extends Component {
                         <h3 className="topband_h1">Deviation Database</h3>
                     </div>
                     <div className="col-sm-7" style={loginStyle}>
-                        { !this.props.fullname ?
+                        {!this.props.fullname ?
                           <Login
                             login={this.state.login}
                             onChange={this.setStateLogin}
@@ -69,7 +69,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  login: React.PropTypes.object,
+  login: React.PropTypes.func,
   fullname: React.PropTypes.string
 };
 

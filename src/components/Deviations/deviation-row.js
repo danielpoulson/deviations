@@ -39,7 +39,7 @@ const DeviationRow = (props) => {
 DeviationRow.propTypes = {
   getDeviation: PropTypes.func,
   deviation: PropTypes.object,
-  detailView: React.PropTypes.string.isRequired
+  detailView: React.PropTypes.bool
 };
 
 export default DeviationRow;

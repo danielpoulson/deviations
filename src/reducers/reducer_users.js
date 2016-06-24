@@ -10,7 +10,7 @@ export default function (state = [], action) {
     case USER_CREATED:
       return [
         ...state,
-        action.fullname,
+        action.fullname
       ];
 
     default:

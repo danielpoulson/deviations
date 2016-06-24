@@ -19,7 +19,7 @@ class Tasks extends Component {
         count: 0,
         numPage: 15,
         _showCapaOnly: false,
-        txtSearch: '',
+        txtSearch: ''
       };
 
     this.onSearchText = this.onSearchText.bind(this);
@@ -88,7 +88,7 @@ class Tasks extends Component {
       fsSource: 'exp',
       fsAddedBy: this.props.user.username,
       fsType: 'tasks',
-      search: this.state.txtSearch,
+      search: this.state.txtSearch
     };
 
     this.props.exportTasks(info);

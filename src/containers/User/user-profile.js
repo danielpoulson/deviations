@@ -98,12 +98,11 @@ class UserProfile extends Component {
       borderRadius: 4,
       marginRight: 0,
       marginLeft: 0,
-      padding: 15,
-
+      padding: 15
     };
 
     const formStyle = {
-      paddingTop: 15,
+      paddingTop: 15
     };
 
     const roleSelect = [{value: 'user', text: 'user'}, {value: 'admin', text: 'admin'}];
@@ -118,7 +117,7 @@ class UserProfile extends Component {
         </div>
 
         <div style={panelStyle}>
-            { this.state.isNewUser ? null :
+            {this.state.isNewUser ? null :
               <UserSelect users={this.props.users} onChange={this.onChange} newUser={this.newUser} />
             }
           <div style={formStyle}>
@@ -148,16 +147,16 @@ UserProfile.propTypes = {
   getUsers: PropTypes.func,
   createUser: PropTypes.func,
   saveUser: PropTypes.func,
-  deleteUser: PropTypes.func,
+  deleteUser: PropTypes.func
 
 };
 
 UserProfile.contextTypes = {
-  router: React.PropTypes.object.isRequired,
+  router: React.PropTypes.object.isRequired
 };
 
 UserProfile.childContextTypes = {
-  location: React.PropTypes.object,
+  location: React.PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {
@@ -165,7 +164,7 @@ function mapStateToProps(state, ownProps) {
     user: state.user,  
     users: usersFormattedForDropdown(state.users)
   };
-};
+}
 
 export default connect(mapStateToProps,
 { getUser, createUser, resetUser, saveUser, deleteUser, getUsers })(UserProfile);

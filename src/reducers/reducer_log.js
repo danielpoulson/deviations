@@ -30,7 +30,7 @@ export default function (state = [], action) {
 					LogType: 'DEV',
 					LogMessage: obj.dvLogType,
 					LogBy: obj.dvLogBy,
-					LogDate: obj.dvLogDate,
+					LogDate: obj.dvLogDate
 				};
 			return newObj;
 			});
