@@ -202,7 +202,7 @@ TaskDetail.propTypes = {
   setLoading: PropTypes.func,
   editTask: PropTypes.func,
   addTask: PropTypes.func,
-  task: PropTypes.array,
+  task: PropTypes.object,
   taskActions: PropTypes.object,
   tasks: PropTypes.object,
   users: PropTypes.array

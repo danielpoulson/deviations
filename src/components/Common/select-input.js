@@ -33,7 +33,7 @@ SelectInput.propTypes = {
   inputdiv: PropTypes.string,
   labelstyle: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.object),
-  value: PropTypes.string
+  value: PropTypes.any
 };
 
 export default SelectInput;
