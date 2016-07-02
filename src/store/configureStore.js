@@ -1,17 +1,12 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reduxPromise from 'redux-promise';
-import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 
-const logger = createLogger({
-  collapsed: true,
-  predicate: () =>
-    process.env.NODE_ENV === 'development' // eslint-disable-line no-unused-vars
-});
-
-const createStoreWithMiddleware = applyMiddleware(
-  reduxPromise,
-  logger
+const createStoreWithMiddleware = compose(
+  applyMiddleware(
+    reduxPromise
+  ),
+  window.devToolsExtension ? window.devToolsExtension() : f => f
 )(createStore);
 
 export default function configureStore(initialState) {

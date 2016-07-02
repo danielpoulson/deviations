@@ -8,14 +8,14 @@ const production = require('./prod.config.js');
 
 require('babel-polyfill').default;
 
-const TARGET = process.env.npm_lifecycle_event;
+const _ENV = process.env.NODE_ENV;
 
 const PATHS = {
   app: path.join(__dirname, '../src'),
   build: path.join(__dirname, '../dist'),
 };
 
-process.env.BABEL_ENV = TARGET;
+process.env.BABEL_ENV = _ENV;
 
 const common = {
   entry: [
@@ -81,10 +81,10 @@ const common = {
   },
 };
 
-if (TARGET === 'start' || !TARGET) {
+if (_ENV === 'development' || !_ENV) {
   module.exports = merge(development, common);
 }
 
-if (TARGET === 'build' || !TARGET) {
+if (_ENV === 'production' || !_ENV) {
   module.exports = merge(production, common);
 }
