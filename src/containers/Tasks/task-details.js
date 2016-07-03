@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import TaskForm from 'components/Tasks/task-form';
 import toastr from 'toastr';
 import {usersFormattedForDropdown} from '../../selectors/selectors';
+import {taskFormIsValid} from './task-form.validation';
 
 import * as taskActions from 'actions/actions_tasks';
 import * as mainActions from 'actions/actions_main';
@@ -63,46 +64,17 @@ class TaskDetail extends React.Component {
     this.taskNav(this.props.main.MainId);
   }
 
-  taskFormIsValid() {
-    let formIsValid = true;
-    // this.state.errors = {}; //Clears any previous errors
-    let _errors = {};
-
-    if (this.state.task.TKName) {
-        if (this.state.task.TKName.length < 10) {
-        _errors.TKName = "Task description must be greater than 10 characters!";
-        this.setState({formIsValid: false});
-        }
-    } else {
-        _errors.TKName = "Task description cannot be empty!";
-        this.setState({formIsValid: false});
-    }
-
-    if (typeof this.state.task.TKTarg == 'undefined'){
-        _errors.TKTarg = "Please enter a target date!!";
-         this.setState({formIsValid: false});
-     }
-
-    if (this.state.task.TKChamp) {
-        if (this.state.task.TKChamp.length < 7) {
-        _errors.TKChamp = "Task owner must be greater than 7 characters!";
-        this.setState({formIsValid: false});
-        }
-    } else {
-        _errors.TKChamp = "Task owner cannot be empty!";
-        this.setState({formIsValid: false});
-    }
-
-    this.setState({errors: _errors});
-
-    return formIsValid;
-  }
+  
 
   saveTask(event) {
     event.preventDefault();
     const _DevId = this.props.main.MainId;
+    let _task = this.state.task;
 
-    if(!this.taskFormIsValid()) {
+    let validation = taskFormIsValid(_task);
+    this.setState({errors: validation.errors});
+
+    if(!validation.formIsValid) {
       return; 
     }
 
@@ -110,7 +82,6 @@ class TaskDetail extends React.Component {
       const TKChampNew = this.state.TKChamp !== this.props.task.TKChamp;
       this.props.taskActions.editTask(this.state.task);
     } else {
-      let _task = this.state.task;
       _task.TKStat = this.state.TKStat || 1;
       _task.TKCapa = this.state.TKCapa || 0;
       _task.DevId = _DevId;

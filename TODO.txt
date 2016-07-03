@@ -1,5 +1,3 @@
-//TODO: (0) @Medium Fix error handling for the Task Detail form 
-//TODO: (0) @Medium Clean up / remove redux form implementation
 //TODO: (5) @Medium Convert the dev-form validation function to a re-useable function
 
 Change Over

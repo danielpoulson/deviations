@@ -11,7 +11,7 @@
     "lint:watch": "npm run lint -- --watch",
     "start": "npm-run-all --parallel test:watch open:src lint:watch",
     "open:src": "NODE_ENV=development babel-node server.js",
-    "startProduction": "NODE_ENV=production node bin/server.js",
+    "startProduction": "NODE_ENV=production babel-node server.js",
     "test:watch": "babel-node bin/testMessage",
     "dpGit": "git add . && git commit -m 'eslint / refactor' && git push"
   },

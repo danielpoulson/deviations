@@ -1,25 +1,29 @@
 import React, {PropTypes} from 'react';
-
+// TODO: (5) @easy error box refine formatting
 const SelectInput = ({name, label, inputdiv, labelstyle, onChange, defaultOption, value, error, options}) => {
+  const errorStyle = {marginLeft: 25};
   return (
-    <div className="form-group">
-      <label className={labelstyle} htmlFor={name}>{label}</label>
-      <div className={`${inputdiv} styled`}>
-        {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
-        <select
-          name={name}
-          value={value}
-          onChange={onChange}
-          className="form-control">
-          <option value="">{defaultOption.text}</option>
-          {options.map((option) => {
-            return <option key={option.value} value={option.value}>{option.text}</option>;
-          })
-          }
-        </select>
+    <div className="">
 
-        {error && <div className="alert alert-danger">{error}</div>}
+      <div className="form-group">
+        <label className={labelstyle} htmlFor={name}>{label}</label>
+        <div className={`${inputdiv} styled`}>
+          {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
+          <select
+            name={name}
+            value={value}
+            onChange={onChange}
+            className="form-control">
+            <option value="">{defaultOption.text}</option>
+            {options.map((option) => {
+              return <option key={option.value} value={option.value}>{option.text}</option>;
+            })
+            }
+          </select>
+        </div>
+        {error && <span className="alert alert-danger" style={errorStyle}>{error}</span>}
       </div>
+        
     </div>
   );
 };
