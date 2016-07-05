@@ -8,6 +8,10 @@ var mailer = require('../config/mailer.js');
 var dateFunc = require('../config/date-function');
 var fs = require('fs');
 
+// TODO: (1) @Medium Single call to get all deviation data (files, tasks, logs)
+// This is currently four seperate calls
+
+    
 exports.getDeviations = function(req, res) {
     var status = parseInt(req.params.status);
     var customer = req.params.cust;

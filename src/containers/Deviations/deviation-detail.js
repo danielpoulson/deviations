@@ -54,6 +54,8 @@ class DeviationDetail extends Component {
   }
 
   componentWillMount() {
+    // TODO: (1) @Medium Only call for new data when loading a new deviation
+    // The record should not get data from the server when the deviaiton has not changed
     const dvNo = this.props.location.pathname.split('/')[2];
     if (this.props.main.loading === true) {
       this.props.getProjectTasks(dvNo);
@@ -133,6 +135,10 @@ class DeviationDetail extends Component {
     e.preventDefault();
     this.context.router.push('/deviations');
   }
+
+  // TODO: (1) @Medium Deviation list displays full list on new deviation
+  // Example On save the state is paged: 43, alldata: 43, total:42 Note paged should be 15
+  // When a new deviation is loaded the pagination goes a bit strange in that the hold list is displayed instead of the first page.
 
   saveDetail(event, closed) {
     event.preventDefault();

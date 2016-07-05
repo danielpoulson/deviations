@@ -30,7 +30,7 @@ const classifies = [
   { value: 'Formulation Difficulty', text: 'Formulation Difficulty'},
   { value: 'Leakers', text: 'Leakers'},
   { value: 'Not Assigned', text: 'Not Assigned'},
-  { value: 'out of Specification', text: 'out of Specification'},
+  { value: 'Out of Specification', text: 'Out of Specification'},
   { value: 'Operator Error', text: 'Operator Error'},
   { value: 'Procedure', text: 'Procedure'},
   { value: 'Transport Issue', text: 'Transport Issue'}, 

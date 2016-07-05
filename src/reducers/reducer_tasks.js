@@ -63,13 +63,14 @@ export default function (state, action) {
   switch (action.type) {
     case ADD_TASK:
       _data = action.payload.data;
-      alldata = [
-        ...state.alldata,
-        _data
-      ];
+      alldata = [ ...state.alldata, _data ];
+      ctlist = [ ...state.ctlist, _data ];
+      ctTotal = state.ctTotal + 1;
       return {
         ...state,
-        alldata
+        alldata,
+        ctlist,
+        ctTotal
       };
 
     case EDIT_TASK: {

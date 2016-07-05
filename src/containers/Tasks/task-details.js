@@ -64,8 +64,6 @@ class TaskDetail extends React.Component {
     this.taskNav(this.props.main.MainId);
   }
 
-  
-
   saveTask(event) {
     event.preventDefault();
     const _DevId = this.props.main.MainId;
@@ -79,11 +77,11 @@ class TaskDetail extends React.Component {
     }
 
     if (this.state.taskId !== 'new') {
-      const TKChampNew = this.state.TKChamp !== this.props.task.TKChamp;
-      this.props.taskActions.editTask(this.state.task);
+      const TKChampNew = _task.TKChamp !== this.props.task.TKChamp;
+      this.props.taskActions.editTask(_task);
     } else {
-      _task.TKStat = this.state.TKStat || 1;
-      _task.TKCapa = this.state.TKCapa || 0;
+      _task.TKStat = _task.TKStat || 1;
+      _task.TKCapa = _task.TKCapa || 0;
       _task.DevId = _DevId;
       this.props.taskActions.addTask(_task);
     }
@@ -117,11 +115,7 @@ class TaskDetail extends React.Component {
   }
 
   taskNav(id) {
-    if (this.props.main.CurrentMode === 'project') {
-      this.context.router.push(`/project/${id}`);
-    } else {
       this.context.router.push(`/deviation/${id}`);
-    }
   }
 
   render() {

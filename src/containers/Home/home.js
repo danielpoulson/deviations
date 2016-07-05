@@ -22,6 +22,8 @@ class Home extends Component {
 
   }
 
+  // TODO: (1) @Medium Front page does not update counts on logging
+
   componentWillMount(){
     const username = sessionStorage.getItem('username');
     this.props.getUserDashboard(username);
