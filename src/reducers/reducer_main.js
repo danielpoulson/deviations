@@ -5,6 +5,7 @@ const initialState = {
   MainId: '',
   CurrentMode: 'change',
   ShowAll: false,
+  myData: [],
   user: {
     username: '',
     fullname: '',
@@ -75,12 +76,14 @@ export default function (state, action) {
       const countTasksUser = action.payload.data ? action.payload.data.taskCount : 0;
       const allOpenTasks = action.payload.data ? action.payload.data.allTaskCount : 0;
       const allOpenDeviations = action.payload.data ? action.payload.data.allDeviationCount : 0;
+      const myData = action.payload.data.myData;
       return {
         ...state,
         countDeviationsUser,
         countTasksUser,
         allOpenTasks,
-        allOpenDeviations
+        allOpenDeviations,
+        myData
       };
     }
 

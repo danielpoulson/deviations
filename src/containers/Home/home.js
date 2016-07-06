@@ -90,11 +90,11 @@ class Home extends Component {
         <div className="row cc-graph">
           <div className="col-sm-6">
             <h3>Open vs Closed Deviations</h3>
-            <BarChart />
+            {this.props.myData.length > 0 && <BarChart />}
           </div>
           <div className="col-sm-6">
             <h3>Deviations Open > 30 days</h3>
-            <LineChart />
+            {this.props.myData.length > 0 && <LineChart myData={this.props.myData} />}
           </div>
         </div>
       </div>
@@ -122,5 +122,6 @@ export default connect(
     countDeviationsUser: state.main.countDeviationsUser,
     allOpenDeviations: state.main.allOpenDeviations,
     allOpenTasks: state.main.allOpenTasks,
+    myData: state.main.myData,
     countTasksUser: state.main.countTasksUser }), { getUserDashboard, loadPage, loadPageTask}
 )(Home);

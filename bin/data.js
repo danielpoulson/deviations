@@ -1,9 +1,5 @@
 export const myData = [
   {
-    date: "Nov 15",
-    count: 25
-  },
-  {
     date: "Dec 15",
     count: 26
   },
@@ -26,6 +22,10 @@ export const myData = [
   {
     date: "May 16",
     count: 31
+  },
+  {
+    date: "Jun 16",
+    count: 16
   }
 ];
 

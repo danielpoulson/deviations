@@ -5,6 +5,7 @@ var logger = require('../controllers/loggers');
 var tasks = require('../controllers/tasks');
 var users = require('../controllers/users');
 var mailer = require('../config/mailer.js');
+var exportdata = require('../config/data.js');
 var dateFunc = require('../config/date-function');
 var fs = require('fs');
 
@@ -168,6 +169,10 @@ exports.getCustomers = function(req, res) {
 exports.getUserDashboard = function(req, res){
   const dashboard = {};
   var username = '';
+  const myData = exportdata.myData();
+
+  dashboard.myData = myData;
+
   const promise = Deviation.count({dvClosed: {$lt:1}}).exec();
 
   promise.then(data => {

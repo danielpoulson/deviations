@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import d3 from 'd3';
 import tip from 'd3-tip';
 import _ from 'lodash';
@@ -10,14 +10,20 @@ d3.tip = tip;
 export default class LineGraph extends Component{
 
   componentDidMount(){
-    this.updateChart();
+    this.updateChart(this.props.myData);
   }
+  // componentWillReceiveProps(nextProps) {
+  //   if(nextProps.myData.length > 0){
+  //     this.updateChart(this.props.myData);
+  //   }
 
-  updateChart(){
+  //   console.log("Hello is it me your looking for?");
+  // }
+
+  updateChart(data){
     const margin = {top: 30, right: 20, bottom: 30, left: 50};
     const w = 500 - margin.left - margin.right;
     const h = 300 - margin.top - margin.bottom;
-    const data = myData;
 
     const dates = _.map(data, 'date');
     const counts = _.map(data, 'count');
@@ -114,7 +120,6 @@ export default class LineGraph extends Component{
         .tickSize(-w, 0, 0)
         .tickFormat("")
       );
-
   }
 
 
@@ -122,3 +127,7 @@ export default class LineGraph extends Component{
     return <div id="chart"></div>;
   }
 }
+
+LineGraph.propTypes = {
+  myData: React.PropTypes.array
+};
