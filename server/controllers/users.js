@@ -147,7 +147,7 @@ exports.deleteUser= function (req, res) {
 
 };
 
-// TODO: LOW Duplicate code with auth.js
+//TODO: (5) @Minor LOW Duplicate code with auth.js
 function makeUserSafe (user) {
     var safeUser = {};
 

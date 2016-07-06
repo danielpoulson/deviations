@@ -165,13 +165,16 @@ exports.getCustomers = function(req, res) {
         });
 };
 
+exports.getGraphData = function(req, res){
+    const myData = exportdata.myData();
+    res.send(myData);
+};
+
 // This function gets the count for **active** tasks and change controls for the logged in user
 exports.getUserDashboard = function(req, res){
   const dashboard = {};
   var username = '';
-  const myData = exportdata.myData();
 
-  dashboard.myData = myData;
 
   const promise = Deviation.count({dvClosed: {$lt:1}}).exec();
 

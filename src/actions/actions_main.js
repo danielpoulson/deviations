@@ -4,6 +4,7 @@ export const SET_MAIN = 'SET_MAIN';
 export const SET_USER = 'SET_USER';
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 export const SET_FILETAB_COUNT = 'SET_FILETAB_COUNT';
+export const SET_GRAPH_DATA = 'SET_GRAPH_DATA';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_USER_DASHBOARD = 'SET_USER_DASHBOARD';
 export const SET_VIEW = 'SET_VIEW';
@@ -15,6 +16,16 @@ export function getUserDashboard(username){
 
   return {
     type: SET_USER_DASHBOARD,
+    payload: request
+  };
+}
+
+export function getGraphData(){
+  const url = "api/graphdata";
+  const request = axios.get(url);
+
+  return {
+    type: SET_GRAPH_DATA,
     payload: request
   };
 }

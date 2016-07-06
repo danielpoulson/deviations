@@ -1,4 +1,4 @@
-import { SET_MAIN, SET_USER, USER_LOGGED_OUT, SET_FILETAB_COUNT, SET_LOADING, SET_USER_DASHBOARD, SET_VIEW } from 'actions/actions_main';
+import { SET_MAIN, SET_USER, USER_LOGGED_OUT, SET_FILETAB_COUNT, SET_LOADING, SET_USER_DASHBOARD, SET_GRAPH_DATA, SET_VIEW } from 'actions/actions_main';
 import toastr from 'toastr';
 
 const initialState = {
@@ -76,15 +76,20 @@ export default function (state, action) {
       const countTasksUser = action.payload.data ? action.payload.data.taskCount : 0;
       const allOpenTasks = action.payload.data ? action.payload.data.allTaskCount : 0;
       const allOpenDeviations = action.payload.data ? action.payload.data.allDeviationCount : 0;
-      const myData = action.payload.data.myData;
       return {
         ...state,
         countDeviationsUser,
         countTasksUser,
         allOpenTasks,
-        allOpenDeviations,
-        myData
+        allOpenDeviations
       };
+    }
+
+    case SET_GRAPH_DATA: {
+      return {
+        ...state,
+        myData: action.payload.data
+      }
     }
 
     default:

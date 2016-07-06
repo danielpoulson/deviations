@@ -10,7 +10,7 @@ import 'scss/toastr.scss';
 import 'scss/styles.scss';
 
 import { getAllTasks } from 'actions/actions_tasks';
-import { setUser } from 'actions/actions_main';
+import { setUser, getGraphData } from 'actions/actions_main';
 import { getUsers } from 'actions/actions_users';
 
 
@@ -24,6 +24,7 @@ class App extends Component {
     const authorised = sessionStorage.getItem('authorised');
     this.props.getAllTasks();
     this.props.getUsers();
+    this.props.getGraphData();
     if (authorised === 'true') {
       this.props.setUser();
     }
@@ -53,4 +54,4 @@ App.propTypes = {
   setUser: React.PropTypes.func
 };
 
-export default connect(null, { getAllTasks, setUser, getUsers })(App);
+export default connect(null, { getAllTasks, setUser, getGraphData, getUsers })(App);

@@ -22,7 +22,7 @@ class Header extends Component {
   onLogin(e) {
     e.preventDefault();
     this.props.login(this.state.login);
-    // this.props.getUserDashboard(this.state.login.username);
+    this.props.getUserDashboard(this.state.login.username);
   }
 
   setStateLogin(evt) {
