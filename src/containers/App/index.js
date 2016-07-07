@@ -50,6 +50,7 @@ class App extends Component {
 App.propTypes = {
   children: React.PropTypes.any,
   getAllTasks: React.PropTypes.func,
+  getGraphData: React.PropTypes.func,
   getUsers: React.PropTypes.func,
   setUser: React.PropTypes.func
 };

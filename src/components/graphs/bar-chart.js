@@ -1,15 +1,14 @@
 import React from 'react';
 import d3 from 'd3';
 import _ from 'lodash';
-import { changeData } from '../../../bin/data';
 
 export default class BarChart extends React.Component{
 
 	componentDidMount(){
-		this.renderChart();
+		this.renderChart(this.props.chartData);
 	}
 
-	renderChart(){
+	renderChart(data){
 		const margin = {top: 20, right: 20, bottom: 30, left: 40},
 			width = 500 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
@@ -40,11 +39,10 @@ export default class BarChart extends React.Component{
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      const data = changeData;
 			//Removes the first element of the array the "Years" item and creates a new array
 			//of category names e.g ["closed", "open"]
 			// const _category = d3.keys(data[0]).filter(function(key) { return key !== "Years"; });
-      const _category = ['closed', 'open'];
+      const _category = ['open', 'closed'];
 
 		// This function is used to make grid lines
 		function make_y_axis() {
@@ -119,7 +117,7 @@ export default class BarChart extends React.Component{
 
 
 		const legend = svg.selectAll(".legend")
-			.data(_category.slice().reverse())
+			.data(_category.slice())
 			.enter().append("g")
 			.attr("class", "legend")
 			.attr("transform", "translate(0,-20)");
@@ -144,3 +142,7 @@ export default class BarChart extends React.Component{
 		return <div id="chartArea"></div>;
 	}
 }
+
+BarChart.propTypes = {
+	chartData: React.PropTypes.array
+};

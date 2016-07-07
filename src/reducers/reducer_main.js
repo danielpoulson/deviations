@@ -5,7 +5,8 @@ const initialState = {
   MainId: '',
   CurrentMode: 'change',
   ShowAll: false,
-  myData: [],
+  lineData: [],
+  chartData: [],
   user: {
     username: '',
     fullname: '',
@@ -88,8 +89,9 @@ export default function (state, action) {
     case SET_GRAPH_DATA: {
       return {
         ...state,
-        myData: action.payload.data
-      }
+        lineData: action.payload.data.lineData,
+        chartData: action.payload.data.chartData
+      };
     }
 
     default:

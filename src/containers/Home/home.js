@@ -22,8 +22,6 @@ class Home extends Component {
 
   }
 
-  // TODO: (1) @Medium Front page does not update counts on logging
-
   componentWillMount(){
     const username = sessionStorage.getItem('username');
     this.props.getUserDashboard(username);
@@ -90,11 +88,11 @@ class Home extends Component {
         <div className="row cc-graph">
           <div className="col-sm-6">
             <h3>Open vs Closed Deviations</h3>
-            {this.props.myData.length > 0 && <BarChart />}
+            {this.props.chartData.length > 0 && <BarChart chartData={this.props.chartData} />}
           </div>
           <div className="col-sm-6">
             <h3>Deviations Open > 30 days</h3>
-            {this.props.myData.length > 0 && <LineChart myData={this.props.myData} />}
+            {this.props.lineData.length > 0 && <LineChart lineData={this.props.lineData} />}
           </div>
         </div>
       </div>
@@ -105,10 +103,12 @@ class Home extends Component {
 Home.propTypes = {
   allOpenDeviations: React.PropTypes.number,
   allOpenTasks: React.PropTypes.number,
+  chartData: React.PropTypes.array,
   countDeviationsUser: React.PropTypes.number,
   countTasksUser: React.PropTypes.number,
   fullname: React.PropTypes.string.isRequired,
   getUserDashboard: React.PropTypes.func,
+  lineData: React.PropTypes.array,
   loadPage: React.PropTypes.func,
   loadPageTask: React.PropTypes.func
 };
@@ -122,6 +122,7 @@ export default connect(
     countDeviationsUser: state.main.countDeviationsUser,
     allOpenDeviations: state.main.allOpenDeviations,
     allOpenTasks: state.main.allOpenTasks,
-    myData: state.main.myData,
+    chartData: state.main.chartData,
+    lineData: state.main.lineData,
     countTasksUser: state.main.countTasksUser }), { getUserDashboard, loadPage, loadPageTask}
 )(Home);

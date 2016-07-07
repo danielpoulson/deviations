@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import d3 from 'd3';
 import tip from 'd3-tip';
 import _ from 'lodash';
-import { myData } from '../../../bin/data';
 import './styles.scss';
 
 d3.tip = tip;
@@ -10,15 +9,8 @@ d3.tip = tip;
 export default class LineGraph extends Component{
 
   componentDidMount(){
-    this.updateChart(this.props.myData);
+    this.updateChart(this.props.lineData);
   }
-  // componentWillReceiveProps(nextProps) {
-  //   if(nextProps.myData.length > 0){
-  //     this.updateChart(this.props.myData);
-  //   }
-
-  //   console.log("Hello is it me your looking for?");
-  // }
 
   updateChart(data){
     const margin = {top: 30, right: 20, bottom: 30, left: 50};
@@ -129,5 +121,5 @@ export default class LineGraph extends Component{
 }
 
 LineGraph.propTypes = {
-  myData: React.PropTypes.array
+  lineData: React.PropTypes.array
 };

@@ -69,6 +69,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
+  getUserDashboard: React.PropTypes.func,
   login: React.PropTypes.func,
   fullname: React.PropTypes.string
 };

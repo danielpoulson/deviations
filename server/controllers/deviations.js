@@ -56,8 +56,6 @@ exports.updateDeviation = function(req, res) {
         }
         res.sendStatus(200);
     });
-
-
 };
 
 function createEmail(body){
@@ -166,8 +164,10 @@ exports.getCustomers = function(req, res) {
 };
 
 exports.getGraphData = function(req, res){
-    const myData = exportdata.myData();
-    res.send(myData);
+    let trendData = {};
+    trendData.lineData = exportdata.myData();
+    trendData.chartData = exportdata.changeData;
+    res.send(trendData);
 };
 
 // This function gets the count for **active** tasks and change controls for the logged in user

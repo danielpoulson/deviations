@@ -63,22 +63,6 @@ router.get('/logout', function (req, res) {
 router.post('/api/logger', loggers.createLog);
 router.get('/api/logger/:id', loggers.getLog);
 //*************Logger Routes************************
-//
-//
-// router.route('/api/projects/:status')
-//     .get(projects.getProjects);
-//
-//
-//     //Projects
-//     router.post('/api/projects', projects.createProject);
-//
-//   router.route('/api/project/:id')
-//     .get(projects.getProjectById)
-// 	.put(projects.updateProject)
-//  	.post(projects.createProject);
-//
-// router.route('/api/projectList/:status')
-//     .get(projects.getProjectList);
 
   //Task
 

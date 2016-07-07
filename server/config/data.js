@@ -32,3 +32,21 @@ exports.myData = function() {
 
   return data;
 };
+
+exports.changeData = [
+  {
+    "Years": 2014,
+    "closed": 325,
+    "open": 325
+  },
+  {
+    "Years": 2015,
+    "closed": 209,
+    "open": 226
+  },
+  {
+    "Years": 2016,
+    "closed": 95,
+    "open": 130
+  }
+];
