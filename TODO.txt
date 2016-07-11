@@ -8,3 +8,6 @@ users will still not be able to log in uptil the paswords are adjusted.
 
 Remove passwords
 db.users.update({}, {$unset: {salt:1, hashed_pwd:1, roles:1, firstName:1, lasteName:1}},{multi:true})
+
+Resources : 
+1. React SkyLight is a simple react component for modals and dialogs. Powerful, lightweight and customizable design.
