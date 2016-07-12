@@ -164,7 +164,7 @@ exports.getCustomers = function(req, res) {
 };
 
 exports.getGraphData = function(req, res){
-    let trendData = {};
+    var trendData = {};
     trendData.lineData = exportdata.myData();
     trendData.chartData = exportdata.changeData;
     res.send(trendData);

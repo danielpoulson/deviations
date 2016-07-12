@@ -54,7 +54,7 @@ export default function (state, action) {
         ...state.alldata,
         _data
       ];
-      paged = alldata;
+      paged = alldata.slice(0,14);
       return {
         ...state,
         alldata,
