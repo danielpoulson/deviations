@@ -30,8 +30,6 @@ class Tasks extends Component {
 
   }
 
-  // TODO: (1) @BUG Task list does not update when saving a task need to refresh
-
   componentWillMount() {
     if (!this.props.tasks.alldata.length > 0) {
       this.props.getAllTasks();
