@@ -1,9 +1,12 @@
-var express = require('express');
-var app = express();
-var File = require('mongoose').model('File');
-var path = require('path');
-var rootPath = path.normalize(__dirname + '/../../');
-var fs = require('fs');
+const express = require('express');
+const app = express();
+const File = require('mongoose').model('File');
+const path = require('path');
+const rootPath = path.normalize(__dirname + '/../../');
+const uploads = path.normalize(rootPath + '../uploads/');
+const fs = require('fs');
+
+// TODO: (1) Medium Need to set the file location one directory higher in production
 
 
 exports.downloadFile = function (req, res) {
@@ -11,13 +14,13 @@ exports.downloadFile = function (req, res) {
     var fileType = filename.substring(0,3);
     var file = '';
 
-// TODO LOW EASY: duplicated file = '.././uploads/' + filename;???.    
+// TODO LOW EASY: duplicated file = '.././uploads/' + filename;???.
     if(fileType == 'exp'){
         filename = filename.slice(6);
-        file = '.././uploads/' + filename;
+        file = uploads + filename;
     } else {
 
-        file = '.././uploads/' + filename;
+        file = uploads + filename;
     }
 
     res.download(file, filename, function(err){

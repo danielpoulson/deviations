@@ -6,11 +6,15 @@ const files = require('../controllers/files');
 const users = require('../controllers/users');
 const loggers = require('../controllers/loggers');
 const multer = require('multer');
+const path = require('path');
+const rootPath = path.normalize(__dirname + '/../../');
+const uploads = path.normalize(rootPath + '../uploads/');
 
+console.log(uploads);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '.././uploads/')
+    cb(null, uploads)
   },
 
   filename: function (req, file, cb) {
@@ -74,7 +78,7 @@ router.get('/api/logger/:id', loggers.getLog);
   router.delete('/api/tasks/:id', tasks.deleteTask);
   router.post('/export/tasks', tasks.dumpTasks);
  //
- 
+
   router.get('/api/files/:files', files.getFiles);
   router.get('/api/filecount/:id', files.getFileCount);
   router.put('/api/filebooked/:id', files.updateFileBook);
