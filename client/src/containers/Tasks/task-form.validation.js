@@ -12,7 +12,7 @@ export function taskFormIsValid(task) {
         formIsValid = false;
     }
 
-    if (typeof task.TKTarg == 'undefined'){
+    if (typeof task.TKTarg === 'undefined'){
         errors.TKTarg = "Please enter a target date!!";
          formIsValid = false;
      }

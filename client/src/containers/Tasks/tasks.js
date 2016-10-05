@@ -134,16 +134,16 @@ class Tasks extends Component {
 
           <div className="col-sm-6">
             <Pagination
-              activePage = {this.state.activePage}
-              numPage = {this.props.tasks.per_page}
-              count = {this.props.tasks.total}
-              getPage = {this.linkClick.bind(this)} />
+              activePage={this.state.activePage}
+              numPage={this.props.tasks.per_page}
+              count={this.props.tasks.total}
+              getPage={this.linkClick.bind(this)} />
           </div>
         </div>
 
         <TaskList
-          tasklist = {this.props.tasks.paged}
-          type = "All" />
+          tasklist={this.props.tasks.paged}
+          type="All" />
 
         </div>
     );

@@ -174,10 +174,10 @@ class Deviations extends Component {
 
           <div className="col-sm-4">
             <Pagination
-              activePage = {this.state.activePage}
-              numPage = {this.props.deviations.per_page}
-              count = {this.props.deviations.total}
-              getPage = {this.linkClick} />
+              activePage={this.state.activePage}
+              numPage={this.props.deviations.per_page}
+              count={this.props.deviations.total}
+              getPage={this.linkClick} />
           </div>
         </div>
 
@@ -186,9 +186,9 @@ class Deviations extends Component {
           <DeviationList
             devlist={this.props.deviations.paged}
             getDeviation={this.onGetDeviation}
-            sortByClick = {this.onSortByClick}
-            colSelected = {this.props.deviations.sorted}
-            detailView = {this.state.detailView} />
+            sortByClick={this.onSortByClick}
+            colSelected={this.props.deviations.sorted}
+            detailView={this.state.detailView} />
         </div>
 
       </section>

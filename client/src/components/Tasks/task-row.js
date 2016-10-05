@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
-import { getStatus, getTraffic } from '../../utils/status';
+import { getTraffic } from '../../utils/status';
 
 const TaskRow = (props) => {
   const task = props.task;

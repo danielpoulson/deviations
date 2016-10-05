@@ -43,7 +43,7 @@ class TaskDetail extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.task._id != nextProps.task._id) {
+    if (this.props.task._id !== nextProps.task._id) {
       // Necessary to populate form when existing course is loaded directly.
       this.setState({task: Object.assign({}, nextProps.task)});
     }
@@ -77,7 +77,7 @@ class TaskDetail extends React.Component {
     }
 
     if (this.state.taskId !== 'new') {
-      const TKChampNew = _task.TKChamp !== this.props.task.TKChamp;
+      // const TKChampNew = _task.TKChamp !== this.props.task.TKChamp;
       this.props.taskActions.editTask(_task);
     } else {
       _task.TKStat = _task.TKStat || 1;
@@ -183,7 +183,7 @@ TaskDetail.childContextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const taskId = ownProps.params.id;
+  // const taskId = ownProps.params.id;
 
   return {
     main: state.main,

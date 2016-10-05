@@ -10,9 +10,9 @@ const TaskTable = (props) => {
   }
 
   return (
-    <div className = "panel panel-success">
-      <table className = "table table-hover project-table dp_point">
-        <thead className = "print-table-head">
+    <div className="panel panel-success">
+      <table className="table table-hover project-table dp_point">
+        <thead className="print-table-head">
           <tr>
             <th> Deviation Id and Task Name </th>
             <th> Target</th>
@@ -20,7 +20,7 @@ const TaskTable = (props) => {
             <th> Status </th>
           </tr>
         </thead>
-        <tbody className = "panel-body dpHand">{tasks}</tbody>
+        <tbody className="panel-body dpHand">{tasks}</tbody>
       </table>
     </div>
   );

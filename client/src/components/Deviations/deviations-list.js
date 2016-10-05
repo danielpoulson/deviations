@@ -35,7 +35,7 @@ const DeviationList = (props) => {
   if (_devs !== undefined) {
 
     deviations = _devs.map((dev) => <DeviationRow key={dev.dvNo} deviation={dev}
-      getDeviation = {props.getDeviation} detailView = {props.detailView}
+      getDeviation={props.getDeviation} detailView={props.detailView}
     />);
   }
 

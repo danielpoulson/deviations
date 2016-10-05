@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react';
 class TextInput extends React.Component {
   render() {
 
-    const spanStyle = { color: 'red' };
+    // const spanStyle = { color: 'red' };
 
     let wrapperClass = 'form-group';
     const _inputstyle = 'form-control' || this.props.inputstyle;
@@ -12,7 +12,7 @@ class TextInput extends React.Component {
     const _labelstyle = this.props.labelstyle;
 
     if (this.props.error && this.props.error.length > 0) {
-      wrapperClass += " " + 'has-error';
+      wrapperClass += ' has-error';
     }
 
     return (

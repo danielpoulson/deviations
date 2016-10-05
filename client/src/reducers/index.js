@@ -8,7 +8,6 @@ import FilesReducer from './reducer_files';
 import UsersReducer from './reducer_users';
 import UserReducer from './reducer_user';
 import LogReducer from './reducer_log';
-import { NEW_DEVIATION } from '../actions/actions_deviations';
 
 const rootReducer = combineReducers({
   /* your reducers */

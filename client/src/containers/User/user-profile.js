@@ -28,7 +28,7 @@ class UserProfile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.user._id != nextProps.user._id) {
+    if (this.props.user._id !== nextProps.user._id) {
       // Necessary to populate form when existing course is loaded directly.
       this.setState({user: Object.assign({}, nextProps.user)});
     }

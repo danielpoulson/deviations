@@ -7,7 +7,7 @@ const TextArea = (props) => {
   const _labelstyle = props.labelstyle;
 
   if (props.error && props.error.length > 0) {
-    wrapperClass += ' ' + 'has-error';
+    wrapperClass += ' has-error';
   }
 
 

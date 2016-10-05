@@ -14,18 +14,18 @@ const Pagination = (props) => {
 
   return (
     <nav>
-      <ul className = "list-inline pull-right dpPag" >
-        <li className = {firstPage ? 'hidden' : 'dpHand'} style={linkStyle} onClick = {() => { props.getPage(0);}} >
+      <ul className="list-inline pull-right dpPag" >
+        <li className={firstPage ? 'hidden' : 'dpHand'} style={linkStyle} onClick={() => { props.getPage(0);}} >
           <em>First</em>
         </li>
-        <li className = {firstPage ? 'hidden' : 'dpHand'} onClick = {() => { props.getPage(activePage - 1);}} >
-          <span className = "glyphicon glyphicon-chevron-left" ></span>
+        <li className={firstPage ? 'hidden' : 'dpHand'} onClick={() => { props.getPage(activePage - 1);}} >
+          <span className="glyphicon glyphicon-chevron-left" ></span>
         </li>
         <li>{activePage + 1} of {pag}</li>
-        <li className = {lastPage ? 'hidden' : 'dpHand'} onClick = {()=>{props.getPage(activePage + 1);}} >
-          <span className = "glyphicon glyphicon-chevron-right" ></span>
+        <li className={lastPage ? 'hidden' : 'dpHand'} onClick={()=>{props.getPage(activePage + 1);}} >
+          <span className="glyphicon glyphicon-chevron-right" ></span>
         </li>
-        <li className = {lastPage ? 'hidden' : 'dpHand'} style={linkStyle} onClick = {() => {props.getPage(pag - 1);}} >
+        <li className={lastPage ? 'hidden' : 'dpHand'} style={linkStyle} onClick={() => {props.getPage(pag - 1);}} >
           <em>Last</em>
         </li>
         <li>Records {count}</li>

@@ -101,16 +101,16 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  allOpenDeviations: React.PropTypes.number,
-  allOpenTasks: React.PropTypes.number,
-  chartData: React.PropTypes.array,
-  countDeviationsUser: React.PropTypes.number,
-  countTasksUser: React.PropTypes.number,
-  fullname: React.PropTypes.string.isRequired,
-  getUserDashboard: React.PropTypes.func,
-  lineData: React.PropTypes.array,
-  loadPage: React.PropTypes.func,
-  loadPageTask: React.PropTypes.func
+  allOpenDeviations: PropTypes.number,
+  allOpenTasks: PropTypes.number,
+  chartData: PropTypes.array,
+  countDeviationsUser: PropTypes.number,
+  countTasksUser: PropTypes.number,
+  fullname: PropTypes.string.isRequired,
+  getUserDashboard: PropTypes.func,
+  lineData: PropTypes.array,
+  loadPage: PropTypes.func,
+  loadPageTask: PropTypes.func
 };
 
 Home.contextTypes = {

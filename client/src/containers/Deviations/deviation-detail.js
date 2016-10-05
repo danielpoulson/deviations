@@ -68,7 +68,7 @@ class DeviationDetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.deviation._id != nextProps.deviation._id) {
+    if (this.props.deviation._id !== nextProps.deviation._id) {
       // Necessary to populate form when existing course is loaded directly.
       this.setState({deviation: Object.assign({}, nextProps.deviation)});
     }
@@ -293,8 +293,8 @@ class DeviationDetail extends Component {
             log={this.props.log} />}
 
           {this.state.notnew && <TaskList
-            tasklist = {this.props.tasklist}
-            tasksTab = {this.state.TasksTab}
+            tasklist={this.props.tasklist}
+            tasksTab={this.state.TasksTab}
             title={this.state.deviationTitle} />}
 
           {this.state.notnew && <FileList

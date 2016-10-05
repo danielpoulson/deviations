@@ -3,17 +3,7 @@
   "version": "2.0.0",
   "description": "Deviation application",
   "scripts": {
-    "prestart": "babel-node bin/startMessage.js",
-    "clean": "rimraf dist",
-    "build": "webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js",
-    "build:production": "npm run clean && npm run build",
-    "lint": "node_modules/.bin/esw webpack.config.* src",
-    "lint:watch": "npm run lint -- --watch",
-    "start": "npm-run-all --parallel test:watch open:src lint:watch",
-    "open:src": "NODE_ENV=development babel-node server.js",
-    "startProduction": "NODE_ENV=production babel-node server.js",
-    "test:watch": "babel-node bin/testMessage",
-    "dpGit": "git add . && git commit -m 'eslint / refactor' && git push"
+    "start": "nf start -p 3010"
   },
   "repository": {
     "type": "git",

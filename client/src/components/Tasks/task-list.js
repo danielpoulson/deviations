@@ -46,8 +46,8 @@ class TaskList extends Component {
       <div className={this.props.tasksTab}>
         <div>
           <TaskTable
-            tasklist = {this.props.tasklist}
-            handleClick = {this.handleClick} />
+            tasklist={this.props.tasklist}
+            handleClick={this.handleClick} />
         </div>
         <div className={hideButton}>
             <input type="submit" value="New Task" className="btn btn-success pull-left" onClick={this.newTask} />

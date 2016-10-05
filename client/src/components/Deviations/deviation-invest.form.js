@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import Input from '../../components/Common/form-text-input';
+import React, { PropTypes } from 'react';
 import TextArea from '../../components/Common/text-area';
 import DateTimePicker from '../../components/Common/date-picker';
 import SelectInput from '../../components/Common/select-input';

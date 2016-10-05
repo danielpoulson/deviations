@@ -3,11 +3,11 @@ import SelectInput from '../Common/select-input';
 import './user-style.css';
 
 const UserSelect = (props) => {
-  const fnStyle = {
-    marginLeft: 40,
-    paddingTop: 20,
-    paddingBottom: 10
-  };
+  // const fnStyle = {
+  //   marginLeft: 40,
+  //   paddingTop: 20,
+  //   paddingBottom: 10
+  // };
 
   return (
     <div>
