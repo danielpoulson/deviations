@@ -239,7 +239,7 @@ class DeviationDetail extends Component {
               <a onClick={this.showTab.bind(this, 'InvestTab')} data-toggle="tab">Investigation</a>
             </li>
             <li className={tasksTabClass}>
-              <a onClick={this.showTab.bind(this, 'TasksTab')} refs="TasksTab" data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
+              <a onClick={this.showTab.bind(this, 'TasksTab')} data-toggle="tab">Tasks <span className="badge"> {this.props.ctTotal} </span></a>
             </li>
             <li className={fileTabClass}>
               <a onClick={this.showTab.bind(this, 'FilesTab')} data-toggle="tab">Files <span className="badge"> {this.props.main.fileTabCount} </span></a>
