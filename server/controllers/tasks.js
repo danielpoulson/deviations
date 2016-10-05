@@ -7,7 +7,6 @@ var users = require('../controllers/users');
 var mailer = require('../config/mailer.js');
 var dateFunc = require('../config/date-function');
 var moment = require('moment');
-var momentLocalizer = require('react-widgets/lib/localizers/moment');
 
 exports.getTasks = function(req, res) {
     var status = req.params.status;

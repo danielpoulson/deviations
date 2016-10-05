@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var mongooseToCsv = require('mongoose-to-csv'); //https://www.npmjs.com/package/mongoose-to-csv
 var moment = require('moment');
-var momentLocalizer = require('react-widgets/lib/localizers/moment');
 
 var deviationSchema = new Schema({
     Id: Number,

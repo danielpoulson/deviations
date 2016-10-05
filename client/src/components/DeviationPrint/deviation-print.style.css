@@ -1,0 +1,69 @@
+.Chemlogo {
+	padding-top: 10px;
+	height: 49px;
+}
+
+.devdescribe {
+  margin-top: 20px;
+  border-bottom: solid 1px;
+}
+
+.devColLeft {
+  width: 650px;
+  padding-top: 5px;
+}
+
+.devColRightl {
+  width: 500px;
+  padding-top: 5px;
+}
+
+.taskTable {
+  margin-left: 10px;
+}
+/*-------------- Report -------------------*/
+
+@page {
+  	margin: 1.5cm;
+}
+
+@media screen {
+	.logo-page-break {
+		display: none;
+	}
+}
+
+@media print {
+	.page-break {
+		display: block;
+		page-break-before: always;
+	}
+	.topband {
+		display: none;
+	}
+	.navbar {
+		display: none;
+	}
+	footer {
+		display: none;
+	}
+
+	button {
+		display: none;
+	}
+}
+
+
+/*Over write bootsrap defaults*/
+.report-body {
+	font-size: 10pt;
+  border: 1px solid;
+}
+
+.reportHeader {
+    font-weight: bold;
+    font-size: 14pt;
+    margin-bottom: 10px;
+}
+
+    /*Report Task Section*/

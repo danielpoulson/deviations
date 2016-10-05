@@ -1,0 +1,31 @@
+.dvextract {
+    white-space: nowrap; 
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.devtable {
+	table-layout: fixed;
+	
+}
+
+.scrollable {
+	list-style-type: none;
+	height: 500px;
+	width: 100%;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+
+.panelStyle {
+	margin-top: 10px;
+	border: #008080 solid 1px;
+	padding-top: 10px;
+}
+
+.spanStyle {
+	color: #008080;
+	font-size: 0.9em;
+	padding-right: 10px;
+}

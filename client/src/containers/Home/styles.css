@@ -1,0 +1,71 @@
+.dashboard {
+	border-bottom: solid 4px #555555;
+}
+
+.dashboard h1 {
+	margin-bottom: 0px;
+	color: #555555;
+}
+
+
+.tile {
+	width: 100%;
+	font-weight: 600;
+	font-size: 4em;
+	padding: 0.1em 0.5em;
+	border-radius: 5px;
+	margin: 20px 0px;
+	box-shadow: 6px 6px 16px -3px rgba(50, 50, 50, 0.75);
+}
+
+.tile:hover {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.tile.grow { transition: all .1s ease-in-out; }
+
+.tile.grow:hover { transform: scale(1.05); }
+
+.tile.purple, .tile.blue, .tile.red, .tile.orange, .tile.green {
+  color: #fff;
+}
+
+.tile.green {
+  background: #00BFA5;
+}
+
+.tile.green:hover {
+  background: darken(#00BFA5, 10%);
+}
+
+.tile.blue {
+  background: #1E9FAF;
+}
+
+.tile.blue:hover {
+  background: darken(#1E9FAF, 10%);
+}
+
+.tile.purple {
+  background: #5C6BC0;
+}
+
+.tile.purple:hover {
+      background: darken(#5C6BC0, 10%);
+    }
+
+.tile.red {
+  background: #F44336;
+}
+.tile.red:hover {
+  background: darken(#F44336, 10%);
+}
+
+.tile.orange {
+  background: #FF5722;
+}
+
+.tile.orange:hover {
+  background: darken(#FF5722, 10%);
+}

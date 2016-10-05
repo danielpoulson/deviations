@@ -1,0 +1,38 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.6.1"
+  },
+  "dependencies": {
+    "axios": "^0.9.0",
+    "classnames": "^2.2.3",
+    "d3": "^3.5.16",
+    "d3-tip": "^0.6.7",
+    "jquery": "^3.1.1",
+    "moment": "^2.12.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-dropzone": "^3.3.4",
+    "react-redux": "^4.4.1",
+    "react-router": "^2.0.1",
+    "react-select": "^1.0.0-beta9",
+    "react-widgets": "^3.3.0",
+    "redux": "^3.3.1",
+    "redux-promise": "^0.5.3",
+    "superagent": "^1.8.3",
+    "toastr": "^2.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/react-scripts/config/eslint.js"
+  },
+  "proxy": "http://localhost:3030/"
+}
