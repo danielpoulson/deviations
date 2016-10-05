@@ -6,11 +6,12 @@ const Pagination = (props) => {
   const count = props.count;
   const numPage = props.numPage;
   const linkStyle = { color: '#71ABFF' };
-  let pag = 1;
+  let pagnum = 1;
 
-  pag = Math.ceil(count / numPage);
+  pagnum = Math.ceil(count / numPage);
   const firstPage = activePage === 0;
-  const lastPage = activePage + 1 === pag;
+  const lastPage = activePage + 1 === pagnum;
+  const pagDisplay = `${activePage + 1} of ${pagnum}`;
 
   return (
     <nav>
@@ -21,11 +22,11 @@ const Pagination = (props) => {
         <li className={firstPage ? 'hidden' : 'dpHand'} onClick={() => { props.getPage(activePage - 1);}} >
           <span className="glyphicon glyphicon-chevron-left" ></span>
         </li>
-        <li>{activePage + 1} of {pag}</li>
+        <li>{pagDisplay}</li>
         <li className={lastPage ? 'hidden' : 'dpHand'} onClick={()=>{props.getPage(activePage + 1);}} >
           <span className="glyphicon glyphicon-chevron-right" ></span>
         </li>
-        <li className={lastPage ? 'hidden' : 'dpHand'} style={linkStyle} onClick={() => {props.getPage(pag - 1);}} >
+        <li className={lastPage ? 'hidden' : 'dpHand'} style={linkStyle} onClick={() => {props.getPage(pagnum - 1);}} >
           <em>Last</em>
         </li>
         <li>Records {count}</li>
