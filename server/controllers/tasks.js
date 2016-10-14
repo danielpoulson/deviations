@@ -1,16 +1,17 @@
-var Task = require('mongoose').model('Task');
-var Deviation = require('mongoose').model('Deviation');
-var fs = require('fs');
-var files = require('../controllers/files');
-var json2csv = require('json2csv');
-var users = require('../controllers/users');
-var mailer = require('../config/mailer.js');
-var dateFunc = require('../config/date-function');
-var moment = require('moment');
+"use strict";
+const Task = require('mongoose').model('Task');
+const Deviation = require('mongoose').model('Deviation');
+const fs = require('fs');
+const files = require('../controllers/files');
+const json2csv = require('json2csv');
+const users = require('../controllers/users');
+const mailer = require('../config/mailer.js');
+const utils = require('../config/utils');
+const moment = require('moment');
 
 exports.getTasks = function(req, res) {
-    var status = req.params.status;
-    var capa = req.params.capa;
+    const status = req.params.status;
+    const capa = req.params.capa;
     Task.find({$and: [{TKStat: { $lte: status }}, { TKCapa: { $gte: capa }}]}, { DevId: true, TKName: true, TKTarg: true, TKComp:true, TKChamp:true, TKStat:true, TKCapa:true})
         .sort({TKTarg:1}).exec(function(err, collection) {
         res.send(collection);
@@ -58,22 +59,22 @@ exports.createTask = function(req, res, next) {
 };
 
 function createEmail(body){
-    var _targetDate = dateFunc.dpFormatDate(body.TKTarg);
-    var emailType = "Deviation - Task";
-    var emailActivity = `<b>Associated Deviation - </b><em>${body.DevId}</em> </br>
+    const _targetDate = utils.dpFormatDate(body.TKTarg);
+    const emailType = "Deviation - Task";
+    const emailActivity = `<b>Associated Deviation - </b><em>${body.DevId}</em> </br>
         <b>Task to Complete:</b><i>${body.TKName} <b>Date Due</b> ${_targetDate}</i>`;
 // TODO: Not the worlds nicest Promise using a timeout need to rework and improve.
-    var p = new Promise(function(resolve, reject) {
-        var toEmail = users.getUserEmail(body.TKChamp);
+    const p = new Promise(function(resolve, reject) {
+        const toEmail = users.getUserEmail(body.TKChamp);
        setTimeout(() => resolve(toEmail), 2000);
     }).then(function(res){
-        var _toEmail = res[0].email;
+        const _toEmail = res[0].email;
         mailer.sendMail(_toEmail, emailType, emailActivity);
     }).catch(function (err) {
-      console.log(err);
+      handleError(err);
     });
 
-};
+}
 
 exports.getTaskById = function(req, res) {
     Task.findOne({_id:req.params.id}).exec(function(err, task) {
@@ -96,9 +97,9 @@ exports.getTaskCount = function(req,res){
 };
 
 exports.dumpTasks = function(req, res) {
-    var fileData = {};
-    var newDate = new Date();
-    var int = parseInt((Math.random()*1000000000),10);
+    let fileData = {};
+    const newDate = new Date();
+    const int = parseInt((Math.random()*1000000000),10);
 
     fileData.fsAddedAt = newDate;
     fileData.fsAddedBy = req.body.fsAddedBy;
@@ -111,19 +112,19 @@ exports.dumpTasks = function(req, res) {
     files.addExportFile(fileData);
 
     // TODO DP: The task export function takes in a search command but does not filter by the search text.           
-    var _search = !req.body.search ? "." : req.body.search;
-    var regExSearch = new RegExp(_search + ".*", "i");
-    var _status = 4;
+    const _search = !req.body.search ? "." : req.body.search;
+    const regExSearch = new RegExp(_search + ".*", "i");
+    const _status = 4;
 
-    getDeviationList(int)
+    getDeviationList(fileData.fsFilePath);
     res.sendStatus(200);
 };
 
-
-function getDeviationList(int) {
-    var status = 4;
-    var file = '.././uploads/tasks' + int + '.csv';
-    var fields = ['DevId', '_name', 'TKName', 'TKTarg', 'TKChamp', 'TKStat'];
+//TODO: 3 the uploads folder is defined in several places
+function getDeviationList(filepath) {
+    const status = 4;
+    const file = utils.uploads + filepath + '.csv';
+    const fields = ['DevId', '_name', 'TKName', 'TKTarg', 'TKChamp', 'TKStat'];
 
     Deviation.find({})
         .select({ dvNo: 1, dvMatName: 1, _id:0 })
@@ -134,13 +135,13 @@ function getDeviationList(int) {
                 .select({DevId:1, TKName:1, TKTarg:1, TKChamp:1, TKStat:1})
                 .exec(function(err, coll) {
 
-                    var reformattedArray = coll.map(function(obj){
+                    const reformattedArray = coll.map(function(obj){
 
-                        var TKName = obj.TKName;
-                        var TKTarg = moment(obj.TKTarg).format("DD/MM/YY");
-                        var TKChamp = obj.TKChamp;
-                        var TKStat = null;
-                        var DevId = obj.DevId;
+                        const TKName = obj.TKName;
+                        const TKTarg = moment(obj.TKTarg).format("DD/MM/YY");
+                        const TKChamp = obj.TKChamp;
+                        let TKStat = null;
+                        const DevId = obj.DevId;
 
                         switch (obj.TKStat) {
                             case 1 :
@@ -163,48 +164,52 @@ function getDeviationList(int) {
                                 break;
                         }
 
-                        var _tasks = collection.find(deviation => deviation.dvNo === obj.DevId);
+                        const _tasks = collection.find(deviation => deviation.dvNo === obj.DevId);
 
                         if (typeof _tasks === 'object') {
-                            var _name = _tasks.dvMatName;
+                            const _name = _tasks.dvMatName;
                             return {TKName, _name, TKTarg, TKChamp, TKStat, DevId};
-                        };
+                        }
 
 
                     });
 
                     json2csv({ data: reformattedArray, fields: fields }, function(err, csv) {
-                      if (err) console.log(err);
+                      if (err) handleError(err);
                       fs.writeFile(file, csv, function(err) {
                         if (err) throw err;
-                        console.log('file saved');
+                        handleError('file saved');
                       });
                     });
 
             });
     })
-};
+}
 
 function write_to_log (write_data) {
-    var fs = require("fs");
-    var path = '.././logs/logs.txt';
-    var date = new Date();
-    var day = ("0" + date.getDate()).slice(-2)
-    var month = ("0" + (date.getMonth() + 1)).slice(-2);
-    var year = date.getFullYear();
-    var dString = day + "/" + month + "/" + year;
+    const fs = require("fs");
+    const path = '.././logs/logs.txt';
+    const date = new Date();
+    const day = ("0" + date.getDate()).slice(-2)
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    const dString = day + "/" + month + "/" + year;
 
-    var write_data = "\r\n" + dString + " - " + write_data;
+    write_data = "\r\n" + dString + " - " + write_data;
 
     fs.appendFile(path, write_data, function(error) {
          if (error) {
-           console.error("write error:  " + error.message);
+           handleError("write error:  " + error.message);
          } else {
-           console.log("Successful Write to " + path);
+           handleLog("Successful Write to " + path);
          }
     });
 }
 
 function handleError(err){
-    console.log(err);
-};
+    console.error(err);
+}
+
+function handleLog(log){
+    console.log(log);
+}

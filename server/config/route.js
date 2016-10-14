@@ -6,15 +6,13 @@ const files = require('../controllers/files');
 const users = require('../controllers/users');
 const loggers = require('../controllers/loggers');
 const multer = require('multer');
-const path = require('path');
-const rootPath = path.normalize(__dirname + '/../../');
-const uploads = path.normalize(rootPath + '../uploads/');
+const utils = require('../config/utils');
 
-console.log(uploads);
+console.log(utils.uploads);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploads)
+    cb(null, utils.uploads);
   },
 
   filename: function (req, file, cb) {

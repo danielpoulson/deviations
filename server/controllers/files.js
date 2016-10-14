@@ -1,3 +1,4 @@
+"use strict";
 const express = require('express');
 const app = express();
 const File = require('mongoose').model('File');
@@ -10,9 +11,9 @@ const fs = require('fs');
 
 
 exports.downloadFile = function (req, res) {
-    var filename = req.params.file;
-    var fileType = filename.substring(0,3);
-    var file = '';
+    let filename = req.params.file;
+    const fileType = filename.substring(0,3);
+    let file = '';
 
 // TODO LOW EASY: duplicated file = '.././uploads/' + filename;???.
     if(fileType == 'exp'){
@@ -25,7 +26,7 @@ exports.downloadFile = function (req, res) {
 
     res.download(file, filename, function(err){
       if (err) {
-        console.log(err);
+        handleError(err);
       } else {
         if(fileType == 'exp'){
 
@@ -39,12 +40,12 @@ exports.downloadFile = function (req, res) {
 };
 
 exports.uploadFile = function (req, res) {
-    var fileData = {};
-    var docName = req.body.docName;
+    let fileData = {};
+    const docName = req.body.docName;
 
     //TODO (5) Minor Functionally only works for Deviations.
     const myRe = /DV\d{6}\s[-]\s/;
-    var myArray = myRe.exec(docName);
+    const myArray = myRe.exec(docName);
 
     if(myArray) {
         fileData.fsFileName = docName.split('.').shift().substr(11);
@@ -63,7 +64,7 @@ exports.uploadFile = function (req, res) {
     File.update({fsFileName: fileData.fsFileName}, fileData, {upsert: true}, function (err) {
         if (err) {
             res.sendStatus(200);
-            console.log(err.toString());
+            handleError(err.toString());
         }
 
         File.findOne({fsFileName : fileData.fsFileName}, function(err, file){
@@ -79,10 +80,10 @@ exports.uploadFile = function (req, res) {
 function addExportFile(fileData){
 
     File.create(fileData, function (err, small) {
-      if (err) return console.log(err);
+      if (err) return handleError(err);
     });
 
-};
+}
 
 exports.getFiles = function (req, res) {
 
@@ -94,7 +95,7 @@ exports.getFiles = function (req, res) {
 };
 
 exports.deletefile = function (req, res) {
-    var id = req.params.id;
+    const id = req.params.id;
 
     fileDeletion(id);
     res.sendStatus(204);
@@ -108,7 +109,7 @@ function fileDeletion(id) {
           if(doc){
             fs.unlink(uploads + doc.fsFilePath, function (err) {
                 if (err) throw err;
-                console.log('successfully deleted /uploads/' + doc.fsFilePath);
+                handlelog('successfully deleted /uploads/' + doc.fsFilePath);
             });
 
             File.remove({_id: id}, function (err) {
@@ -125,8 +126,8 @@ exports.getFileCount = function(req,res){
 };
 
 exports.updateFileBook = function(req,res){
-    var id = req.params.id;
-    console.log("updateFileBook " + req.params.id)
+    const id = req.params.id;
+    handlelog("updateFileBook " + req.params.id)
     File.findById(id, function (err, doc){
         doc.fsBooked = 1;
         doc.save();
@@ -136,3 +137,11 @@ exports.updateFileBook = function(req,res){
 };
 
 exports.addExportFile = addExportFile;
+
+function handleError(err){
+    console.error(err);
+}
+
+function handlelog(log){
+    console.error(log);
+}
