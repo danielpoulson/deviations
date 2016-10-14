@@ -34,6 +34,7 @@
     "express-csv": "^0.6.0",
     "express-session": "^1.11.3",
     "foreman": "^2.0.0",
+    "git": "^0.1.5",
     "json2csv": "^3.2.0",
     "lodash": "^3.10.1",
     "moment": "^2.12.0",
@@ -42,6 +43,7 @@
     "morgan": "^1.7.0",
     "multer": "^1.1.0",
     "nodemailer": "^2.3.0",
+    "nodemailer-mailgun-transport": "https://github.com/orliesaurus/nodemailer-mailgun-transport.git",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0"
   }
