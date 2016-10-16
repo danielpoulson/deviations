@@ -183,14 +183,14 @@ function getDeviationList(filepath) {
                     });
 
             });
-    })
+    });
 }
 
 function write_to_log (write_data) {
     const fs = require("fs");
     const path = '.././logs/logs.txt';
     const date = new Date();
-    const day = ("0" + date.getDate()).slice(-2)
+    const day = ("0" + date.getDate()).slice(-2);
     const month = ("0" + (date.getMonth() + 1)).slice(-2);
     const year = date.getFullYear();
     const dString = day + "/" + month + "/" + year;

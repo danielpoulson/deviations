@@ -185,7 +185,7 @@ exports.getUserDashboard = function(req, res){
     return users.getFullname(req.params.user);
   }).then(data => {
     username = data[0].fullname;
-    return Deviation.count({$and: [{dvAssign: username }, {dvClosed: {$lt:1}}]})
+    return Deviation.count({$and: [{dvAssign: username }, {dvClosed: {$lt:1}}]});
   }).then( data => {
     dashboard.deviationCount = data;
     return tasks.getTasksCountByUser(username);
