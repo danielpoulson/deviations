@@ -7,7 +7,6 @@ const tasks = require('../controllers/tasks');
 const users = require('../controllers/users');
 const mailer = require('../config/mailer.js');
 const exportdata = require('../config/data.js');
-const dateFunc = require('../config/date-function');
 const utils = require('../config/utils');
 const fs = require('fs');
 
@@ -62,7 +61,7 @@ exports.updateDeviation = function(req, res) {
 };
 
 function createEmail(body){
-    const _DateCreated = dateFunc.dpFormatDate(body.dvCreated);
+    const _DateCreated = utils.dpFormatDate(body.dvCreated);
     const emailType = "Deviation";
     const emailActivity = `<b>Deviation - </b><em>${body.dvNo}</em> </br>
         <b> Deviation Description:</b><i>${body.dvMatName} <b> Date Created</b> ${_DateCreated}</i>`;
@@ -274,11 +273,10 @@ exports.dumpDeviation = function(req, res) {
 exports.dumpDeviations = function(req, res) {
     //const status = 2;
     const int = parseInt((Math.random()*1000000000),10);
-    const file = utils.uploads + int + '.csv';
+    const uploadsfolder = utils.uploads;
+    const file = uploadsfolder + 'deviations' + int + '.csv';
     let fileData = {};
     const newDate = new Date();
-
-
 
     fileData.fsAddedAt = newDate;
     fileData.fsAddedBy = req.body.fsAddedBy;

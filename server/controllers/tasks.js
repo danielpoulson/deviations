@@ -123,7 +123,7 @@ exports.dumpTasks = function(req, res) {
 //TODO: 3 the uploads folder is defined in several places
 function getDeviationList(filepath) {
     const status = 4;
-    const file = utils.uploads + filepath + '.csv';
+    const file = utils.uploads + filepath;
     const fields = ['DevId', '_name', 'TKName', 'TKTarg', 'TKChamp', 'TKStat'];
 
     Deviation.find({})

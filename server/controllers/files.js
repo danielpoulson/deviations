@@ -4,8 +4,9 @@ const app = express();
 const File = require('mongoose').model('File');
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
-const uploads = path.normalize(rootPath + '../uploads/');
+// const uploads = path.normalize(rootPath + '../uploads/');
 const fs = require('fs');
+const utils = require('../config/utils');
 
 // TODO: (1) Medium Need to set the file location one directory higher in production
 
@@ -18,10 +19,10 @@ exports.downloadFile = function (req, res) {
 // TODO LOW EASY: duplicated file = '.././uploads/' + filename;???.
     if(fileType == 'exp'){
         filename = filename.slice(6);
-        file = uploads + filename;
+        file = utils.uploads + filename;
     } else {
 
-        file = uploads + filename;
+        file = utils.uploads + filename;
     }
 
     res.download(file, filename, function(err){
@@ -107,7 +108,7 @@ function fileDeletion(id) {
         File.findById(id, function (err, doc){
 
           if(doc){
-            fs.unlink(uploads + doc.fsFilePath, function (err) {
+            fs.unlink(utils.uploads + doc.fsFilePath, function (err) {
                 if (err) throw err;
                 handlelog('successfully deleted /uploads/' + doc.fsFilePath);
             });

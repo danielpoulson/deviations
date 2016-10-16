@@ -16,6 +16,4 @@ exports.dpDashDates = function(){
 	return dates;
 };
 
-exports.uploads_folder = function(){
-    return uploads;
-};
+exports.uploads = path.normalize(rootPath + '../uploads/');
