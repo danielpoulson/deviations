@@ -2,12 +2,13 @@ import React, { PropTypes } from 'react';
 import TaskList from '../../components/Tasks/task-list';
 import moment from 'moment';
 import './deviation-print.style.css';
+import LogoImg from '../../images/RED_SOLID.jpg';
 
 export default function DeviationPrint (props) {
 
 	return (
 		<div>
-			<img src="../../images/RED_SOLID.jpg" className="Chemlogo" alt="Company Logo" />
+			<img src={LogoImg} className="Chemlogo" alt="Company Logo" />
 			<hr/>
 			<div className="reportHeader">Investigation Report  -  <span>{props.dev.dvNo}</span></div>
 			<div><strong>Material Name :</strong> {props.dev.dvMatName}</div>
@@ -40,7 +41,7 @@ export default function DeviationPrint (props) {
 			<div >{props.dev.dvInvest}</div>
 
 			<div className="page-break">
-				<div className="row logo-page-break"><img src="./src/images/RED_SOLID.jpg" className="Chemlogo" alt="Company Logo" />
+				<div className="row logo-page-break"><img src={LogoImg} className="Chemlogo" alt="Company Logo" />
 			</div>
 			<div className="devdescribe">
 				<div className="h4">Deviation Task and CAPA Actions</div>
