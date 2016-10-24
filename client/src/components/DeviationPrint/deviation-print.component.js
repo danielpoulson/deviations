@@ -12,7 +12,7 @@ export default function DeviationPrint (props) {
 			<hr/>
 			<div className="reportHeader">Investigation Report  -  <span>{props.dev.dvNo}</span></div>
 			<div><strong>Material Name :</strong> {props.dev.dvMatName}</div>
-			<table className="devColLeft">
+			<table>
 				<tbody>
 					<tr>
 						<td className="devColLeft"><strong>Material No :</strong> {props.dev.dvMatNo}</td>
