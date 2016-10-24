@@ -240,7 +240,7 @@ exports.getDashboard = function(req, res) {
         dashArray.devClosed2 = less60;
         return Deviation.count({dvClosed:0, dvCreated:{$lte:todayless60}}).exec();
     }).then(function(gt60){
-        dashArray.devClosed3 = gt60;
+        dashArray.devClosed3 = gt60;reformattedArray
         return Deviation.count({dvNo:{$in : [/^DV15.*$/]}}).exec();
         //TODO: Remove static constiables
     }).then(function(totalDev){
@@ -299,6 +299,7 @@ exports.dumpDeviations = function(req, res) {
         .stream()
         .pipe(Deviation.csvTransformStream())
         .pipe(fs.createWriteStream(file));
+
 
     handlelog("Files have been created");
 
