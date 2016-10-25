@@ -30,7 +30,19 @@ exports.myData = function() {
 		},
 		{
 			date: "Jul 16",
-			count: 25
+			count: 24
+		},
+		{
+			date: "Aug 16",
+			count: 31
+		},
+		{
+			date: "Sep 16",
+			count: 33
+		},
+		{
+			date: "Oct 16",
+			count: 28
 		}
 	];
 

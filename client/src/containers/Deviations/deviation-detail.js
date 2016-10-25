@@ -94,6 +94,7 @@ class DeviationDetail extends Component {
     let _data = this.state.deviation;
     
     _data.dvClosed = 1;
+    _data.dvDateClosed = new Date();
     _data.dvLog = this.logMessage('Deviation Completed');
 
     this.props.closeDeviation(_data);

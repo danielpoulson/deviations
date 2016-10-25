@@ -262,7 +262,7 @@ exports.getDashboard = function(req, res) {
 
 exports.dumpDeviation = function(req, res) {
 
-    Deviation.findAndStreamCsv({dvClosed: {$lt:req.params.id}}, {dvNo:true, dvMatNo:true, dvMatName:true, dvCust:true, dvAssign:true, dvClass: 1, 'dvCreated': 1, _id: 0})
+    Deviation.findAndStreamCsv({dvClosed: {$lt:req.params.id}}, {dvNo:true, dvMatNo:true, dvMatName:true, dvCust:true, dvAssign:true, dvClass: 1, dvDateClosed:1, 'dvCreated': 1, _id: 0})
         .pipe(fs.createWriteStream('exports/devs.csv'));
 
     handlelog("Files have been created");
@@ -294,7 +294,7 @@ exports.dumpDeviations = function(req, res) {
 
 
     Deviation.find({dvClosed: {$lte:_status}})
-        .select({dvNo: 1, dvMatNo: 1, dvMatName: 1, dvCust: 1, 'dvCreated':1, dvAssign: 1, dvClosed: 1, dvClass: 1, _id: 0})
+        .select({dvNo: 1, dvMatNo: 1, dvMatName: 1, dvCust: 1, 'dvCreated':1, dvAssign: 1, dvClosed: 1, dvDateClosed: 1, dvClass: 1, _id: 0})
         .where({$or: [{dvAssign : regExSearch }, {dvNo : regExSearch}, {dvMatName : regExSearch}, {dvCust : regExSearch}]})
         .stream()
         .pipe(Deviation.csvTransformStream())
