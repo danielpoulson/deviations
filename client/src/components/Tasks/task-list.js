@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -7,18 +9,13 @@ import { getDeviation } from '../../actions/actions_deviations';
 import { setMain } from '../../actions/actions_main';
 
 class TaskList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
 
-    this.handleClick = this.handleClick.bind(this);
-    this.newTask = this.newTask.bind(this);
+  state = {};
 
-  }
 
-  handleClick(i) {
+  handleClick = (i) => {
     if (this.props.type === 'All') {
-      const dvNo = this.props.tasklist[i].DevId;
+      const dvNo:string = this.props.tasklist[i].DevId;
       this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true });
       this.props.getDeviation(dvNo);
       this.context.router.push(`/deviation/${dvNo}`);
@@ -27,12 +24,12 @@ class TaskList extends Component {
       this.props.getTask(_id);
       this.context.router.push(`/task/${_id}`);
     }
-  }
+  };
 
-  newTask() {
+  newTask = () => {
     this.props.getTask('new');
     this.context.router.push('/task/new');
-  }
+  };
 
   render() {
 
