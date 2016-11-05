@@ -25,7 +25,8 @@ export default function (state, action) {
         ...state,
         MainId: action.data.MainId,
         CurrentMode: action.data.CurrentMode,
-        loading: action.data.loading
+        loading: action.data.loading,
+        reload: action.data.reload
       };
 
     case SET_USER: {

@@ -1,4 +1,4 @@
-import { GET_DEVS, ADD_DEV, EDIT_DEV, DELETE_DEV, LOAD_PAGE_DEVS } from '../actions/actions_deviations';
+import { GET_DEVS, ADD_DEV, DELETE_DEV, LOAD_PAGE_DEVS } from '../actions/actions_deviations';
 import _ from 'lodash';
 
 const initialState = {
@@ -61,7 +61,7 @@ export default function (state, action) {
         paged
       };
 
-    case EDIT_DEV:
+    case 'EDIT_DEV':
       _data = action.payload;
       currIds = state.alldata.map(c => c._id);
       index = currIds.indexOf(_data._id);

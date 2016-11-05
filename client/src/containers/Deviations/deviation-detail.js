@@ -54,16 +54,17 @@ class DeviationDetail extends Component {
   }
 
   componentWillMount() {
-    // TODO: (1) @Medium Only call for new data when loading a new deviation
-    // The record should not get data from the server when the deviaiton has not changed
-    const dvNo = this.props.location.pathname.split('/')[2];
-    if (this.props.main.loading === true) {
-      this.props.getProjectTasks(dvNo);
-    }
-    this.setState({ _dvNo: dvNo });
+      const dvNo = this.props.location.pathname.split('/')[2];
+      this.setState({ _dvNo: dvNo });
 
-    if(dvNo === 'new'){
-      this.setState({ notnew: false });
+      if(dvNo === 'new'){
+        this.setState({ notnew: false });
+      }
+  }
+
+  componentDidMount() {
+    if (this.props.main.reload === false) {
+      this.props.getProjectTasks(this.state._dvNo);
     }
   }
 
@@ -88,11 +89,11 @@ class DeviationDetail extends Component {
     if(this.props.main.user.role !== 'admin') {
       toastr.warning('Only QA can closed a deviation! If deviation is complete notify QA.',
         'Deviation Detail', { timeOut: 2000 });
-      return; 
+      return;
     }
 
     let _data = this.state.deviation;
-    
+
     _data.dvClosed = 1;
     _data.dvDateClosed = new Date();
     _data.dvLog = this.logMessage('Deviation Completed');
@@ -121,7 +122,7 @@ class DeviationDetail extends Component {
 
     // let _dvLog = this.props.deviation.dvLog;
     const _dvLog = {
-      SourceId: this.state._dvNo,  
+      SourceId: this.state._dvNo,
       LogType: 'DEV',
       LogMessage : message,
       LogBy: this.props.main.user.fullname,
@@ -137,10 +138,6 @@ class DeviationDetail extends Component {
     this.context.router.push('/deviations');
   }
 
-  // TODO: (1) @Medium Deviation list displays full list on new deviation
-  // Example On save the state is paged: 43, alldata: 43, total:42 Note paged should be 15
-  // When a new deviation is loaded the pagination goes a bit strange in that the hold list is displayed instead of the first page.
-
   saveDetail(event, closed) {
     event.preventDefault();
     let _dev = this.state.deviation;
@@ -149,14 +146,14 @@ class DeviationDetail extends Component {
     this.setState({errors: validation.errors});
 
     if(!validation.formIsValid) {
-      return; 
+      return;
     }
 
     if (this.state._dvNo !== 'new') {
       _dev.dvLog = this.logMessage('Deviation Edit');
       _dev.dvNotChanged = _dev.dvAssign === this.props.deviation.dvAssign;
       _dev.dvClosed = 0;
-      this.props.editDeviation(_dev);    
+      this.props.editDeviation(_dev);
     } else {
       _dev.dvLog = this.logMessage('Deviation Created');
       _dev.dvClosed = 0;
@@ -268,7 +265,7 @@ class DeviationDetail extends Component {
             <div className="panel panel-default">
               <div className="panel-body">
                 {this.state.notnew && <DevInvestForm
-                  dev={this.state.deviation} 
+                  dev={this.state.deviation}
                   onSave={this.saveDetail}
                   onCloseDev={this.onCloseDev}
                   onPrintDev={this.onPrintDev}
@@ -284,8 +281,8 @@ class DeviationDetail extends Component {
               </div>
             </div>
           </div>
-          
-          
+
+
           {this.state.notnew && <DeviationLog
             logTab={this.state.LogTab}
             onApprove={this.onApprove}

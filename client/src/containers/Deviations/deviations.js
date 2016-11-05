@@ -47,9 +47,6 @@ class Deviations extends Component {
     this.onChange(1, search);
   }
 
-  // TODO: (0) @Bug Show all button reverts to "Show all"
-  // The button should be "Show Current" but reverts back when returning from the details page.
-
   onSearchText(event) {
     const value = event.target.value;
     this.setState({ activePage: 0 });
@@ -66,14 +63,23 @@ class Deviations extends Component {
     this.props.loadPage(action);
   }
 
-  onGetDeviation(i) { 
+  onGetDeviation(i) {
+    const _MainId = this.props.MainId;
     const _id = i;
-    this.props.resetLog();
-    this.props.resetDeviation();
-    this.props.setMain({ MainId: _id, CurrentMode: 'deviation', loading: true });
-    this.props.getDeviation(_id);
-    this.props.getLog(_id);
+
+
+    if (_MainId !== _id ) {
+      this.props.resetLog();
+      this.props.resetDeviation();
+      this.props.getDeviation(_id);
+      this.props.getLog(_id);
+      this.props.setMain({ MainId: _id, CurrentMode: 'deviation', loading: true, reload: false });
+    } else {
+      this.props.setMain({ MainId: _id, CurrentMode: 'deviation', loading: true, reload: true });
+    }
+
     this.context.router.push(`/deviation/${_id}`);
+
   }
 
   onSortByClick(column) {
@@ -204,6 +210,7 @@ Deviations.propTypes = {
   getDeviation: PropTypes.func,
   getLog: PropTypes.func,
   loadPage: PropTypes.func,
+  MainId: PropTypes.string,
   resetLog: PropTypes.func,
   resetDeviation: PropTypes.func,
   setMain: PropTypes.func,
@@ -220,5 +227,5 @@ Deviations.childContextTypes = {
   location: React.PropTypes.object
 };
 
-export default connect(state => ({ deviations: state.deviations, ShowAll: state.main.ShowAll, user: state.main.user }),
+export default connect(state => ({ deviations: state.deviations, MainId: state.main.MainId, ShowAll: state.main.ShowAll, user: state.main.user }),
   { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation, setMain, setView, resetLog, getLog })(Deviations);

@@ -3,7 +3,6 @@ import axios from 'axios';
 export const GET_DEVS = 'GET_DEVS';
 export const GET_DEV = 'GET_DEV';
 export const ADD_DEV = 'ADD_DEV';
-export const EDIT_DEV = 'EDIT_DEV';
 export const DELETE_DEV = 'DELETE_DEV';
 export const NEW_DEVIATION = 'NEW_DEVIATION';
 export const LOAD_PAGE_DEVS = 'LOAD_PAGE_DEVS';
@@ -67,7 +66,7 @@ export function editDeviation(data) {
   axios.put(url, _data);
 
   return {
-    type: EDIT_DEV,
+    type: 'EDIT_DEV',
     payload: _data
   };
 
