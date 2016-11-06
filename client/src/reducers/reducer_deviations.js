@@ -57,6 +57,9 @@ export default function (state, action) {
       paged = alldata.slice(0,14);
       return {
         ...state,
+        searchText: '',
+        total: alldata.length,
+        total_pages: Math.ceil(alldata.length / per_page),
         alldata,
         paged
       };

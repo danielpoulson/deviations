@@ -16,7 +16,7 @@ const SearchBox = ({ searchText, onChange }) => {
         onChange={onChange}
         placeholder="Enter Search Text"
       />
-      <span style={spanStyle} className="input-group-addon glyphicon glyphicon-search"></span>
+      <span style={spanStyle} className="input-group-addon glyphicon glyphicon-search" />
     </div>
   );
 };

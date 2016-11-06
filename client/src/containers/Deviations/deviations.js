@@ -38,10 +38,12 @@ class Deviations extends Component {
   }
 
   componentWillMount() {
-    const search = this.props.deviations.searchText;
+    let search = this.props.deviations.searchText;
+
     if (!this.props.deviations.alldata.length > 0) {
       this.props.getDeviations(1);
     }
+
     this.setState({ txtSearch: search });
     this.setState({ showAll: this.props.ShowAll });
     this.onChange(1, search);
@@ -124,6 +126,7 @@ class Deviations extends Component {
   newDeviation() {
     // this.props.getDeviation(null);
     this.props.resetDeviation();
+    this.onChange(1, null);
     this.props.setMain({ MainId: 'new', CurrentMode: 'deviation', loading: false });
     this.context.router.push('/deviation/new');
   }
