@@ -69,7 +69,7 @@ class Deviations extends Component {
     const _MainId = this.props.MainId;
     const _id = i;
 
-
+    //This action is linked to component/tasklist handleClick function
     if (_MainId !== _id ) {
       this.props.resetLog();
       this.props.resetDeviation();
@@ -90,7 +90,6 @@ class Deviations extends Component {
   }
 
   linkClick(i) {
-    //TODO: (3) @Minor Pagination Adding 1 to the page mumber as it uses the base of 0
     this.onChange(i + 1, this.state.txtSearch);
     this.setState({ activePage: i });
   }

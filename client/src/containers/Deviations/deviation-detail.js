@@ -220,8 +220,6 @@ class DeviationDetail extends Component {
       hidden: this.props.main.MainId === 'new'
     });
 
-    // TODO (1) The title for a new deviation is undefined - undefined needs to state "New Deviaiton"
-
     return (
     <div>
           <div className="">

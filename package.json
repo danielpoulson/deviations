@@ -3,8 +3,7 @@
   "version": "2.0.0",
   "description": "Deviation application",
   "scripts": {
-    "startApp": "nf start -p 3010",
-    "start": "npm nf start -p 3010"
+    "start": "nf start -p 3010"
   },
   "repository": {
     "type": "git",

@@ -63,25 +63,25 @@ class Home extends Component {
           <div className="col-sm-3">
             <div className="tile green grow" onClick={this.getDeviations}>
               <h2>My Deviations</h2>
-              <i className="fa fa-list-alt"></i>&nbsp; {this.props.countDeviationsUser}
+              <i className="fa fa-list-alt" />&nbsp; {this.props.countDeviationsUser}
             </div>
           </div>
           <div className="col-sm-3">
             <div className="tile blue grow" onClick={this.getTasks}>
               <h2>My Tasks</h2>
-              <i className="fa fa-tasks">&nbsp; </i>{this.props.countTasksUser}
+              <i className="fa fa-tasks" />&nbsp; {this.props.countTasksUser}
             </div>
           </div>
           <div className="col-sm-3">
             <div className="tile orange grow" onClick={this.getAllDeviations}>
               <h2>All Deviations</h2>
-              <i className="fa fa-list-alt"></i>&nbsp; {this.props.allOpenDeviations}
+              <i className="fa fa-list-alt" />&nbsp; {this.props.allOpenDeviations}
             </div>
           </div>
           <div className="col-sm-3">
             <div className="tile purple grow" onClick={this.getAllTasks}>
               <h2>Open Tasks</h2>
-              <i className="fa fa-tasks"></i>&nbsp; {this.props.allOpenTasks}
+              <i className="fa fa-tasks" />&nbsp; {this.props.allOpenTasks}
             </div>
           </div>
         </div>

@@ -7,9 +7,6 @@ import SearchBox from '../../components/Common/search-box';
 /* actions */
 import { getAllTasks, loadPageTask, exportTasks, setCapa } from '../../actions/actions_tasks';
 
-// TODO: MED 3 - Make a common component search box Changes and Task List
-// Changes and Task share the same search text box function which should be made as a common component
-
 class Tasks extends Component {
   constructor(props) {
     super(props);
@@ -34,9 +31,9 @@ class Tasks extends Component {
     if (!this.props.tasks.alldata.length > 0) {
       this.props.getAllTasks();
     }
-    // TODO: HIGH (FUNC) Sticky options on the task list
-    // This section should remember you page and or serach options.
+
     this.onloading();
+
   }
 
   onloading(){
@@ -78,7 +75,6 @@ class Tasks extends Component {
   }
 
   linkClick(i) {
-    // TODO: LOW (BUG) Pagination Adding 1 to the page mumber as it uses the base of 0
     this.onChange(i + 1, this.state._showCapaOnly, this.state.txtSearch);
     this.setState({ activePage: i });
   }

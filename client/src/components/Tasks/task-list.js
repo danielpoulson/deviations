@@ -4,9 +4,12 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import TaskTable from './task-table';
+/* actions */
 import { getTask } from '../../actions/actions_tasks';
-import { getDeviation } from '../../actions/actions_deviations';
+import { getDeviation, resetDeviation } from '../../actions/actions_deviations';
 import { setMain } from '../../actions/actions_main';
+import { resetLog, getLog } from '../../actions/actions_logger';
+
 
 class TaskList extends Component {
 
@@ -16,8 +19,17 @@ class TaskList extends Component {
   handleClick = (i) => {
     if (this.props.type === 'All') {
       const dvNo:string = this.props.tasklist[i].DevId;
-      this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true });
-      this.props.getDeviation(dvNo);
+      //This action is linked to container/deviations onGetDeviation function
+      if (this.props.MainId !== dvNo ) {
+        this.props.resetLog();
+        this.props.resetDeviation();
+        this.props.getDeviation(dvNo);
+        this.props.getLog(dvNo);
+        this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true, reload: false });
+      } else {
+        this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true, reload: true });
+      }
+
       this.context.router.push(`/deviation/${dvNo}`);
     } else {
       const _id = this.props.tasklist[i]._id;
@@ -59,13 +71,16 @@ TaskList.propTypes = {
   tasksTab: PropTypes.string,
   tasklist: PropTypes.array,
   setMain: PropTypes.func,
-  getChange: PropTypes.func,
   getDeviation: PropTypes.func,
-  getTask: PropTypes.func
+  getLog: PropTypes.func,
+  getTask: PropTypes.func,
+  resetDeviation: PropTypes.func,
+  resetLog: PropTypes.func,
+  MainId: PropTypes.string
 };
 
 TaskList.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default connect(null, { getTask, getDeviation, setMain })(TaskList);
+export default connect(state => ({ MainId: state.main.MainId }), { getTask, getDeviation, resetDeviation, setMain, resetLog, getLog })(TaskList);

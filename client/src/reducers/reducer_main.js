@@ -11,7 +11,8 @@ const initialState = {
     username: '',
     fullname: '',
     role: 'user'
-  }
+  },
+  reload: false
 };
 
 export default function (state, action) {

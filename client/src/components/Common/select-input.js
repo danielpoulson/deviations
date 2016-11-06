@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-// TODO: (5) @easy error box refine formatting
+
 const SelectInput = ({name, label, inputdiv, labelstyle, onChange, defaultOption, value, error, options}) => {
   const errorStyle = {marginLeft: 25};
   return (
@@ -23,7 +23,7 @@ const SelectInput = ({name, label, inputdiv, labelstyle, onChange, defaultOption
         </div>
         {error && <span className="alert alert-danger" style={errorStyle}>{error}</span>}
       </div>
-        
+
     </div>
   );
 };
