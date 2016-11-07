@@ -50,13 +50,8 @@ class UserProfile extends Component {
 
   deleteUser(event) {
     event.preventDefault();
-    this.props.deleteUser(this.props.user._id);
+    this.props.deleteUser(this.props.user._id, this.props.user.fullname);
     toastr.warning('User account has been deleted', 'User Account', { timeOut: 1000 });
-    // TODO: LOW 3 Remove server call to repopulate user after delete
-    // When the action to delteUser is call the action does not remove the user from the state tree.
-    // See Actions Users deleteUser
-    this.props.getUsers();
-    this.props.resetUser();
   }
 
   saveUser(event) {
@@ -67,7 +62,7 @@ class UserProfile extends Component {
     this.setState({errors: validation.errors});
 
     if(!validation.formIsValid) {
-      return; 
+      return;
     }
 
     if (this.state.isNewUser) {
@@ -161,7 +156,7 @@ UserProfile.childContextTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    user: state.user,  
+    user: state.user,
     users: usersFormattedForDropdown(state.users)
   };
 }

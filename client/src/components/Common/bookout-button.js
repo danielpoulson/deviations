@@ -9,8 +9,6 @@ export default class BookoutButton extends React.Component {
     this.deleteFile = this.deleteFile.bind(this);
   }
 
-  // TODO: LOW Remove CC_ActDept : this.props.user.dept
-  // Not sure if this is needed or not.
   onBookout() {
       // TODO MED 3 If download does not complete donot delete from server.
     if (window.ActiveXObject || 'ActiveXObject' in window) {
@@ -18,7 +16,7 @@ export default class BookoutButton extends React.Component {
       toastr.error('This function does not work with internet explorer. Please contact your administrator', 'Error - Internet Explorer', { timeOut: 5000 });
     } else {
 
-      const _log = {  
+      const _log = {
         SourceId: this.props.source,
         LogType: 'FILE',
         LogMessage: `File booked out - ${this.props.fileLoad}`,
@@ -39,7 +37,7 @@ export default class BookoutButton extends React.Component {
       return;
     }
 
-    const _log = {  
+    const _log = {
       SourceId: this.props.source,
       LogType: 'FILE',
       LogMessage: `**** File Deleted **** - ${this.props.fileLoad}`,
@@ -61,7 +59,7 @@ export default class BookoutButton extends React.Component {
     if (this.props.fsBooked > 0) {
       if (this.props.user.role === 'admin') {
 
-        text = 'Delete';   
+        text = 'Delete';
         classButton = 'btn btn-danger btn-xs';
         classSpan = 'glyphicon glyphicon-trash';
 
@@ -79,7 +77,7 @@ export default class BookoutButton extends React.Component {
       classButton = 'btn btn-warning btn-xs';
       classSpan = 'glyphicon glyphicon-book';
     }
-    return <button onClick={action} className={classButton}><span className={classSpan}></span> {text} </button>;
+    return <button onClick={action} className={classButton}><span className={classSpan} /> {text} </button>;
   }
 
 }

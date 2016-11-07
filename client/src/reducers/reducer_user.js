@@ -12,6 +12,7 @@ export default function (state = initialState, action) {
     }
 
     case RESET_USER:
+    case 'DELETED_USER':
       return {};
 
     default:

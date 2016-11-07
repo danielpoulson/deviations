@@ -85,7 +85,7 @@ UserProfileForm.propTypes = {
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   deleteUser: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func,
   newUser: PropTypes.bool,
   roleSelect: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired

@@ -4,7 +4,6 @@ export const GET_USER = 'GET_USER';
 export const GET_USERS = 'GET_USERS';
 export const RESET_USER = 'RESET_USER';
 export const SAVE_USER = 'SAVE_USER';
-export const DELETED_USER = 'DELETED_USER';
 export const USER_CREATED = 'USER_CREATED';
 
 
@@ -56,15 +55,12 @@ export function saveUser(data) {
   };
 }
 
-export function deleteUser(data) {
-  const fullname = data;
-  const url = `/api/user/${data}`;
+export function deleteUser(id, fullname) {
+  const url = `/api/user/${id}`;
   axios.delete(url);
-  // TODO: LOW 3 Remove server call to repopulate user after delete
-  // This action should remove the user from the state tree
-  // See user-profile ondeleteUser
+
   return {
-    type: DELETED_USER,
+    type: 'DELETED_USER',
     fullname
   };
 }
