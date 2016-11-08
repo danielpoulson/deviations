@@ -20,43 +20,44 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// TODO: (2) Add authentication by using "auth.required" to protect routes
+
 //*******************Start Login routes*********************
 
 router.post('/login', auth.authenticate);
 
 router.get('/logout', function (req, res) {
-    req.logout();
-    res.sendStatus(200);
+  req.logout();
+  res.sendStatus(200);
 });
 
 //*******************End Login routes*********************
 
 //**********User Routes ***************
-   router.get('/api/allusers', users.getAllUsers);
-   router.get('/api/user/:id', users.getUser);
-   router.get('/api/loggeduser', users.getLoggedUser);
-   router.put('/api/updateuser/:username', users.updateUser);
-   // TODO: MED Remove when new create user is complete.
-   router.post('/signup', users.createUser);
-   router.post('/api/user', users.createUser);
-   router.delete('/api/user/:id', users.deleteUser);
+ router.get('/api/allusers', users.getAllUsers);
+ router.get('/api/user/:id', users.getUser);
+ router.get('/api/loggeduser', auth.required, users.getLoggedUser);
+ router.put('/api/updateuser/:username', users.updateUser);
+ router.post('/signup', users.createUser);
+ router.post('/api/user', users.createUser);
+ router.delete('/api/user/:id', auth.required, users.deleteUser);
 
-   // router.get('/usermaint', users.formatDB);
+ // router.get('/usermaint', users.formatDB);
 
 
 //**********User Routes ***************
 
- //*************Deviation Routes************************
- router.get('/api/deviationlist/:status/:cust', deviations.getDeviations);
- router.get('/api/deviation/:id', deviations.getDeviationById);
- router.get('/api/deviation/tasks/:id', tasks.getDeviationTaskList);
- router.put('/api/deviations/:id', deviations.updateDeviation);
- router.post('/api/deviations', deviations.createDeviation);
- router.post('/export/deviations', deviations.dumpDeviations);
+//*************Deviation Routes************************
+router.get('/api/deviationlist/:status/:cust', deviations.getDeviations);
+router.get('/api/deviation/:id', deviations.getDeviationById);
+router.get('/api/deviation/tasks/:id', tasks.getDeviationTaskList);
+router.put('/api/deviations/:id', deviations.updateDeviation);
+router.post('/api/deviations', deviations.createDeviation);
+router.post('/export/deviations', deviations.dumpDeviations);
 
- router.get('/api/userdashboard/:user', deviations.getUserDashboard);
- router.get('/api/graphdata', deviations.getGraphData);
- router.get('/api/olddashboard', deviations.getDashboard);
+router.get('/api/userdashboard/:user', deviations.getUserDashboard);
+router.get('/api/graphdata', deviations.getGraphData);
+// router.get('/api/olddashboard', deviations.getDashboard);
 //*************Deviation Routes************************
 
 //*************Logger Routes************************
@@ -64,22 +65,20 @@ router.post('/api/logger', loggers.createLog);
 router.get('/api/logger/:id', loggers.getLog);
 //*************Logger Routes************************
 
-  //Task
+//Task
 
- //  router.get('/api/project/tasks/:id', tasks.getProjectTaskList);
-  router.get('/api/alltasks/:status/:capa', tasks.getTasks);
-  router.get('/api/task/:id', tasks.getTaskById);
-  router.put('/api/task/:id', tasks.updateTask);
-  router.post('/api/task', tasks.createTask);
-  router.delete('/api/tasks/:id', tasks.deleteTask);
-  router.post('/export/tasks', tasks.dumpTasks);
- //
+router.get('/api/alltasks/:status/:capa', tasks.getTasks);
+router.get('/api/task/:id', tasks.getTaskById);
+router.put('/api/task/:id', tasks.updateTask);
+router.post('/api/task', tasks.createTask);
+router.delete('/api/tasks/:id', tasks.deleteTask);
+router.post('/export/tasks', tasks.dumpTasks);
 
-  router.get('/api/files/:files', files.getFiles);
-  router.get('/api/filecount/:id', files.getFileCount);
-  router.put('/api/filebooked/:id', files.updateFileBook);
- //
- //    //**********File function ***************
+router.get('/api/files/:files', files.getFiles);
+router.get('/api/filecount/:id', files.getFileCount);
+router.put('/api/filebooked/:id', files.updateFileBook);
+//
+//    //**********File function ***************
 router.get('/server/upload/:file', files.downloadFile);
 router.post('/server/upload', upload.any(), files.uploadFile);
 router.delete('/server/delete/:id', files.deletefile);

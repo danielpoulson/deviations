@@ -4,26 +4,19 @@ const app = express();
 const File = require('mongoose').model('File');
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
-// const uploads = path.normalize(rootPath + '../uploads/');
 const fs = require('fs');
 const utils = require('../config/utils');
-
-// TODO: (1) Medium Need to set the file location one directory higher in production
-
 
 exports.downloadFile = function (req, res) {
     let filename = req.params.file;
     const fileType = filename.substring(0,3);
     let file = '';
 
-// TODO LOW EASY: duplicated file = '.././uploads/' + filename;???.
     if(fileType == 'exp'){
-        filename = filename.slice(6);
-        file = utils.uploads + filename;
-    } else {
-
-        file = utils.uploads + filename;
+      filename = filename.slice(6);
     }
+
+    file = utils.uploads + filename;
 
     res.download(file, filename, function(err){
       if (err) {
@@ -44,7 +37,6 @@ exports.uploadFile = function (req, res) {
     let fileData = {};
     const docName = req.body.docName;
 
-    //TODO (5) Minor Functionally only works for Deviations.
     const myRe = /DV\d{6}\s[-]\s/;
     const myArray = myRe.exec(docName);
 
@@ -74,8 +66,6 @@ exports.uploadFile = function (req, res) {
         });
 
     });
-
-
 };
 
 function addExportFile(fileData){
@@ -139,10 +129,11 @@ exports.updateFileBook = function(req,res){
 
 exports.addExportFile = addExportFile;
 
+/* eslint-disable no-console */
 function handleError(err){
     console.error(err);
 }
 
 function handlelog(log){
-    console.error(log);
+    console.log(log);
 }

@@ -1,9 +1,13 @@
+"use strict";
 const User = require('mongoose').model('User');
 const passport = require('passport');
 const crypto = require('../config/cryptopass');
+const utils = require('../config/utils');
+const auth = require('../config/auth');
+
 
 exports.getAllUsers = function(req, res) {
-    var status = req.params.status;
+    const status = req.params.status;
 
     User
         .find({fullname: { $exists: true}})
@@ -11,59 +15,13 @@ exports.getAllUsers = function(req, res) {
         .sort({fullname : 1})
         .exec(function(err, collection) {
 
-          var users = collection.map(function(user) {
+          const users = collection.map(function(user) {
             return user.fullname;
           });
 
           res.send(users);
     });
 };
-
-// exports.formatDB = function(req, res) {
-
-//     User.aggregate(
-//      [
-//        { $project: 
-//         { 
-//           username: { $toLower: "$username" },
-//           fullname: { $concat: [ "$firstName", " ", "$lastName" ] },
-//           role: "$roles",
-//           email: 1,
-//           password: "$username"
-//         }
-//       }
-//      ]
-//     ).exec(function (err, users) {
-//       var _users = users.map(function(user) {
-//         mainCreate(user);
-//       });
-
-//       res.send(200);
-//     });
-
-// };
-
-// function mainCreate (user) {
-
-//   var userData = user;
-
-//   userData.username = userData.username.toLowerCase();
-//   userData.passwordHash = crypto.hash(userData.password);
-//   //create new model
-//   var _user = new User(userData);
-
-//   _user.isNew = false;
-
-//   //save model to MongoDB
-//   _user.save(function (err) {
-//     if (err) {
-//       console.log(err);
-//     }
-//     else {
-//       console.log("User saved");
-//     }
-//   });
-// };
 
 exports.updateUser = function (req, res, next) {
     const password = req.body.password;
@@ -79,25 +37,31 @@ exports.updateUser = function (req, res, next) {
     }
 
     User.update({_id : req.body._id}, {$set: userData}, function (err) {
-      if (err){console.log(err); res.sendStatus(500);}
+      if (err){
+        utils.handleError(err);
+        res.sendStatus(500);
+      }
+
       res.sendStatus(200);
+
     });
 
 };
 
 exports.getLoggedUser = function(req, res) {
-  res.send({success:true, user: makeUserSafe(req.user)});
+  res.send({success:true, user: auth.safe(req.user)});
 };
 
 exports.getUser = function(req, res) {
-    var _fullname = req.params.id;
+    const _fullname = req.params.id;
 
     User
         .find({})
         .select({"passwordHash": 0})
         .where({fullname : _fullname})
         .exec(function(err, collection) {
-          res.send(collection);
+          const _user = auth.safe(collection[0]);
+          res.send(_user);
     });
 };
 
@@ -115,7 +79,7 @@ exports.getUserEmail = function(user) {
 
 exports.createUser = function (req, res, next) {
 
-  var userData = req.body;
+  const userData = req.body;
 
   userData.username = userData.username.toLowerCase();
   userData.passwordHash = crypto.hash(userData.password);
@@ -136,25 +100,13 @@ exports.createUser = function (req, res, next) {
 };
 
 exports.deleteUser= function (req, res) {
-    var id = req.params.id;
+    const id = req.params.id;
 
     User.remove({_id: id}, function (err) {
-        if (err) return handleError(err);
+        if (err) { utils.handleError(err); }
         res.status(200);
     });
 
 
 
 };
-
-//TODO: (5) @Minor LOW Duplicate code with auth.js
-function makeUserSafe (user) {
-    var safeUser = {};
-
-    var safeKeys = ['id', 'fullname', 'email', 'username', 'dept', 'role'];
-
-    safeKeys.forEach(function (key) {
-        safeUser[key] = user[key];
-    });
-    return safeUser;
-}

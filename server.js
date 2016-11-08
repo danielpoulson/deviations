@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('./server/config/auth');
+const utils = require('./server/config/utils');
 
 process.env.NODE_ENV = 'development';
 process.env.PORT = 3030;
@@ -18,6 +19,8 @@ app.get('/*', function (req, res) {
     res.render('index.html');
 });
 
+
+/* eslint-disable no-console */
 app.listen(process.env.PORT, function() {
     console.log('Express server 🌎  listening on port ' + process.env.PORT);
     console.log('env = ' + process.env.NODE_ENV +

@@ -14,7 +14,7 @@ const fs = require('fs');
 // TODO: (1) @Medium Single call to get all deviation data (files, tasks, logs)
 // This is currently four seperate calls
 
-    
+
 exports.getDeviations = function(req, res) {
     const status = parseInt(req.params.status);
     const customer = req.params.cust;
@@ -31,7 +31,7 @@ exports.getDeviations = function(req, res) {
         .sort({dvNo:1})
         .exec(function(err, collection) {
             if(err){
-                handleError("get deviations : " + err);
+                utils.handleError("get deviations : " + err);
             }
             res.status(200).send(collection);
         });
@@ -54,7 +54,7 @@ exports.updateDeviation = function(req, res) {
 
     Deviation.update({dvNo:req.params.id}, {$set: _dev}, function (err) {
         if (err) {
-            handleError({reason:err.toString()});
+            utils.handleError({reason:err.toString()});
         }
         res.sendStatus(200);
     });
@@ -65,7 +65,7 @@ function createEmail(body){
     const emailType = "Deviation";
     const emailActivity = `<b>Deviation - </b><em>${body.dvNo}</em> </br>
         <b> Deviation Description:</b><i>${body.dvMatName} <b> Date Created</b> ${_DateCreated}</i>`;
-// TODO: Not the worlds nicest Promise using a timeout need to rework and improve.
+//TODO: (4) Not the worlds nicest Promise using a timeout need to rework and improve.
     const p = new Promise(function(resolve, reject) {
         const toEmail = users.getUserEmail(body.dvAssign);
        setTimeout(() => resolve(toEmail), 2000);
@@ -73,7 +73,7 @@ function createEmail(body){
         const _toEmail = res[0].email;
         mailer.sendMail(_toEmail, emailType, emailActivity);
     }).catch(function (err) {
-      handleError(err);
+      utils.handleError(err);
     });
 
 }
@@ -81,7 +81,7 @@ function createEmail(body){
 
 exports.deleteDeviation = function(req, res) {
     Deviation.remove({ProjNo:req.params.id}, function (err) {
-        if (err) return handleError(err);
+        if (err) return utils.handleError(err);
         res.sendStatus(200);
     });
 };
@@ -94,7 +94,7 @@ exports.createDeviation = function(req, res) {
     const _dev = req.body;
 
     const devCount = Deviation.count({dvNo: search}).exec(function (err, count) {
-        if (err) return handleError(err);
+        if (err) return utils.handleError(err);
 
         newDevNum = "DV" + ((yr * 10000) + (count + 1));
 
@@ -135,23 +135,24 @@ exports.getDeviationNameById = function(req, res) {
     });
 };
 
+//TODO (4) This fuction should be pasted a year and return a count for the given year
 exports.deviationCountYear = function(req, res) {
-    //TODO remove static route
+
     const search = /DV15/;
 
     Deviation.count({dvNo: search}).exec(function (err, count) {
-        if (err) return handleError(err);
+        if (err) return utils.handleError(err);
         res.status(200).send({count: count});
     });
 };
 
+//TODO (4) This fuction should be pasted a year and return grouped class counts for the given year
 exports.getClass = function(req, res) {
-    //TODO remove static route
     const search = /DV15/;
 
     Deviation.aggregate({$match : {dvNo:{$in : [/^DV15.*$/]}}},
         {$group : {_id : "$dvClass", total : {$sum :1}}}, {$sort: {total : -1}}).exec(function (err, devClass) {
-        if (err) return handleError(err);
+        if (err) return utils.handleError(err);
         res.status(200).send(devClass);
     });
 };
@@ -160,7 +161,7 @@ exports.getClass = function(req, res) {
 exports.getCustomers = function(req, res) {
 
     Deviation.distinct("dvCust").exec(function (err, customers) {
-            if (err) return handleError(err);
+            if (err) return utils.handleError(err);
             res.status(200).send(customers);
         });
 };
@@ -198,74 +199,12 @@ exports.getUserDashboard = function(req, res){
   });
 };
 
-
-// This was the old dashboard
-exports.getDashboard = function(req, res) {
-    //TODO: This block is a bit of a mess not really sure what is the best approach for making all these calls. D.Poulson 05/04/2015
-    const dashArray = {
-        year1: "2014",
-        y1open : 325,
-        y1Closed : 325,
-        year2: "2015",
-        y2open : 325,
-        y2Closed : 315,
-        year3: "2016",
-        y3open : 69,
-        y3Closed : 35,
-        devClosed1 : 0,
-        devClosed2 : 30,
-        devClosed3 : 40,
-        capa1: 0,
-        capa2: 0
-    };
-
-
-    const today = new Date();
-    const todayless30 = today.setDate(today.getDate()-30);
-    const todayless60 = today.setDate(today.getDate()-60);
-
-
-    const promise = Task.count({TKCapa : 1, TKStat: {$lt: 5}}).exec();
-
-    promise.then(function (count) {
-        dashArray.capa1 = count;
-        return Task.count({TKStat: {$lt: 5}}).exec();
-    }).then(function (taskCount) {
-        dashArray.capa2 = taskCount;
-        return Deviation.count({dvClosed:0, dvCreated:{$gt:todayless30}}).exec();
-    }).then(function (less30) {
-        dashArray.devClosed1 = less30;
-        return Deviation.count({dvClosed:0, dvCreated:{$lte:todayless30, $gte: todayless60}}).exec();
-    }).then(function(less60){
-        dashArray.devClosed2 = less60;
-        return Deviation.count({dvClosed:0, dvCreated:{$lte:todayless60}}).exec();
-    }).then(function(gt60){
-        dashArray.devClosed3 = gt60;reformattedArray
-        return Deviation.count({dvNo:{$in : [/^DV15.*$/]}}).exec();
-        //TODO: Remove static constiables
-    }).then(function(totalDev){
-        dashArray.y2open = totalDev;
-        return Deviation.count({dvClosed:1, dvNo:{$in : [/^DV15.*$/]}}).exec();
-    }).then(function(closedDev){
-        dashArray.y2Closed = closedDev;
-        return Deviation.count({dvNo:{$in : [/^DV16.*$/]}}).exec();
-        //TODO: Remove static constiables
-    }).then(function(totalDev){
-        dashArray.y3open = totalDev;
-        return Deviation.count({dvClosed:1, dvNo:{$in : [/^DV16.*$/]}}).exec();
-    }).then(function(closedDev){
-        dashArray.y3Closed = closedDev;
-        res.status(200).send(dashArray);
-    });
-
-};
-
 exports.dumpDeviation = function(req, res) {
 
     Deviation.findAndStreamCsv({dvClosed: {$lt:req.params.id}}, {dvNo:true, dvMatNo:true, dvMatName:true, dvCust:true, dvAssign:true, dvClass: 1, dvDateClosed:1, 'dvCreated': 1, _id: 0})
         .pipe(fs.createWriteStream('exports/devs.csv'));
 
-    handlelog("Files have been created");
+    utils.handleLog("Files have been created");
 
     res.sendStatus(200);
 };
@@ -301,16 +240,66 @@ exports.dumpDeviations = function(req, res) {
         .pipe(fs.createWriteStream(file));
 
 
-    handlelog("Files have been created");
+    utils.handleLog("Files have been created");
 
     res.sendStatus(200);
 
 };
 
-function handleError(err){
-    console.error(err);
-}
-
-function handlelog(log){
-    console.error(log);
-}
+// This was the old dashboard
+// exports.getDashboard = function(req, res) {
+//     const dashArray = {
+//         year1: "2014",
+//         y1open : 325,
+//         y1Closed : 325,
+//         year2: "2015",
+//         y2open : 325,
+//         y2Closed : 315,
+//         year3: "2016",
+//         y3open : 69,
+//         y3Closed : 35,
+//         devClosed1 : 0,
+//         devClosed2 : 30,
+//         devClosed3 : 40,
+//         capa1: 0,
+//         capa2: 0
+//     };
+//
+//
+//     const today = new Date();
+//     const todayless30 = today.setDate(today.getDate()-30);
+//     const todayless60 = today.setDate(today.getDate()-60);
+//
+//
+//     const promise = Task.count({TKCapa : 1, TKStat: {$lt: 5}}).exec();
+//
+//     promise.then(function (count) {
+//         dashArray.capa1 = count;
+//         return Task.count({TKStat: {$lt: 5}}).exec();
+//     }).then(function (taskCount) {
+//         dashArray.capa2 = taskCount;
+//         return Deviation.count({dvClosed:0, dvCreated:{$gt:todayless30}}).exec();
+//     }).then(function (less30) {
+//         dashArray.devClosed1 = less30;
+//         return Deviation.count({dvClosed:0, dvCreated:{$lte:todayless30, $gte: todayless60}}).exec();
+//     }).then(function(less60){
+//         dashArray.devClosed2 = less60;
+//         return Deviation.count({dvClosed:0, dvCreated:{$lte:todayless60}}).exec();
+//     }).then(function(gt60){
+//         dashArray.devClosed3 = gt60;reformattedArray
+//         return Deviation.count({dvNo:{$in : [/^DV15.*$/]}}).exec();
+//     }).then(function(totalDev){
+//         dashArray.y2open = totalDev;
+//         return Deviation.count({dvClosed:1, dvNo:{$in : [/^DV15.*$/]}}).exec();
+//     }).then(function(closedDev){
+//         dashArray.y2Closed = closedDev;
+//         return Deviation.count({dvNo:{$in : [/^DV16.*$/]}}).exec();
+//     }).then(function(totalDev){
+//         dashArray.y3open = totalDev;
+//         return Deviation.count({dvClosed:1, dvNo:{$in : [/^DV16.*$/]}}).exec();
+//     }).then(function(closedDev){
+//         dashArray.y3Closed = closedDev;
+//         res.status(200).send(dashArray);
+//     });
+//
+// };

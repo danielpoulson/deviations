@@ -11,7 +11,6 @@ export const BOOKOUT_FILE = 'BOOKOUT_FILE';
 
 
 export function getDeviations(data) {
-  // TODO: (1) @EASY Hard copy customer can not choose to load a particular customer
   const cust = 'all';
   const url = `/api/deviationlist/${data}/${cust}`;
   const request = axios.get(url);

@@ -28,7 +28,7 @@ exports.updateTask = function(req, res) {
     const newOwner = req.body.TKChampNew;
     req.body.TKChampNew = false;
     Task.findByIdAndUpdate({_id:req.params.id}, {$set: req.body}, function (err) {
-        if (err) return handleError(err);
+        if (err) return utils.utils.handleError(err);
         res.send(200);
         if(newOwner){
           createEmail(req.body);
@@ -39,7 +39,7 @@ exports.updateTask = function(req, res) {
 
 exports.deleteTask = function(req, res) {
     Task.remove({_id:req.params.id}, function (err) {
-        if (err) return handleError(err);
+        if (err) return utils.handleError(err);
         res.send(200);
     });
 };
@@ -63,7 +63,7 @@ function createEmail(body){
     const emailType = "Deviation - Task";
     const emailActivity = `<b>Associated Deviation - </b><em>${body.DevId}</em> </br>
         <b>Task to Complete:</b><i>${body.TKName} <b>Date Due</b> ${_targetDate}</i>`;
-// TODO: Not the worlds nicest Promise using a timeout need to rework and improve.
+//TODO: (4) Not the worlds nicest Promise using a timeout need to rework and improve.
     const p = new Promise(function(resolve, reject) {
         const toEmail = users.getUserEmail(body.TKChamp);
        setTimeout(() => resolve(toEmail), 2000);
@@ -71,7 +71,7 @@ function createEmail(body){
         const _toEmail = res[0].email;
         mailer.sendMail(_toEmail, emailType, emailActivity);
     }).catch(function (err) {
-      handleError(err);
+      utils.handleError(err);
     });
 
 }
@@ -111,17 +111,15 @@ exports.dumpTasks = function(req, res) {
 
     files.addExportFile(fileData);
 
-    // TODO DP: The task export function takes in a search command but does not filter by the search text.           
     const _search = !req.body.search ? "." : req.body.search;
     const regExSearch = new RegExp(_search + ".*", "i");
     const _status = 4;
 
-    getDeviationList(fileData.fsFilePath);
+    getDeviationList(fileData.fsFilePath, regExSearch);
     res.sendStatus(200);
 };
 
-//TODO: 3 the uploads folder is defined in several places
-function getDeviationList(filepath) {
+function getDeviationList(filepath, regExSearch) {
     const status = 4;
     const file = utils.uploads + filepath;
     const fields = ['DevId', '_name', 'TKName', 'TKTarg', 'TKChamp', 'TKStat'];
@@ -132,6 +130,7 @@ function getDeviationList(filepath) {
 
             Task
                 .where('TKStat').lte(4)
+                .where({$or: [{TKChamp : regExSearch }, {TKName: regExSearch}, {DevId: regExSearch}]})
                 .select({DevId:1, TKName:1, TKTarg:1, TKChamp:1, TKStat:1})
                 .exec(function(err, coll) {
 
@@ -175,10 +174,10 @@ function getDeviationList(filepath) {
                     });
 
                     json2csv({ data: reformattedArray, fields: fields }, function(err, csv) {
-                      if (err) handleError(err);
+                      if (err) utils.handleError(err);
                       fs.writeFile(file, csv, function(err) {
                         if (err) throw err;
-                        handleError('file saved');
+                        utils.handleError('file saved');
                       });
                     });
 
@@ -199,17 +198,9 @@ function write_to_log (write_data) {
 
     fs.appendFile(path, write_data, function(error) {
          if (error) {
-           handleError("write error:  " + error.message);
+           utils.handleError("write error:  " + error.message);
          } else {
-           handleLog("Successful Write to " + path);
+           utils.handleLog("Successful Write to " + path);
          }
     });
-}
-
-function handleError(err){
-    console.error(err);
-}
-
-function handleLog(log){
-    console.log(log);
 }
