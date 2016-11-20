@@ -339,7 +339,7 @@ function mapStateToProps(state, ownProps) {
     log: state.log,
     tasklist: state.tasks.ctlist,
     ctTotal: state.tasks.ctTotal,
-    users: usersFormattedForDropdown(state.users)
+    users: usersFormattedForDropdown(state.users, state.deviation.dvAssign)
   };
 }
 

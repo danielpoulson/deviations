@@ -21,7 +21,7 @@ export function getUsers() {
 export function getUser(id) {
   const url = `/api/user/${id}`;
   const request = axios.get(url);
-
+  
   return {
     type: GET_USER,
     payload: request

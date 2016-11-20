@@ -73,7 +73,7 @@ class TaskDetail extends React.Component {
     this.setState({errors: validation.errors});
 
     if(!validation.formIsValid) {
-      return; 
+      return;
     }
 
     if (this.state.taskId !== 'new') {
@@ -187,8 +187,8 @@ function mapStateToProps(state, ownProps) {
 
   return {
     main: state.main,
-    task: state.task, 
-    users: usersFormattedForDropdown(state.users)
+    task: state.task,
+    users: usersFormattedForDropdown(state.users, state.task.TKChamp)
   };
 }
 
