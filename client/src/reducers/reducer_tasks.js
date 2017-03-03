@@ -1,4 +1,5 @@
 import { ADD_TASK, EDIT_TASK, DELETE_TASK, GET_TASKS, LOAD_PAGE_TASKS, GET_PROJECT_TASKS , SET_CAPA} from '../actions/actions_tasks';
+import { ADD_DEV } from '../actions/actions_deviations';
 import _ from 'lodash';
 
 const initialState = {
@@ -61,6 +62,17 @@ export default function (state, action) {
   }
 
   switch (action.type) {
+    case ADD_DEV:
+      alldata = [ ...state.alldata, _data ];
+      ctlist = [];
+      ctTotal = 0;
+      return {
+        ...state,
+        alldata,
+        ctlist,
+        ctTotal
+      };
+
     case ADD_TASK:
       _data = action.payload.data;
       alldata = [ ...state.alldata, _data ];

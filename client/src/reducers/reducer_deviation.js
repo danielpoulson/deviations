@@ -1,4 +1,4 @@
-import { GET_DEV, CREATE_LOG, NEW_DEVIATION } from '../actions/actions_deviations';
+import { ADD_DEV, GET_DEV, CREATE_LOG, NEW_DEVIATION } from '../actions/actions_deviations';
 
 const initialState = {
   dvNo: '',
@@ -9,6 +9,11 @@ const initialState = {
 export default function (state = initialState, action) {
 
   switch (action.type) {
+
+    case ADD_DEV: {
+      const _dev = action.payload.data || initialState;
+      return _dev;
+    }
 
     case GET_DEV: {
       const _dev = action.payload.data || initialState;

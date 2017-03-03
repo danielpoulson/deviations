@@ -1,13 +1,15 @@
-var mongoose = require('mongoose');
-var DeviationModel = require('../models/Deviation');
-var userModel = require('../models/User');
-var taskModel = require('../models/Task');
-var filesModel = require('../models/File');
-var loggerModel = require('../models/Logger');
+const mongoose = require('mongoose');
+const DeviationModel = require('../models/Deviation');
+const userModel = require('../models/User');
+const taskModel = require('../models/Task');
+const filesModel = require('../models/File');
+const loggerModel = require('../models/Logger');
 
+/*eslint no-console: 0*/
 module.exports = function(config) {
+  mongoose.Promise = global.Promise;
 	mongoose.connect(config.db);
-  var db = mongoose.connection;
+  const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error...'));
   db.once('open', function callback() {
     console.log('Deviation db opened');

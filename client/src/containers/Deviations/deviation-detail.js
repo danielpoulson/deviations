@@ -149,7 +149,7 @@ class DeviationDetail extends Component {
       return;
     }
 
-    if (this.state._dvNo !== 'new') {
+    if (this.props.main.MainId !== 'new') {
       _dev.dvLog = this.logMessage('Deviation Edit');
       _dev.dvNotChanged = _dev.dvAssign === this.props.deviation.dvAssign;
       _dev.dvClosed = 0;
@@ -160,11 +160,13 @@ class DeviationDetail extends Component {
       _dev.dvAssign = 'Quality Assurance';
       _dev.dvClass = 'Not Assigned';
       this.props.addDeviation(_dev);
+      this.setState({ notnew: true });
     }
 
     toastr.success('Deviation has been saved', 'Deviation Detail', { timeOut: 1000 });
     this.setState({ dirty: false });
-    this.context.router.push('/deviations');
+    // This function was remove as it was not user friendly
+    // this.context.router.push('/deviations');
 
   }
 

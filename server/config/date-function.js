@@ -1,11 +1,12 @@
-var moment = require('moment')
+'use strict';
+const moment = require('moment')
 
 exports.dpFormatDate = function(date) {
   return moment(date).format('DD/MM/YYYY');
 };
 
 exports.dpDashDates = function(){
-	var dates = [];
+	let dates = [];
 	dates.push(moment());
 	dates.push(moment().subtract(30, 'days'));
 	dates.push(moment().subtract(60, 'days'));

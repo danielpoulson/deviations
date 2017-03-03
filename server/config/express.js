@@ -4,16 +4,10 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const path = require('path');
-const rootPath = path.normalize(__dirname + '/../../');
-let appViews = rootPath + '/build/';
 
 module.exports = function (app, config) {
-  if (config.env === 'development') {
-    appViews = rootPath + '/client/';
-  }
 
-  app.set('views', appViews);
+  app.set('views', config.rootPath);
   app.engine('html', require('ejs').renderFile);
   app.use(logger('dev'));
   app.use(cookieParser());
@@ -28,6 +22,6 @@ module.exports = function (app, config) {
   app.use(passport.initialize());
   app.use(passport.session());
   
-  app.use(express.static(appViews));
+  app.use(express.static(config.rootPath));
 
 };

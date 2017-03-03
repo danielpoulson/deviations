@@ -3,7 +3,19 @@
   "version": "2.0.0",
   "description": "Deviation application",
   "scripts": {
-    "start": "nf start -p 3010"
+    "start": "nf start -p 3010",
+    "start:prod": "NODE_ENV=production node server/server.js",
+    "build:folder": "npm-run-all --parallel copy:*",
+    "build:prod": "npm-run-all delete:dist build:client build:folder",
+    "build:client": "npm run build --prefix client",
+    "delete:dist": "del ./dist",
+    "dev:babel": "babel server -d dist/server -watch",
+    "dev:nodemon": "NODE_ENV=development nodemon server/server.js --watch server",
+    "serve:dev": "npm-run-all --parallel dev:*",
+    "copy:client": "cpy '**/*.*' ../../dist --cwd=client/build --parents",
+    "copy:packjson": "cpy 'package.json' dist",
+    "copy:html": "cpy 'server/config/mail.html' dist/server/config/",
+    "copy:server": "cpy '**/*.js' '../dist/server' --cwd=server --parents"
   },
   "repository": {
     "type": "git",

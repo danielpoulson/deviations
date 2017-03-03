@@ -1,4 +1,5 @@
 import { SET_MAIN, SET_USER, USER_LOGGED_OUT, SET_FILETAB_COUNT, SET_LOADING, SET_USER_DASHBOARD, SET_GRAPH_DATA, SET_VIEW } from '../actions/actions_main';
+import { ADD_DEV } from '../actions/actions_deviations';
 import toastr from 'toastr';
 
 const initialState = {
@@ -28,6 +29,16 @@ export default function (state, action) {
         CurrentMode: action.data.CurrentMode,
         loading: action.data.loading,
         reload: action.data.reload
+      };
+      
+    case ADD_DEV:
+      return {
+        ...state,
+        MainId: action.payload.data.dvNo,
+        CurrentMode: 'deviation',
+        loading: true,
+        reload: false,
+        fileTabCount: 0
       };
 
     case SET_USER: {

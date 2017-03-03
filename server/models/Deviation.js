@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongooseToCsv = require('mongoose-to-csv'); //https://www.npmjs.com/package/mongoose-to-csv
 const moment = require('moment');
+const dateFunc = require('../config/date-function');
 
 const deviationSchema = new Schema({
     Id: Number,
@@ -35,20 +36,26 @@ deviationSchema.plugin(mongooseToCsv, {
     constraints: {
         'DevNo': 'dvNo',
         'Mat#': 'dvMatNo',
-        'Material_Name': 'dvMatName',
-        'Customer': 'dvCust',
         'Assigned': 'dvAssign',
         'Class': 'dvClass'
     },
     virtuals: {
+        'Material_Name': function (doc) {
+            const descpt = doc.dvMatName.replace(/,/g, "");
+            return descpt;
+        },
+        'Customer': function (doc) {
+            const comp = doc.dvCust.replace(/,/g, "");
+            return comp;
+        },
         'Created': function (doc) {
-            const _createdDate = doc.dvCreated ? moment(doc.dvCreated).format("DD/MM/YY") : "";
-            return _createdDate;
+            const _date = (typeof doc.dvCreated != 'undefined') ? dateFunc.dpFormatDate(doc.dvCreated) : '';
+            return _date;
         },
 
         'Closed': function (doc) {
-            const _closedDate = doc.dvDateClosed ? moment(doc.dvDateClosed).format("DD/MM/YY") : "";
-            return _closedDate;
+            const _date = (typeof doc.dvDateClosed != 'undefined') ? dateFunc.dpFormatDate(doc.vDateClosed) : '';
+            return _date;
         },
 
         'Archive': function(doc) {

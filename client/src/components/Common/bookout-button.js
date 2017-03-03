@@ -1,5 +1,4 @@
 import React from 'react';
-import toastr from 'toastr';
 
 export default class BookoutButton extends React.Component {
   constructor(props) {
@@ -11,25 +10,20 @@ export default class BookoutButton extends React.Component {
 
   onBookout() {
       // TODO (4) If download does not complete donot delete from server.
-    if (window.ActiveXObject || 'ActiveXObject' in window) {
-      // Always true if browser is Internet Explorer
-      toastr.error('This function does not work with internet explorer. Please contact your administrator', 'Error - Internet Explorer', { timeOut: 5000 });
-    } else {
 
-      const _log = {
-        SourceId: this.props.source,
-        LogType: 'FILE',
-        LogMessage: `File booked out - ${this.props.fileLoad}`,
-        LogBy: this.props.user.fullname,
-        LogDate: new Date()
-      };
+    const _log = {
+      SourceId: this.props.source,
+      LogType: 'FILE',
+      LogMessage: `File booked out - ${this.props.fileLoad}`,
+      LogBy: this.props.user.fullname,
+      LogDate: new Date()
+    };
 
-      window.location.href = `/server/upload/${this.props.fileLoad}`;
+    window.location.href = `/server/upload/${this.props.fileLoad}`;
 
-      this.props.createLog(_log);
-      this.props.bookoutFile(this.props.fileId);
+    this.props.createLog(_log);
+    this.props.bookoutFile(this.props.fileId);
 
-    }
   }
 
   deleteFile() {

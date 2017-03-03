@@ -31,7 +31,7 @@ exports.updateTask = function(req, res) {
         if (err) return utils.utils.handleError(err);
         res.send(200);
         if(newOwner){
-          createEmail(req.body);
+        //   createEmail(req.body);
         }
     });
 };
@@ -54,7 +54,7 @@ exports.createTask = function(req, res, next) {
             return res.send({reason:err.toString()});
         }
         res.status(200).send(task);
-        createEmail(req.body);
+        // createEmail(req.body);
     });
 };
 

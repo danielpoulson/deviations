@@ -47,7 +47,7 @@ exports.updateDeviation = function(req, res) {
     delete _dev.dvLog;
 
     if(!_dev.dvNotChanged){
-        createEmail(_dev);
+        // createEmail(_dev);
     }
 
     delete _dev.dvNotChanged;
@@ -107,7 +107,7 @@ exports.createDeviation = function(req, res) {
 
         const deviation = new Deviation(_dev);
 
-        deviation.save(function (err) {
+        deviation.save(function (err, data) {
         if(err) {
             if(err.toString().indexOf('E11000') > -1) {
                 err = new Error('Duplicate Username');
@@ -115,7 +115,7 @@ exports.createDeviation = function(req, res) {
             res.status(400);
             return res.send({reason:err.toString()});
         }
-        res.status(200).send(deviation);
+        res.status(200).send(data);
         });
     });
 
