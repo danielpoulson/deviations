@@ -8,6 +8,7 @@ const users = require('../controllers/users');
 const mailer = require('../config/mailer.js');
 const exportdata = require('../config/data.js');
 const utils = require('../config/utils');
+const config = require('../config/config');
 const fs = require('fs');
 
 
@@ -212,7 +213,7 @@ exports.dumpDeviation = function(req, res) {
 exports.dumpDeviations = function(req, res) {
     //const status = 2;
     const int = parseInt((Math.random()*1000000000),10);
-    const uploadsfolder = utils.uploads;
+    const uploadsfolder = config.uploads;
     const file = uploadsfolder + 'deviations' + int + '.csv';
     let fileData = {};
     const newDate = new Date();
@@ -233,7 +234,7 @@ exports.dumpDeviations = function(req, res) {
 
 
     Deviation.find({dvClosed: {$lte:_status}})
-        .select({dvNo: 1, dvMatNo: 1, dvMatName: 1, dvCust: 1, 'dvCreated':1, dvAssign: 1, dvClosed: 1, dvDateClosed: 1, dvClass: 1, _id: 0})
+        .select({dvNo: 1, dvMatNo: 1, dvMatName: 1, dvCust: 1, 'dvCreated':1, dvAssign: 1, dvClosed: 1, dvDateClosed: 1, dvClass: 1, dvStatus: 1, dvExtract: 1, _id: 0})
         .where({$or: [{dvAssign : regExSearch }, {dvNo : regExSearch}, {dvMatName : regExSearch}, {dvCust : regExSearch}]})
         .stream()
         .pipe(Deviation.csvTransformStream())

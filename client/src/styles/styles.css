@@ -9,9 +9,13 @@
 
 select {
   -webkit-appearance: none;
-  -moz-appearance: none;
+       -moz-appearance: none;
   text-indent: 0.01px;
   text-overflow: '';
+}
+
+select::-ms-expand {
+    display: none;
 }
 
 .styled select {

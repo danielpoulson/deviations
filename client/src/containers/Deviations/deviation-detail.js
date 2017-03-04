@@ -7,7 +7,8 @@ import FileList from '../../containers/Files/file-list';
 import DeviationLog from '../../components/Deviations/deviation-log';
 import {usersFormattedForDropdown} from '../../selectors/selectors';
 import {devFormIsValid} from './dev-form-validation';
-import {statusData, outcomesData, categoriesData, classifiesData} from './select-data';
+import {statusData, outcomesData, categoriesData, classifiesData, customerData} from './select-data';
+import {dpFormatDate} from '../../utils/helpers';
 import classNames from 'classnames';
 import toastr from 'toastr';
 
@@ -35,6 +36,7 @@ class DeviationDetail extends Component {
       tasks: [],
       TasksTab: 'hidden',
       tCount: 0,
+      customer: customerData,
       status: statusData,
       outcomes: outcomesData,
       categories: categoriesData,
@@ -87,7 +89,7 @@ class DeviationDetail extends Component {
     e.preventDefault();
 
     if(this.props.main.user.role !== 'admin') {
-      toastr.warning('Only QA can closed a deviation! If deviation is complete notify QA.',
+      toastr.warning('Only Quality Assurance can closed a deviation! If deviation is complete notify QA.',
         'Deviation Detail', { timeOut: 2000 });
       return;
     }
@@ -97,6 +99,7 @@ class DeviationDetail extends Component {
     _data.dvClosed = 1;
     _data.dvDateClosed = new Date();
     _data.dvLog = this.logMessage('Deviation Completed');
+    _data.dvStatus = `This customer complaint or deviation is now closed - ${dpFormatDate(new Date())}`;
 
     this.props.closeDeviation(_data);
     toastr.success('Deviation has been Closed', 'Deviation Detail', { timeOut: 1000 });
@@ -165,8 +168,6 @@ class DeviationDetail extends Component {
 
     toastr.success('Deviation has been saved', 'Deviation Detail', { timeOut: 1000 });
     this.setState({ dirty: false });
-    // This function was remove as it was not user friendly
-    // this.context.router.push('/deviations');
 
   }
 
@@ -252,6 +253,7 @@ class DeviationDetail extends Component {
               <div className="panel-body">
                 <DevDetailForm
                   dev={this.state.deviation}
+                  customer={this.state.customer}
                   onSave={this.saveDetail}
                   onCancel={this.cancelDeviation}
                   onChange={this.updateDevState}

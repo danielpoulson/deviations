@@ -39,6 +39,16 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
         labelstyle="col-sm-2 control-label"
         inputdiv="col-sm-10" />
 
+      <TextArea
+        name="dvStatus"
+        label="Current Status"
+        value={dev.dvStatus || ''}
+        rows="3"
+        onChange={onChange}
+        error={errors.dvStatus}
+        labelstyle="col-sm-2 control-label"
+        inputdiv="col-sm-10" />
+
     <SelectInput
         name="dvOutCome"
         label="Outcomes:"

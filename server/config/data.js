@@ -1,48 +1,44 @@
 exports.myData = function() {
 	const data = [
 		{
-			date: "Dec 15",
-			count: 26
+			date: "Mar 17",
+			count: 1
 		},
 		{
-			date: "Jan 16",
-			count: 24
+			date: "Apr 17",
+			count: 0
 		},
 		{
-			date: "Feb 16",
-			count: 21
+			date: "May 17",
+			count: 0
 		},
 		{
-			date: "Mar 16",
-			count: 24
+			date: "Jun 17",
+			count: 0
 		},
 		{
-			date: "Apr 16",
-			count: 25
+			date: "Jul 17",
+			count: 0
 		},
 		{
-			date: "May 16",
-			count: 31
+			date: "Aug 17",
+			count: 0
 		},
 		{
-			date: "Jun 16",
-			count: 15
+			date: "Sep 17",
+			count: 0
 		},
 		{
-			date: "Jul 16",
-			count: 24
+			date: "Oct 17",
+			count: 0
 		},
 		{
-			date: "Aug 16",
-			count: 31
+			date: "Nov 17",
+			count: 0
 		},
 		{
-			date: "Sep 16",
-			count: 33
-		},
-		{
-			date: "Oct 16",
-			count: 28
+			date: "Dec 17",
+			count: 0
 		}
 	];
 
@@ -51,18 +47,18 @@ exports.myData = function() {
 
 exports.changeData = [
   {
-    "Years": 2014,
-    "closed": 325,
-    "open": 325
-  },
-  {
     "Years": 2015,
-    "closed": 225,
-    "open": 226
+    "closed": 0,
+    "open": 0
+  },
+	{
+    "Years": 2016,
+    "closed": 58,
+    "open": 58
   },
   {
-    "Years": 2016,
-    "closed": 131,
-    "open": 169
+    "Years": 2017,
+    "closed": 2,
+    "open": 12
   }
 ];

@@ -6,11 +6,11 @@ const files = require('../controllers/files');
 const users = require('../controllers/users');
 const loggers = require('../controllers/loggers');
 const multer = require('multer');
-const utils = require('./utils');
+const config = require('./config');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, utils.uploads);
+    cb(null, config.uploads);
   },
 
   filename: function (req, file, cb) {

@@ -2,12 +2,13 @@ import React, { PropTypes } from 'react';
 import InputText from '../../components/Common/form-text-input';
 import TextArea from '../../components/Common/text-area';
 import DateTimePicker from '../../components/Common/date-picker';
+import SelectInput from '../../components/Common/select-input';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
 
 
-const DevDetailForm = ({dev, onSave, onCancel, onChange, onDateChange, errors}) => {
+const DevDetailForm = ({customer, dev, onSave, onCancel, onChange, onDateChange, errors}) => {
 
   return (
     <form className="form-horizontal">
@@ -69,16 +70,19 @@ const DevDetailForm = ({dev, onSave, onCancel, onChange, onDateChange, errors}) 
         value={dev.dvCreated}
         onChange={onDateChange.bind(null, "dvCreated")}
         error={errors.dvCreated}/> 
-
-      <InputText
+      
+      <SelectInput
         name="dvCust"
         label="Customer:"
         value={dev.dvCust}
+        options={customer}
         onChange={onChange}
+        defaultOption="FMC - Crop Protection"
         placeholder="Enter Customer Name ( Required, Min 5 characters )"
         labelstyle="col-sm-2 control-label"
         inputdiv="col-sm-6"
         error={errors.dvCust}/>
+
 
       <InputText
         name="dvSupplier"

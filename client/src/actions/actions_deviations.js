@@ -36,7 +36,7 @@ export function getDeviation(data) {
 
 export function addDeviation(data) {
   let _data = data;
-  _data.dvExtract = data.dvDescribe.slice(0,200);
+  _data.dvExtract = data.dvDescribe.slice(0,200).replace(/(\r\n|\n|\r)/gm,"");
   const url = '/api/deviations';
   const request = axios.post(url, _data);
 
@@ -60,7 +60,7 @@ export function closeDeviation(data){
 
 export function editDeviation(data) {
   let _data = data;
-  _data.dvExtract = data.dvDescribe.slice(0,200);
+  _data.dvExtract = data.dvDescribe.slice(0,200).replace(/(\r\n|\n|\r)/gm,"");
   const url = `/api/deviations/${_data.dvNo}`;
   axios.put(url, _data);
 

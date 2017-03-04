@@ -7,6 +7,7 @@ const json2csv = require('json2csv');
 const users = require('../controllers/users');
 const mailer = require('../config/mailer.js');
 const utils = require('../config/utils');
+const config = require('../config/config');
 const moment = require('moment');
 
 exports.getTasks = function(req, res) {
@@ -121,7 +122,7 @@ exports.dumpTasks = function(req, res) {
 
 function getDeviationList(filepath, regExSearch) {
     const status = 4;
-    const file = utils.uploads + filepath;
+    const file = config.uploads + filepath;
     const fields = ['DevId', '_name', 'TKName', 'TKTarg', 'TKChamp', 'TKStat'];
 
     Deviation.find({})

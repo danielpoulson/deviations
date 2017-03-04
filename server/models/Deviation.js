@@ -17,6 +17,7 @@ const deviationSchema = new Schema({
     dvDescribe: {type: String},
     dvAssign: {type: String},
     dvInvest: {type: String},
+    dvStatus: {type: String},
     dvOutCome: {type:String},
     dvCustSend: {type: Date},
     dvCat: {type: String},
@@ -32,7 +33,7 @@ const deviationSchema = new Schema({
 });
 
 deviationSchema.plugin(mongooseToCsv, {
-    headers: 'DevNo Mat# Material_Name Customer Assigned Created Closed Class Archive',
+    headers: 'DevNo Mat# Material_Name Customer Assigned Created Closed Class Archive Description Status',
     constraints: {
         'DevNo': 'dvNo',
         'Mat#': 'dvMatNo',
@@ -41,12 +42,20 @@ deviationSchema.plugin(mongooseToCsv, {
     },
     virtuals: {
         'Material_Name': function (doc) {
-            const descpt = doc.dvMatName.replace(/,/g, "");
+            const _name = (typeof doc.dvMatName != 'undefined') ? doc.dvMatName.replace(/,/g, "") : '';
+            return _name;
+        },
+        'Description': function (doc) {
+            const descpt = (typeof doc.dvExtract != 'undefined') ? doc.dvExtract.replace(/,/g, "") : '';
             return descpt;
         },
+        'Status': function (doc) {
+            const status = (typeof doc.dvStatus != 'undefined') ? doc.dvStatus.replace(/,/g, "") : '';
+            return status;
+        },
         'Customer': function (doc) {
-            const comp = doc.dvCust.replace(/,/g, "");
-            return comp;
+            const cust = (typeof doc.dvCust != 'undefined') ? doc.dvCust.replace(/,/g, "") : '';
+            return cust;
         },
         'Created': function (doc) {
             const _date = (typeof doc.dvCreated != 'undefined') ? dateFunc.dpFormatDate(doc.dvCreated) : '';

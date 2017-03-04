@@ -5,7 +5,7 @@ const File = require('mongoose').model('File');
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
 const fs = require('fs');
-const utils = require('../config/utils');
+const config = require('../config/config');
 
 exports.downloadFile = function (req, res) {
     let filename = req.params.file;
@@ -16,7 +16,7 @@ exports.downloadFile = function (req, res) {
       filename = filename.slice(6);
     }
 
-    file = utils.uploads + filename;
+    file = config.uploads + filename;
 
     res.download(file, filename, function(err){
       if (err) {
@@ -98,7 +98,7 @@ function fileDeletion(id) {
         File.findById(id, function (err, doc){
 
           if(doc){
-            fs.unlink(utils.uploads + doc.fsFilePath, function (err) {
+            fs.unlink(config.uploads + doc.fsFilePath, function (err) {
                 if (err) throw err;
                 handlelog('successfully deleted /uploads/' + doc.fsFilePath);
             });

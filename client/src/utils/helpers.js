@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 export function calculateDay(date, closed) {
     let _dayDiff = '-';
     if (date) {
@@ -22,3 +24,7 @@ export function dayDiff(date) {
     
     return _dayDiff;
 }
+
+export function dpFormatDate (date) {
+  return moment(date).format('DD/MM/YYYY');
+};

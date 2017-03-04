@@ -1,3 +1,10 @@
+const customer = [
+  { value: 'FMC - Crop Protection', text: 'FMC - Crop Protection'},
+  { value: 'FMC - Specialty', text: 'FMC - Specialty'},
+  { value: 'FMC - Other', text: 'FMC - Other'},
+  { value: 'Other', text: 'Other'}
+];
+
 const status = [
         { value: 1, text: 'Review' },
         { value: 2, text: 'Approved' },
@@ -41,4 +48,10 @@ const classifies = [
   { value: '', text: ''}
 ];
 
-export {status as statusData, outcomes as outcomesData, categories as categoriesData, classifies as classifiesData};
+export {
+  customer as customerData,
+  status as statusData,
+  outcomes as outcomesData,
+  categories as categoriesData,
+  classifies as classifiesData
+};
