@@ -1,3 +1,4 @@
+//SYNC 11/03/2017 DP
 import React, { PropTypes } from 'react';
 import moment from 'moment';
 import { getTraffic } from '../../utils/status';
@@ -13,7 +14,7 @@ const TaskRow = (props) => {
   const capa = task.TKCapa === 1 ? 'fa fa-product-hunt' : '';
   return (
     <tr onClick={props.getTask}>
-      <td>{task.DevId} - {task.TKName} <i className={capa}></i></td>
+      <td>{task.SourceId} - {task.TKName} <i className={capa}></i></td>
       <td style={minColTarget}>{moment(task.TKTarg).format('DD/MM/YYYY')}</td>
       <td style={minColChamp}>{task.TKChamp}</td>
       <td><i className={getTraffic(task.TKTarg, task.TKStat)}></i></td>

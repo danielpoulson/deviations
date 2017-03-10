@@ -28,3 +28,5 @@ export function dayDiff(date) {
 export function dpFormatDate (date) {
   return moment(date).format('DD/MM/YYYY');
 };
+
+export const fileRegex = /DV\d{6}\s[-]\s/;

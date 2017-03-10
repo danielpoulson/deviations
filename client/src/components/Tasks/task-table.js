@@ -1,3 +1,4 @@
+//SYNC 11/03/2017 DP
 import React, { PropTypes } from 'react';
 import TaskRow from './task-row';
 
@@ -14,8 +15,8 @@ const TaskTable = (props) => {
       <table className="table table-hover project-table dp_point">
         <thead className="print-table-head">
           <tr>
-            <th> Deviation Id and Task Name </th>
-            <th> Target</th>
+            <th> Project Id and Task Name </th>
+            <th> Target Date </th>
             <th> Champion </th>
             <th> Status </th>
           </tr>

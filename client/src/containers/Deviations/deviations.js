@@ -112,7 +112,7 @@ class Deviations extends Component {
 
   exportDeviation() {
     const info = {
-      fsDevNo: 'exp',
+      fsSource: 'exp',
       fsAddedBy: this.props.user.username,
       fsType: 'deviations',
       search: this.state.txtSearch,

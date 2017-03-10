@@ -1,44 +1,57 @@
+//SYNC 11/03/2017 DP
 "use strict";
-const express = require('express');
-const app = express();
+/*eslint no-console: 0*/
 const File = require('mongoose').model('File');
-const path = require('path');
-const rootPath = path.normalize(__dirname + '/../../');
+const express = require('express');
+const config = require('../config/config.js'); 
 const fs = require('fs');
-const config = require('../config/config');
+
+const uploaded = config.uploaded;
 
 exports.downloadFile = function (req, res) {
     let filename = req.params.file;
     const fileType = filename.substring(0,3);
+    const expfilename = filename.slice(6);
     let file = '';
 
     if(fileType == 'exp'){
-      filename = filename.slice(6);
+        filename = filename.slice(6);
+        file = uploaded + filename;
+    } else {
+        file = uploaded + filename;
     }
 
-    file = config.uploads + filename;
+    if (fs.existsSync(file)) {
+        res.download(file, filename, function(err){
+            if (err) {
+                console.log(err);
+            } else {
+                if(fileType == 'exp'){
 
-    res.download(file, filename, function(err){
-      if (err) {
-        handleError(err);
-      } else {
-        if(fileType == 'exp'){
+                    File.find({fsFilePath : filename})
+                        .exec(function (err, collection) {
+                        fileDeletion(collection[0]._id);
+                    });
+                }
+            }
+        });
 
-            File.find({fsFilePath : filename})
-                .exec(function (err, collection) {
-                fileDeletion(collection[0]._id);
-            });
-        }
-      }
-    });
+    } else {
+        res.redirect('/');
+        
+        File.remove({fsFilePath: expfilename}, function (err) {
+            if (err) {console.log(err);}
+        });
+    }
 };
 
 exports.uploadFile = function (req, res) {
-    let fileData = {};
+    const fileData = {};
     const docName = req.body.docName;
 
-    const myRe = /DV\d{6}\s[-]\s/;
+    const myRe = config.regex;
     const myArray = myRe.exec(docName);
+
 
     if(myArray) {
         fileData.fsFileName = docName.split('.').shift().substr(11);
@@ -50,14 +63,14 @@ exports.uploadFile = function (req, res) {
     fileData.fsAddedBy = req.body.dpUser;
 
     fileData.fsFileExt = docName.split('.').pop();
-    fileData.fsDevNo = req.body.dvNo;
+    fileData.fsSource = req.body.sourceId;
     fileData.fsFilePath = req.files[0].filename;
     fileData.fsBooked = 0;
 
     File.update({fsFileName: fileData.fsFileName}, fileData, {upsert: true}, function (err) {
         if (err) {
             res.sendStatus(200);
-            handleError(err.toString());
+            console.log(err.toString());
         }
 
         File.findOne({fsFileName : fileData.fsFileName}, function(err, file){
@@ -66,23 +79,24 @@ exports.uploadFile = function (req, res) {
         });
 
     });
+
+
 };
 
 function addExportFile(fileData){
 
-    File.create(fileData, function (err, small) {
-      if (err) return handleError(err);
-    });
+  File.create(fileData, function (err, small) {
+    if (err) return console.log(err);
+  });
 
 }
 
 exports.getFiles = function (req, res) {
 
-    File.find({fsDevNo: req.params.files})
-        .exec(function (err, collection) {
-            if (err) throw err;
-            res.send(collection);
-        });
+  File.find({fsSource: req.params.files})
+    .exec(function (err, collection) {
+        res.send(collection);
+    });
 };
 
 exports.deletefile = function (req, res) {
@@ -95,32 +109,27 @@ exports.deletefile = function (req, res) {
 
 function fileDeletion(id) {
 
-        File.findById(id, function (err, doc){
+    File.findById(id, function (err, doc){
 
-          if(doc){
-            fs.unlink(config.uploads + doc.fsFilePath, function (err) {
-                if (err) throw err;
-                handlelog('successfully deleted /uploads/' + doc.fsFilePath);
-            });
-
+        if(doc){
+        
             File.remove({_id: id}, function (err) {
-                if (err) return handleError(err);
+                if (err) {console.log(err);}
             });
-          }
+
+            fs.unlink(uploaded + doc.fsFilePath, function (err) {
+                if (err) {console.log(err)};
+            });
+        }    
     });
 }
 
-exports.getFileCount = function(req,res){
-    File.count({fsDevNo:req.params.id}, function(err, fileCount){
-        res.send(fileCount.toString());
-    });
-};
-
 exports.updateFileBook = function(req,res){
     const id = req.params.id;
-    handlelog("updateFileBook " + req.params.id);
     File.findById(id, function (err, doc){
         doc.fsBooked = 1;
+        doc.fsAddedAt = new Date();
+        doc.fsAddedBy = req.body.user;
         doc.save();
     });
 
@@ -128,12 +137,3 @@ exports.updateFileBook = function(req,res){
 };
 
 exports.addExportFile = addExportFile;
-
-/* eslint-disable no-console */
-function handleError(err){
-    console.error(err);
-}
-
-function handlelog(log){
-    console.log(log);
-}

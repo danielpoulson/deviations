@@ -1,14 +1,16 @@
-//SYNC 11/03/2017 DP
 "use strict";
 const User = require('mongoose').model('User');
 const passport = require('passport');
 const crypto = require('../config/cryptopass');
+const utils = require('../config/utils');
+const auth = require('../config/auth');
+
 
 exports.getAllUsers = function(req, res) {
     const status = req.params.status;
 
     User
-        .find({})
+        .find({fullname: { $exists: true}})
         .select({fullname : 1, "_id" : 0})
         .sort({fullname : 1})
         .exec(function(err, collection) {
@@ -35,36 +37,19 @@ exports.updateUser = function (req, res, next) {
     }
 
     User.update({_id : req.body._id}, {$set: userData}, function (err) {
-      if (err){console.log(err); res.sendStatus(500);}
+      if (err){
+        utils.handleError(err);
+        res.sendStatus(500);
+      }
+
       res.sendStatus(200);
+
     });
 
-};
-
-exports.updatePassword = function(req, res) {
-  const password = req.body.password;
-
-  console.log(password);
-  console.log(req.params.id);
-
-  if (password) {
-    
-    const _passwordHash = crypto.hash(password);
-
-    User.update({_id : req.params.id}, {$set: {passwordHash: _passwordHash}}, function (err) {
-      if (err){console.log(err); res.sendStatus(500);}
-      res.sendStatus(200);
-    });
-
-  } else {
-
-    res.sendStatus(500);
-
-  }
 };
 
 exports.getLoggedUser = function(req, res) {
-  res.send({success:true, user: makeUserSafe(req.user)});
+  res.send({success:true, user: auth.safe(req.user)});
 };
 
 exports.getUser = function(req, res) {
@@ -75,7 +60,8 @@ exports.getUser = function(req, res) {
         .select({"passwordHash": 0})
         .where({fullname : _fullname})
         .exec(function(err, collection) {
-          res.send(collection);
+          const _user = auth.safe(collection[0]);
+          res.send(_user);
     });
 };
 
@@ -116,30 +102,11 @@ exports.createUser = function (req, res, next) {
 exports.deleteUser= function (req, res) {
     const id = req.params.id;
 
-    console.log(req.params.id);
-
     User.remove({_id: id}, function (err) {
-        if (err) return handleError(err);
-        res.sendStatus(200);
+        if (err) { utils.handleError(err); }
+        res.status(200);
     });
 
 
 
 };
-
-// TODO: (5) LOW Duplicate code with auth.js
-function makeUserSafe (user) {
-    const safeUser = {};
-
-    const safeKeys = ['id', 'fullname', 'email', 'username', 'dept', 'role'];
-
-    safeKeys.forEach(function (key) {
-        safeUser[key] = user[key];
-    });
-    return safeUser;
-}
-
-/*eslint no-console: 0*/
-function handleError(err) {
-  console.log(err);
-}

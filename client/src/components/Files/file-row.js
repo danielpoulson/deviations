@@ -1,3 +1,4 @@
+//SYNC 11/03/2017 DP
 import React, { PropTypes } from 'react';
 import moment from 'moment';
 import { getExt } from '../../utils/status';
@@ -8,17 +9,7 @@ import BookoutButton from '../../components/Common/bookout-button';
 const FileRow = (props) => {
 
   const file = props.file;
-  const myRe = /DV\d{6}\s[-]\s/;
-  const hasDVprefix = myRe.exec(file.fsFileName);
-  let fullFileName = '';
-
-  // This is adding in as older file names are prefix with the devition number
-  // This prevents the deviation number to be added twice.
-  if(hasDVprefix) {
-      fullFileName = `${file.fsFileName}.${file.fsFileExt}`;
-  } else {
-      fullFileName = `${file.fsDevNo} - ${file.fsFileName}.${file.fsFileExt}`;
-  }
+  const fullFileName = `${file.fsSource} - ${file.fsFileName}.${file.fsFileExt}`;
 
   return (
     <tr>
@@ -37,7 +28,7 @@ const FileRow = (props) => {
           <BookoutButton
             user={props.user}
             fileLoad={fullFileName}
-            source={file.fsDevNo}
+            source={file.fsSource}
             fileId={file._id}
             fsBooked={file.fsBooked}
             createLog={props.createLog}

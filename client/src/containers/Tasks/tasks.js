@@ -88,6 +88,7 @@ class Tasks extends Component {
     };
 
     this.props.exportTasks(info);
+    this.context.router.push('/export');
   }
 
   render() {
@@ -152,6 +153,14 @@ Tasks.propTypes = {
   exportTasks: PropTypes.func,
   getAllTasks: PropTypes.func,
   loadPageTask: PropTypes.func
+};
+
+Tasks.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+Tasks.childContextTypes = {
+  location: React.PropTypes.object
 };
 
 export default connect(state => ({ tasks: state.tasks, user: state.main.user }),

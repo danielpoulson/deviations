@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import TaskForm from '../../components/Tasks/task-form';
+import ErrorPanel from '../../components/Common/error-panel';
 import toastr from 'toastr';
-import {usersFormattedForDropdown} from '../../selectors/selectors';
 import {taskFormIsValid} from './task-form.validation';
+import {usersFormattedForDropdown} from '../../selectors/selectors';
 
 import * as taskActions from '../../actions/actions_tasks';
 import * as mainActions from '../../actions/actions_main';
@@ -15,13 +16,14 @@ class TaskDetail extends React.Component {
 
     this.state = {
       dirty: false,
-      errors: {},
+      errors: [],
+      errorsObj: {},
       hideDelete: props.main.user.role !== 'admin' || props.newTask === true ? 'hidden' : 'btn btn-danger',
       newTask: false,
-      task: Object.assign({}, props.task),
-      taskId: props.location.pathname.split('/')[2],
-      taskTitle: props.main.MainId,
       submitting: false,
+      taskId: props.location.pathname.split('/')[2],
+      task: Object.assign({}, props.task),
+      taskTitle: props.main.MainId,
       status: [
         { value: 1, text: 'Task - Not Started (New)' },
         { value: 2, text: 'Task - On Track' },
@@ -37,9 +39,6 @@ class TaskDetail extends React.Component {
     this.updateTaskState = this.updateTaskState.bind(this);
     this.updateTaskStateDate = this.updateTaskStateDate.bind(this);
     this.updateTaskStateCheck = this.updateTaskStateCheck.bind(this);
-  }
-
-  componentDidMount() {
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,28 +65,31 @@ class TaskDetail extends React.Component {
 
   saveTask(event) {
     event.preventDefault();
-    const _DevId = this.props.main.MainId;
+
+    const _SourceId = this.props.main.MainId;
     let _task = this.state.task;
 
     let validation = taskFormIsValid(_task);
     this.setState({errors: validation.errors});
+    this.setState({errorsObj: validation.errorsObj});
 
     if(!validation.formIsValid) {
       return;
     }
 
     if (this.state.taskId !== 'new') {
-      // const TKChampNew = _task.TKChamp !== this.props.task.TKChamp;
+      _task.TKChampNew = _task.TKChamp !== this.props.task.TKChamp;
       this.props.taskActions.editTask(_task);
     } else {
       _task.TKStat = _task.TKStat || 1;
       _task.TKCapa = _task.TKCapa || 0;
-      _task.DevId = _DevId;
+      _task.SourceId = _SourceId;
       this.props.taskActions.addTask(_task);
     }
 
     toastr.success('Task has been saved', 'Task Detail', { timeOut: 1000 });
-    this.taskNav(_DevId);
+    this.props.mainActions.setLoading({ loading: false });
+    this.taskNav(_SourceId);
   }
 
   updateTaskState(event) {
@@ -139,19 +141,20 @@ class TaskDetail extends React.Component {
           </div>
 
           <div style={formStyle}>
+            {this.state.errors.length > 0 ? <ErrorPanel errors={this.state.errors}/> : ""}
             <TaskForm
-              task={this.state.task}
-              errors={this.state.errors}
-              onSubmit={this.saveTask}
-              status={this.state.status}
-              users={this.props.users}
-              deleteTask={this.deleteTask}
+              errors={this.state.errorsObj}
               hideDelete={this.state.hideDelete}
+              onCancel={this.cancelTask}
               onChange={this.updateTaskState}
               onDateChange={this.updateTaskStateDate}
+              onDeleteTask={this.deleteTask}
+              onSaveTask={this.saveTask}
+              status={this.state.status}
               onCheckChange={this.updateTaskStateCheck}
-              onCancel={this.cancelTask}
-              submitting={this.state.submitting} />
+              submitting={this.state.submitting}
+              task={this.state.task}
+              users={this.props.users} />
           </div>
         </div>
     );
@@ -173,7 +176,6 @@ TaskDetail.propTypes = {
   users: PropTypes.array
 };
 
-//Pull in the React Router context so router is available on this.context.router.
 TaskDetail.contextTypes = {
   router: PropTypes.object
 };
@@ -183,7 +185,6 @@ TaskDetail.childContextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  // const taskId = ownProps.params.id;
 
   return {
     main: state.main,

@@ -1,19 +1,21 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+//SYNC 11/03/2017 DP
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const utils = require('../config/utils');
 
-var taskSchema = new Schema({
+const taskSchema = new Schema({
     ID: Number,
     TKName: {type: String, required: '{PATH} is required!'},
+    TKStart: {type: Date, required: '{PATH} is required!'},
     TKTarg: {type: Date, required: '{PATH} is required!'},
-    TKComp: {type: Date},
     TKChamp: {type: String, required: '{PATH} is required!'},
     TKStat: {type: Number, required: '{PATH} is required!'},
-    TKCapa: {type: Number},
-    DevId: {type: String, required: '{PATH} is required!'},
+    SourceId: {type: String, required: '{PATH} is required!'},
     TKComment: String,
-    datecreated: {type:Date, default: Date.now}
+    TKCapa: {type: Number, default: 0},
+    TKChampNew: {type: Boolean, default: false},
+    datecreated: {type:Date, default: Date.now},
+    dateclosed: {type:Date}
 });
 
-var Task = mongoose.model('Task', taskSchema);/**
- * Created by dpoulson on 2/05/2014.
- */
+const Task = mongoose.model('Task', taskSchema);

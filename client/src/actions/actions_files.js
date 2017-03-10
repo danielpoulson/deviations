@@ -1,3 +1,4 @@
+//SYNC 11/03/2017 DP
 import axios from 'axios';
 
 export const GET_FILES = 'GET_FILES';
@@ -48,7 +49,7 @@ export function removeFile(id) {
 }
 //
 export function bookoutFile(id) {
-  const url = `/api/filebooked/${id}`;
+  const url = `/api/files/booked/${id}`;
   axios.put(url);
 
   return {

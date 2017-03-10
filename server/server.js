@@ -8,7 +8,7 @@ const app = express();
 require('./config/express')(app, config);
 require('./config/mongoose')(config);
 require('./config/passport')();
-app.use(require('./config/route'));
+require('./routes')(app);
 app.get('/*', function (req, res) {
     res.render('index.html');
 });

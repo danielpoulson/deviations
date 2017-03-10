@@ -168,6 +168,7 @@ exports.getCustomers = function(req, res) {
 };
 
 exports.getGraphData = function(req, res){
+    
     const trendData = {};
     trendData.lineData = exportdata.myData();
     trendData.chartData = exportdata.changeData;
@@ -213,8 +214,8 @@ exports.dumpDeviation = function(req, res) {
 exports.dumpDeviations = function(req, res) {
     //const status = 2;
     const int = parseInt((Math.random()*1000000000),10);
-    const uploadsfolder = config.uploads;
-    const file = uploadsfolder + 'deviations' + int + '.csv';
+    const uploadedfolder = config.uploaded;
+    const file = uploadedfolder + 'deviations' + int + '.csv';
     let fileData = {};
     const newDate = new Date();
 
@@ -222,7 +223,7 @@ exports.dumpDeviations = function(req, res) {
     fileData.fsAddedBy = req.body.fsAddedBy;
     fileData.fsFileName = 'deviations' + int;
     fileData.fsFileExt = 'csv';
-    fileData.fsDevNo = req.body.fsDevNo;
+    fileData.fsSource = req.body.fsSource;
     fileData.fsFilePath = 'deviations' + int + '.csv';
     fileData.fsBooked = 0;
 

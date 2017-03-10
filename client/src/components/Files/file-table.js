@@ -1,3 +1,4 @@
+//SYNC 11/03/2017 DP
 import React, { PropTypes } from 'react';
 import FileRow from './file-row';
 

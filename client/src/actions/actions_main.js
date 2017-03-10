@@ -11,7 +11,7 @@ export const SET_VIEW = 'SET_VIEW';
 
 
 export function getUserDashboard(username){
-  const url = `/api/userdashboard/${username}`;
+  const url = `/api/deviations/userdashboard/${username}`;
   const request = axios.get(url);
 
   return {
@@ -21,7 +21,7 @@ export function getUserDashboard(username){
 }
 
 export function getGraphData(){
-  const url = "api/graphdata";
+  const url = "/api/deviations/graphdata";
   const request = axios.get(url);
 
   return {

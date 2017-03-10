@@ -1,5 +1,4 @@
 // @flow
-
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -18,7 +17,7 @@ class TaskList extends Component {
 
   handleClick = (i) => {
     if (this.props.type === 'All') {
-      const dvNo:string = this.props.tasklist[i].DevId;
+      const dvNo:string = this.props.tasklist[i].SourceId;
       //This action is linked to container/deviations onGetDeviation function
       if (this.props.MainId !== dvNo ) {
         this.props.resetLog();

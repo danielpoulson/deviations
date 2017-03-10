@@ -7,12 +7,10 @@ export const DELETE_DEV = 'DELETE_DEV';
 export const NEW_DEVIATION = 'NEW_DEVIATION';
 export const LOAD_PAGE_DEVS = 'LOAD_PAGE_DEVS';
 export const CREATE_LOG = 'CREATE_LOG';
-export const BOOKOUT_FILE = 'BOOKOUT_FILE';
-
 
 export function getDeviations(data) {
   const cust = 'all';
-  const url = `/api/deviationlist/${data}/${cust}`;
+  const url = `/api/deviations/${data}/${cust}`;
   const request = axios.get(url);
 
   return {
@@ -24,7 +22,7 @@ export function getDeviations(data) {
 
 export function getDeviation(data) {
 
-  const url = `/api/deviation/${data}`;
+  const url = `/api/deviations/${data}`;
   const request = axios.get(url);
 
   return {
@@ -99,19 +97,8 @@ export function createLog(data) {
 
 }
 
-export function bookoutFile(data) {
-  const url = `/api/filebooked/${data._id}`;
-  axios.put(url);
-
-  return {
-    type: BOOKOUT_FILE,
-    payload: data
-  };
-
-}
-
 export function exportDeviations(search) {
-  const url = '/export/deviations';
+  const url = '/api/deviations/export/';
   axios.post(url, search);
 
   return {

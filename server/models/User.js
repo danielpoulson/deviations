@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+//SYNC 11/03/2017 DP
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+const userSchema = new Schema({
     fullname: {type:String},
     email: {type:String},
     username: {type:String},
@@ -10,4 +11,4 @@ var userSchema = new Schema({
     role: {type:String}
 });
 
-var User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
