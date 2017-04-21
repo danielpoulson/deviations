@@ -1,6 +1,5 @@
 "use strict";
 const Deviation = require('mongoose').model('Deviation');
-const Task = require('mongoose').model('Task');
 const files = require('../controllers/files');
 const logger = require('../controllers/loggers');
 const tasks = require('../controllers/tasks');
@@ -9,6 +8,7 @@ const mailer = require('../config/mailer.js');
 const exportdata = require('../config/data.js');
 const utils = require('../config/utils');
 const config = require('../config/config');
+const reporter = require('../helpers/reports');
 const fs = require('fs');
 
 
@@ -38,6 +38,13 @@ exports.getDeviations = function(req, res) {
         });
 };
 
+function getAllDeviations(_status, regExSearch) {
+    return Deviation.find({dvClosed: {$lte:_status}})
+        .select({dvNo: 1, dvMatNo: 1, dvMatName: 1, dvCust: 1, 'dvCreated':1, dvAssign: 1, dvClosed: 1, dvDateClosed: 1, dvClass: 1, dvStatus: 1, dvExtract: 1, _id: 0})
+        .where({$or: [{dvAssign : regExSearch }, {dvNo : regExSearch}, {dvMatName : regExSearch}, {dvCust : regExSearch}]})
+        .exec();
+}
+
 exports.updateDeviation = function(req, res) {
     const _dev = req.body;
     // These two functions below do the following functions
@@ -48,7 +55,7 @@ exports.updateDeviation = function(req, res) {
     delete _dev.dvLog;
 
     if(!_dev.dvNotChanged){
-        // createEmail(_dev);
+        mailer.createEmail(_dev);
     }
 
     delete _dev.dvNotChanged;
@@ -61,23 +68,23 @@ exports.updateDeviation = function(req, res) {
     });
 };
 
-function createEmail(body){
-    const _DateCreated = utils.dpFormatDate(body.dvCreated);
-    const emailType = "Deviation";
-    const emailActivity = `<b>Deviation - </b><em>${body.dvNo}</em> </br>
-        <b> Deviation Description:</b><i>${body.dvMatName} <b> Date Created</b> ${_DateCreated}</i>`;
-//TODO: (4) Not the worlds nicest Promise using a timeout need to rework and improve.
-    const p = new Promise(function(resolve, reject) {
-        const toEmail = users.getUserEmail(body.dvAssign);
-       setTimeout(() => resolve(toEmail), 2000);
-    }).then(function(res){
-        const _toEmail = res[0].email;
-        mailer.sendMail(_toEmail, emailType, emailActivity);
-    }).catch(function (err) {
-      utils.handleError(err);
-    });
-
-}
+// function createEmail(body){
+//     const _DateCreated = utils.dpFormatDate(body.dvCreated);
+//     const emailType = "Deviation";
+//     const emailActivity = `<b>Deviation - </b><em>${body.dvNo}</em> </br>
+//         <b> Deviation Description:</b><i>${body.dvMatName} <b> Date Created</b> ${_DateCreated}</i>`;
+// //TODO: (4) Not the worlds nicest Promise using a timeout need to rework and improve.
+//     const p = new Promise(function(resolve, reject) {
+//         const toEmail = users.getUserEmail(body.dvAssign);
+//        setTimeout(() => resolve(toEmail), 2000);
+//     }).then(function(res){
+//         const _toEmail = res[0].email;
+//         mailer.sendMail(_toEmail, emailType, emailActivity);
+//     }).catch(function (err) {
+//       utils.handleError(err);
+//     });
+//
+// }
 
 
 exports.deleteDeviation = function(req, res) {
@@ -168,11 +175,17 @@ exports.getCustomers = function(req, res) {
 };
 
 exports.getGraphData = function(req, res){
-    
+
     const trendData = {};
     trendData.lineData = exportdata.myData();
     trendData.chartData = exportdata.changeData;
     res.send(trendData);
+};
+
+exports.getReportData = function(status){
+    return Deviation.find({dvClosed: {$lt:status}})
+        .select({ dvNo: 1, dvMatName: 1, _id:0 })
+        .exec();
 };
 
 // This function gets the count for **active** tasks and change controls for the logged in user
@@ -201,27 +214,17 @@ exports.getUserDashboard = function(req, res){
   });
 };
 
-exports.dumpDeviation = function(req, res) {
-
-    Deviation.findAndStreamCsv({dvClosed: {$lt:req.params.id}}, {dvNo:true, dvMatNo:true, dvMatName:true, dvCust:true, dvAssign:true, dvClass: 1, dvDateClosed:1, 'dvCreated': 1, _id: 0})
-        .pipe(fs.createWriteStream('exports/devs.csv'));
-
-    utils.handleLog("Files have been created");
-
-    res.sendStatus(200);
-};
-
 exports.dumpDeviations = function(req, res) {
-    //const status = 2;
-    const int = parseInt((Math.random()*1000000000),10);
-    const uploadedfolder = config.uploaded;
-    const file = uploadedfolder + 'deviations' + int + '.csv';
-    let fileData = {};
+    const fileData = {};
     const newDate = new Date();
+    const int = parseInt((Math.random()*1000000000),10);
+    const filename = 'deviations' + int;
+    const fields = ['_dvNo', '_dvMatNo', '_dvMatName', '_dvCust', '_dvAssign', '_dvCreated', '_dvDateClosed', '_dvClosed', '_dvClass', '_dvStatus', '_dvExtract'];
+    const fieldNames = ['DevId', 'Material#', 'Material_Name', 'Customer', 'Assigned', 'Created', 'Closed', 'IsClosed', 'Class', 'Status', 'Extracted'];
 
     fileData.fsAddedAt = newDate;
     fileData.fsAddedBy = req.body.fsAddedBy;
-    fileData.fsFileName = 'deviations' + int;
+    fileData.fsFileName = filename;
     fileData.fsFileExt = 'csv';
     fileData.fsSource = req.body.fsSource;
     fileData.fsFilePath = 'deviations' + int + '.csv';
@@ -233,75 +236,28 @@ exports.dumpDeviations = function(req, res) {
     const regExSearch = new RegExp(_search + ".*", "i");
     const _status = req.body.showAll ? 1 : 0;
 
+    fileData._id = int;
 
-    Deviation.find({dvClosed: {$lte:_status}})
-        .select({dvNo: 1, dvMatNo: 1, dvMatName: 1, dvCust: 1, 'dvCreated':1, dvAssign: 1, dvClosed: 1, dvDateClosed: 1, dvClass: 1, dvStatus: 1, dvExtract: 1, _id: 0})
-        .where({$or: [{dvAssign : regExSearch }, {dvNo : regExSearch}, {dvMatName : regExSearch}, {dvCust : regExSearch}]})
-        .stream()
-        .pipe(Deviation.csvTransformStream())
-        .pipe(fs.createWriteStream(file));
+    const p = getAllDeviations(_status, regExSearch);
+    p.then(data => {
+      const _devData = data.map(dev => {
+        const _dvNo = dev.dvNo;
+        const _dvMatNo = dev.dvMatNo;
+        const _dvMatName = dev.dvMatName.replace(/,/g, "");
+        const _dvCust = (typeof dev.dvCust != 'undefined') ? dev.dvCust.replace(/,/g, "") : '';
+        const _dvAssign = dev.dvAssign;
+        const _dvCreated = (typeof dev.dvCreated != 'undefined') ? utils.dpFormatDate(dev.dvCreated) : '';
+        const _dvDateClosed = (typeof dev.dvDateClosed != 'undefined') ? utils.dpFormatDate(dev.dvDateClosed) : '';
+        const _dvClosed = dev.dvClosed;
+        const _dvClass = dev.dvClass;
+        const _dvStatus = (typeof dev.dvStatus != 'undefined') ? dev.dvStatus.replace(/,/g, "") : '';
+        const _dvExtract = (typeof dev.dvExtract != 'undefined') ? dev.dvExtract.replace(/,/g, "") : '';
 
+        return {_dvNo, _dvMatNo, _dvMatName, _dvCust, _dvAssign, _dvCreated, _dvDateClosed, _dvClosed, _dvClass, _dvStatus, _dvExtract};
+      });
 
-    utils.handleLog("Files have been created");
+      reporter.printToCSV(_devData, filename, fields, fieldNames);
+    });
 
-    res.sendStatus(200);
-
+    res.send(fileData);
 };
-
-// This was the old dashboard
-// exports.getDashboard = function(req, res) {
-//     const dashArray = {
-//         year1: "2014",
-//         y1open : 325,
-//         y1Closed : 325,
-//         year2: "2015",
-//         y2open : 325,
-//         y2Closed : 315,
-//         year3: "2016",
-//         y3open : 69,
-//         y3Closed : 35,
-//         devClosed1 : 0,
-//         devClosed2 : 30,
-//         devClosed3 : 40,
-//         capa1: 0,
-//         capa2: 0
-//     };
-//
-//
-//     const today = new Date();
-//     const todayless30 = today.setDate(today.getDate()-30);
-//     const todayless60 = today.setDate(today.getDate()-60);
-//
-//
-//     const promise = Task.count({TKCapa : 1, TKStat: {$lt: 5}}).exec();
-//
-//     promise.then(function (count) {
-//         dashArray.capa1 = count;
-//         return Task.count({TKStat: {$lt: 5}}).exec();
-//     }).then(function (taskCount) {
-//         dashArray.capa2 = taskCount;
-//         return Deviation.count({dvClosed:0, dvCreated:{$gt:todayless30}}).exec();
-//     }).then(function (less30) {
-//         dashArray.devClosed1 = less30;
-//         return Deviation.count({dvClosed:0, dvCreated:{$lte:todayless30, $gte: todayless60}}).exec();
-//     }).then(function(less60){
-//         dashArray.devClosed2 = less60;
-//         return Deviation.count({dvClosed:0, dvCreated:{$lte:todayless60}}).exec();
-//     }).then(function(gt60){
-//         dashArray.devClosed3 = gt60;reformattedArray
-//         return Deviation.count({dvNo:{$in : [/^DV15.*$/]}}).exec();
-//     }).then(function(totalDev){
-//         dashArray.y2open = totalDev;
-//         return Deviation.count({dvClosed:1, dvNo:{$in : [/^DV15.*$/]}}).exec();
-//     }).then(function(closedDev){
-//         dashArray.y2Closed = closedDev;
-//         return Deviation.count({dvNo:{$in : [/^DV16.*$/]}}).exec();
-//     }).then(function(totalDev){
-//         dashArray.y3open = totalDev;
-//         return Deviation.count({dvClosed:1, dvNo:{$in : [/^DV16.*$/]}}).exec();
-//     }).then(function(closedDev){
-//         dashArray.y3Closed = closedDev;
-//         res.status(200).send(dashArray);
-//     });
-//
-// };

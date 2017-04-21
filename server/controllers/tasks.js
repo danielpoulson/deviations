@@ -102,7 +102,7 @@ exports.getCountAll = function(){
 exports.getReportData = function(){
     return Task.find({'TKStat':{$lte:4}}, {SourceId:1, TKName:1, TKTarg:1, TKStart:1, TKChamp:1, TKStat:1})
         .sort({TKTarg : 1}).exec();
-}
+};
 
 exports.dumpTasks = function(req, res) {
     const fileData = {};

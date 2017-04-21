@@ -300,7 +300,7 @@ class DeviationDetail extends Component {
           {this.state.notnew && <FileList
             filesTab={this.state.FilesTab}
             refreshDeviation={this.onRefresh}
-            dvNo={this.props.location.pathname.split('/')[2]} />}
+            sourceId={this.props.location.pathname.split('/')[2]} />}
 
       </div>
     );

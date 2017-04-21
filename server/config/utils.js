@@ -32,6 +32,6 @@ exports.write_to_log = function(write_data) {
            console.log("Successful Write to " + path);
          }
     });
-}
+};
 
 exports.dpFormatDate = dpFormatDate;

@@ -19,10 +19,10 @@ export default class BookoutButton extends React.Component {
       LogDate: new Date()
     };
 
-    window.location.href = `/server/upload/${this.props.fileLoad}`;
+    window.location.href = `/api/files/upload/${this.props.fileLoad}`;
 
     this.props.createLog(_log);
-    this.props.bookoutFile(this.props.fileId);
+    this.props.bookoutFile(this.props.fileId, this.props.user.fullname);
 
   }
 
@@ -54,6 +54,7 @@ export default class BookoutButton extends React.Component {
       if (this.props.user.role === 'admin') {
 
         text = 'Delete';
+        action = this.deleteFile;
         classButton = 'btn btn-danger btn-xs';
         classSpan = 'glyphicon glyphicon-trash';
 
@@ -63,15 +64,13 @@ export default class BookoutButton extends React.Component {
         classSpan = 'fa fa-hand-paper-o';
       }
 
-      action = this.deleteFile;
-
     } else {
       text = 'Book out';
       action = this.onBookout;
       classButton = 'btn btn-warning btn-xs';
       classSpan = 'glyphicon glyphicon-book';
     }
-    return <button onClick={action} className={classButton}><span className={classSpan} /> {text} </button>;
+    return <button onClick={action} className={classButton}><span className={classSpan}></span> {text} </button>;
   }
 
 }

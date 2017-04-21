@@ -1,3 +1,4 @@
+//SYNC 12/03/2017 DP
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import FileTable from '../../components/Files/file-table';
@@ -6,7 +7,7 @@ import FileZone from '../../components/Files/file-zone';
 /* actions */
 import { getFiles, addFile, bookoutFile, deleteFile, removeFile } from '../../actions/actions_files';
 import { setFiletabCount } from '../../actions/actions_main';
-import { createLog } from '../../actions/actions_logger';
+import { createLog } from '../../actions/actions_logger'; //Not Synced
 
 class FileList extends Component {
   constructor(props) {
@@ -20,8 +21,8 @@ class FileList extends Component {
   }
 
   componentWillMount() {
-    if (this.props.dvNo) {
-      this.props.getFiles(this.props.dvNo);
+    if (this.props.sourceId) {
+      this.props.getFiles(this.props.sourceId);
     }
   }
 
@@ -45,8 +46,8 @@ class FileList extends Component {
     this.props.removeFile(id);
   }
 
-  onBookoutFile(id) {
-    this.props.bookoutFile(id);
+  onBookoutFile(id, user) {
+    this.props.bookoutFile(id, user);
   }
 
   render() {
@@ -73,7 +74,7 @@ class FileList extends Component {
               <FileZone
                 addFile={this.onAddFile}
                 user={this.props.user}
-                dvNo={this.props.dvNo} />
+                sourceId={this.props.sourceId} />
             </div>
           </div>
         </div>
@@ -93,7 +94,7 @@ FileList.propTypes = {
   getFiles: PropTypes.func,
   removeFile: PropTypes.func,
   setFiletabCount: PropTypes.func,
-  dvNo: PropTypes.string,
+  sourceId: PropTypes.string,
   user: PropTypes.object
 };
 

@@ -1,3 +1,4 @@
+// @flow
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Toastr from 'toastr';
@@ -13,29 +14,17 @@ import { resetLog, getLog } from '../../actions/actions_logger';
 
 class Deviations extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      activePage: 0,
-      colSelected: null,
-      paged: {},
-      count: 0,
-      numPage: 15,
-      txtSearch: '',
-      showAll: false,
-      detailView: false
-    };
+state = {
+    activePage: 0,
+    colSelected: null,
+    paged: {},
+    count: 0,
+    numPage: 15,
+    txtSearch: '',
+    showAll: false,
+    detailView: false
+  };
 
-    this.allDeviations = this.allDeviations.bind(this);
-    this.exportDeviation = this.exportDeviation.bind(this);
-    this.newDeviation = this.newDeviation.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onSearchText = this.onSearchText.bind(this);
-    this.onSortByClick = this.onSortByClick.bind(this);
-    this.onGetDeviation = this.onGetDeviation.bind(this);
-    this.linkClick = this.linkClick.bind(this);
-    this.showDetailed = this.showDetailed.bind(this);
-  }
 
   componentWillMount() {
     let search = this.props.deviations.searchText;
@@ -49,23 +38,23 @@ class Deviations extends Component {
     this.onChange(1, search);
   }
 
-  onSearchText(event) {
+  onSearchText = (event) => {
     const value = event.target.value;
     this.setState({ activePage: 0 });
     this.setState({ txtSearch: value });
     this.onChange(0, value);
-  }
+  };
 
-  onChange(page_num, searchText, column) {
+  onChange = (page_num, searchText, column) => {
     const action = {};
     action.page_num = page_num || 1;
     action.search = searchText || null;
     action.numPage = this.state.numPage;
     action.column = column;
     this.props.loadPage(action);
-  }
+  };
 
-  onGetDeviation(i) {
+  onGetDeviation = (i) => {
     const _MainId = this.props.MainId;
     const _id = i;
 
@@ -82,35 +71,35 @@ class Deviations extends Component {
 
     this.context.router.push(`/deviation/${_id}`);
 
-  }
+  };
 
-  onSortByClick(column) {
+  onSortByClick = (column) => {
     this.setState({ activePage: 0 });
     this.onChange(0, this.state.txtSearch, column);
-  }
+  };
 
-  linkClick(i) {
+  linkClick = (i) => {
     this.onChange(i + 1, this.state.txtSearch);
     this.setState({ activePage: i });
-  }
+  };
 
-  allDeviations() {
+  allDeviations = () => {
     let _showAll = this.state.showAll;
     _showAll = !_showAll;
     this.setState({ showAll: _showAll });
     this.props.setView();
 
-    if (this.state.showAll !== true) {
+    if (_showAll !== true) {
       this.props.getDeviations(2);
     } else {
       this.props.getDeviations(1);
     }
-    this.setState({ txtSearch: null });
+    this.setState({ txtSearch: '' });
     this.setState({ activePage: 0 });
-    Toastr.success(`Only showing active changes - ${this.state.showAll}`, 'Deviation Detail', { timeOut: 1000 });
-  }
+    Toastr.success(`Only showing active changes - ${String(_showAll)}`, 'Deviation Detail', { timeOut: 1000 });
+  };
 
-  exportDeviation() {
+  exportDeviation = () => {
     const info = {
       fsSource: 'exp',
       fsAddedBy: this.props.user.username,
@@ -120,19 +109,19 @@ class Deviations extends Component {
     };
 
     this.props.exportDeviations(info);
-  }
+  };
 
-  newDeviation() {
+  newDeviation = () => {
     // this.props.getDeviation(null);
     this.props.resetDeviation();
     this.onChange(1, null);
     this.props.setMain({ MainId: 'new', CurrentMode: 'deviation', loading: false });
     this.context.router.push('/deviation/new');
-  }
+  };
 
-  showDetailed() {
+  showDetailed = () => {
     this.setState({detailView: !this.state.detailView});
-  }
+  };
 
   render() {
     let _changeTitle = 'Register';

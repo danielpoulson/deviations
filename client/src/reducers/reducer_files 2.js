@@ -1,14 +1,13 @@
-//SYNC 12/03/2017 DP
 import { GET_FILES, ADD_FILE, BOOKOUT_FILE, DELETE_FILE } from '../actions/actions_files';
 
-function toggleBooked(state, action) {
+function toggleBooked(file, action) {
 
-  if (state._id !== action.payload) {
-    return state;
+  if (file._id !== action.payload) {
+    return file;
   }
 
   return {
-    ...state,
+    ...file,
     fsBooked: 1,
     fsAddedBy: sessionStorage.getItem('username'),
     fsAddedAt: new Date()
@@ -57,7 +56,7 @@ export default function (state = [], action) {
         ...state,
         _data
       ];
-    
+
     default:
       return state;
   }

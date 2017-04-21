@@ -5,7 +5,7 @@ import DateTimePicker from '../../components/Common/date-picker';
 import SelectInput from '../../components/Common/select-input';
 
 const TaskForm = ({
-  errors, task, status, users, onSubmit, hideDelete, deleteTask,
+  errors, task, status, users, onSaveTask, hideDelete, onDeleteTask,
   onChange, onDateChange, onCheckChange, onCancel, submitting}) => {
 
   return (
@@ -22,23 +22,23 @@ const TaskForm = ({
         />
 
         <DateTimePicker
+          name="TKStart"
+          label="Start date"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-2"
+          value={task.TKStart}
+          onChange={onDateChange.bind(null, "TKStart")}
+          error={errors.TKStart}
+        />
+
+        <DateTimePicker
           name="TKTarg"
           label="Target date"
           labelstyle="col-sm-2 control-label"
           inputdiv="col-sm-2"
           value={task.TKTarg}
           onChange={onDateChange.bind(null, "TKTarg")}
-          error={errors.TKTarg}
-        />
-
-        <DateTimePicker
-          name="TKComp"
-          label="Date Completed"
-          labelstyle="col-sm-2 control-label"
-          inputdiv="col-sm-2"
-          value={task.TKComp}
-          onChange={onDateChange.bind(null, "TKComp")}
-        />
+          error={errors.TKTarg} />
 
         <SelectInput
           name="TKStat"
@@ -66,7 +66,7 @@ const TaskForm = ({
             <div className="col-sm-offset-2 col-sm-10">
                 <div className="checkbox">
                     <label>
-                        <input type="checkbox" name="TKCapa" checked={task.TKCapa} 
+                        <input type="checkbox" name="TKCapa" checked={task.TKCapa}
                           onChange={onCheckChange}/>Preventative Action
                     </label>
                 </div>
@@ -84,13 +84,13 @@ const TaskForm = ({
         />
 
         <div className="col-sm-9 col-md-offset-2">
-          <button className="btn btn-success pull-left" disabled={submitting} onClick={onSubmit}>
+          <button className="btn btn-success pull-left" disabled={submitting} onClick={onSaveTask}>
             {submitting ? <i /> : <i />} Save Task
           </button>
           <button className="btn btn-info dp-margin-10-LR" disabled={submitting} onClick={onCancel}>
           Cancel
           </button>
-          <button className={hideDelete} disabled={submitting} onClick={deleteTask}>
+          <button className={hideDelete} disabled={submitting} onClick={onDeleteTask}>
             Delete
           </button>
         </div>

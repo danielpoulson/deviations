@@ -19,7 +19,7 @@ app.get('/*', function (req, res) {
 });
 
 app.listen(process.env.PORT, function() {
-    console.log('Express server 🌎  listening on port ' + process.env.PORT);
+    console.log('Express server 🌎  listening on port ' + toString(process.env.PORT));
     console.log('env = ' + process.env.NODE_ENV +
                 '\n__dirname = ' + __dirname +
                 '\nprocess.cwd = ' + process.cwd());

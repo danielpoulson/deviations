@@ -26,6 +26,6 @@ exports.getLog = function(req, res){
 
           res.status(200).send(collection);
     });
-}
+};
 
 exports._createlog = _createlog;

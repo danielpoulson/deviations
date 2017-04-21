@@ -16,34 +16,34 @@ function createTaskReport(filename, search, regExSearch, status){
 }
 
 function getCombinedData(data) {
-    const changeData = data;
+    const devData = data;
     const _tasks = tasks.getReportData(5);
-    const fields = ['SourceId', '_name', 'TKName', 'TKStart', 'TKTarg', 'TKChamp', 'TKStat'];
-    
+    const fields = ['SourceId', 'Deviation_Title', 'Task_Name', 'Start', 'Target', 'Champion', 'Status'];
+
     _tasks.then( data => {
 
         const reformattedArray = data.map( obj => {
-            const TKName = obj.TKName.replace(/,/g, "");
-            const TKStart = (typeof obj.TKStart != 'undefined') ? utils.dpFormatDate(obj.TKStart) : '';                        
-            const TKTarg = (typeof obj.TKTarg != 'undefined') ? utils.dpFormatDate(obj.TKTarg) : '';
-            const TKChamp = obj.TKChamp;
-            const TKStat = getStatus(obj.TKStat);
+            const Task_Name = obj.TKName.replace(/,/g, "");
+            const Start = (typeof obj.TKStart != 'undefined') ? utils.dpFormatDate(obj.TKStart) : '';
+            const Target = (typeof obj.TKTarg != 'undefined') ? utils.dpFormatDate(obj.TKTarg) : '';
+            const Champion = obj.TKChamp;
+            const Status = getStatus(obj.TKStat);
             const SourceId = obj.SourceId.replace(/,/g, "");
 
-            const _tasks = changeData.find(change => change.CC_No === obj.SourceId);
+            const _tasks = devData.find(dev => dev.dvNo === obj.SourceId);
 
             if (typeof _tasks === 'object') {
-                const _name = _tasks.CC_Descpt;
-                return {TKName, _name, TKTarg, TKStart, TKChamp, TKStat, SourceId};
+                const Deviation_Title = _tasks.dvMatName;
+                return {Task_Name, Deviation_Title, Target, Start, Champion, Status, SourceId};
             }
 
         });
-        
+
         reporter.printToCSV(reformattedArray, reportName, fields);
 
     });
 
-    _tasks.catch(err => console.error(err));
+    _tasks.catch(err => utils.handleError(err));
 
 }
 
@@ -51,22 +51,16 @@ function getStatus(status) {
     switch (status) {
         case 1 :
             return "Not Started (New)";
-            break;
         case 2 :
             return 'On Track';
-            break;
         case 3 :
             return 'In Concern';
-            break;
         case 4 :
             return 'Behind Schedule';
-            break;
         case 5 :
             return 'Completed';
-            break;
         default :
             return "Not Set";
-            break;
     }
 }
 
