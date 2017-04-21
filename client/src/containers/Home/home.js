@@ -106,7 +106,7 @@ Home.propTypes = {
   chartData: PropTypes.array,
   countDeviationsUser: PropTypes.number,
   countTasksUser: PropTypes.number,
-  fullname: PropTypes.string.isRequired,
+  fullname: PropTypes.string,
   getUserDashboard: PropTypes.func,
   lineData: PropTypes.array,
   loadPage: PropTypes.func,
