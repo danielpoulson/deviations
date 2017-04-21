@@ -7,9 +7,7 @@ import Moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 momentLocalizer(Moment);
 
-
-const DevDetailForm = ({customer, dev, onSave, onCancel, onChange, onDateChange, errors}) => {
-
+const DevDetailForm = ({customer, dev, onSave, onCancel, onChange, onDateChange, errors, settings}) => {
   return (
     <form className="form-horizontal">
       <InputText
@@ -20,7 +18,7 @@ const DevDetailForm = ({customer, dev, onSave, onCancel, onChange, onDateChange,
           placeholder="Enter Material No. ( Required, Min 5 character )"
           labelstyle="col-sm-2 control-label"
           inputdiv="col-sm-4"
-          error={errors.dvMatNo}/> 
+          error={errors.dvMatNo}/>
 
       <InputText
         name="dvMatName"
@@ -49,7 +47,7 @@ const DevDetailForm = ({customer, dev, onSave, onCancel, onChange, onDateChange,
         inputdiv="col-sm-2"
         value={dev.dvDOM}
         onChange={onDateChange.bind(null, "dvDOM")}
-        error={errors.dvDOM}/> 
+        error={errors.dvDOM}/>
 
       <TextArea
         name="dvDescribe"
@@ -69,19 +67,33 @@ const DevDetailForm = ({customer, dev, onSave, onCancel, onChange, onDateChange,
         inputdiv="col-sm-2"
         value={dev.dvCreated}
         onChange={onDateChange.bind(null, "dvCreated")}
-        error={errors.dvCreated}/> 
-      
-      <SelectInput
-        name="dvCust"
-        label="Customer:"
-        value={dev.dvCust}
-        options={customer}
-        onChange={onChange}
-        defaultOption="FMC - Crop Protection"
-        placeholder="Enter Customer Name ( Required, Min 5 characters )"
-        labelstyle="col-sm-2 control-label"
-        inputdiv="col-sm-6"
-        error={errors.dvCust}/>
+        error={errors.dvCreated}/>
+
+      {
+        settings.app === "fmc" ?
+        <SelectInput
+          name="dvCust"
+          label="Customer:"
+          value={dev.dvCust}
+          options={customer}
+          onChange={onChange}
+          defaultOption="FMC - Crop Protection"
+          placeholder="Enter Customer Name ( Required, Min 5 characters )"
+          labelstyle="col-sm-2 control-label"
+          inputdiv="col-sm-6"
+          error={errors.dvCust}/>
+
+          :
+          <InputText
+            name="dvCust"
+            label="Customer:"
+            value={dev.dvCust}
+            onChange={onChange}
+            placeholder="Enter Customer Name ( Required, Min 5 characters )"
+            labelstyle="col-sm-2 control-label"
+            inputdiv="col-sm-6"
+            error={errors.dvCust}/>
+      }
 
 
       <InputText
@@ -89,7 +101,7 @@ const DevDetailForm = ({customer, dev, onSave, onCancel, onChange, onDateChange,
         label="Supplier:"
         value={dev.dvSupplier}
         onChange={onChange}
-        placeholder="Enter Customer Name ( Required, Min 5 characters )"
+        placeholder="Enter Supplier Name ( Required, Min 5 characters )"
         labelstyle="col-sm-2 control-label"
         inputdiv="col-sm-6"
         error={errors.dvSupplier}/>

@@ -9,6 +9,7 @@ import {usersFormattedForDropdown} from '../../selectors/selectors';
 import {devFormIsValid} from './dev-form-validation';
 import {statusData, outcomesData, categoriesData, classifiesData, customerData} from './select-data';
 import {dpFormatDate} from '../../utils/helpers';
+import settings from '../../../settings.json';
 import classNames from 'classnames';
 import toastr from 'toastr';
 
@@ -258,7 +259,9 @@ class DeviationDetail extends Component {
                   onCancel={this.cancelDeviation}
                   onChange={this.updateDevState}
                   onDateChange={this.updateDevStateDate}
-                  errors={this.state.errors} />
+                  errors={this.state.errors}
+                  settings={settings}
+                  />
               </div>
             </div>
           </div>

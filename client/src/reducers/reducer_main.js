@@ -30,7 +30,7 @@ export default function (state, action) {
         loading: action.data.loading,
         reload: action.data.reload
       };
-      
+
     case ADD_DEV:
       return {
         ...state,
