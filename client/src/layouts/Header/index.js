@@ -14,7 +14,7 @@ class Header extends Component {
     this.state = {
       login: {}
     };
-  
+
     this.onLogin = this.onLogin.bind(this);
     this.setStateLogin = this.setStateLogin.bind(this);
 }
@@ -46,10 +46,10 @@ class Header extends Component {
         <div>
             <div className="topband">
                 <section className="col-sm-12 dp-nav-section ">
-                    <div className="col-sm-5">
+                    <div className="col-sm-6">
                         <h3 className="topband_h1">Deviation Database</h3>
                     </div>
-                    <div className="col-sm-7" style={loginStyle}>
+                    <div className="col-sm-6" style={loginStyle}>
                         {!this.props.fullname ?
                           <Login
                             login={this.state.login}

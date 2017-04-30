@@ -48,7 +48,7 @@ exports.updatePassword = function(req, res) {
   console.log(req.params.id);
 
   if (password) {
-    
+
     const _passwordHash = crypto.hash(password);
 
     User.update({_id : req.params.id}, {$set: {passwordHash: _passwordHash}}, function (err) {
@@ -75,7 +75,7 @@ exports.getUser = function(req, res) {
         .select({"passwordHash": 0})
         .where({fullname : _fullname})
         .exec(function(err, collection) {
-          res.send(collection);
+          res.send(collection.shift());
     });
 };
 

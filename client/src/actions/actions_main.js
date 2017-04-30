@@ -56,7 +56,7 @@ export function setLoading(data) {
 }
 
 export function setUser() {
-  const url = '/api/loggeduser';
+  const url = '/api/users/logged';
   const request = axios.get(url);
 
   return {

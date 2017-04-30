@@ -26,12 +26,8 @@ class UserProfile extends Component {
     this.onCancel = this.onCancel.bind(this);
     this.updateUserState = this.updateUserState.bind(this);
   }
-
+  
   componentWillReceiveProps(nextProps) {
-    console.log('this.props.user._id');
-    console.log(this.props.user._id);
-    console.log('nextProps.user._id');
-    console.log(nextProps.user._id);
     if (this.props.user._id !== nextProps.user._id) {
       // Necessary to populate form when existing course is loaded directly.
       this.setState({user: Object.assign({}, nextProps.user)});

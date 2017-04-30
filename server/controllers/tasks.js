@@ -4,7 +4,7 @@
 const Task = require('mongoose').model('Task');
 const files = require('../controllers/files');
 const mailer = require('../config/mailer.js');
-const config = require('../config/config.js'); 
+const config = require('../config/config.js');
 const utils = require('../config/utils');
 const databind = require('../helpers/data-bind');
 
@@ -37,7 +37,7 @@ exports.updateTask = function(req, res) {
         res.sendStatus(200);
 
         if(newOwner){
-          mailer.createEmail(req.body);
+          sendEmail(req.body);
         }
     });
 };
@@ -66,7 +66,8 @@ exports.deleteTask = function(req, res) {
 };
 
 exports.createTask = function(req, res, next) {
-    Task.create(req.body, function(err, task) {
+  const _body = req.body;
+    Task.create(_body, function(err, task) {
         if(err) {
             if(err.toString().indexOf('E11000') > -1) {
                 err = new Error('Duplicate Task');
@@ -75,9 +76,20 @@ exports.createTask = function(req, res, next) {
             return res.send({reason:err.toString()});
         }
         res.status(200).send(task);
-        mailer.createEmail(req.body);
+        sendEmail(_body);
     });
 };
+
+function sendEmail(_body){
+  const emailContent = [];
+  emailContent._id = _body.SourceId;
+  emailContent.name = _body.TKName;
+  emailContent.assigned = _body.TKChamp;
+  emailContent.emailDate = _body.TKTarg;
+  emailContent.emailType = "Deviation Task";
+  emailContent.dateHeader = "Target Date";
+  mailer.createEmail(emailContent);
+}
 
 exports.getTaskById = function(req, res) {
     Task.findById(req.params.id).exec(function(err, task) {

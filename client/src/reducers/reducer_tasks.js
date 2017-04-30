@@ -29,7 +29,7 @@ function searchData(data, searchText, sortColumn, showCapaOnly) {
       if (item.TKCapa >= 1 ) {
         return true;
       }
-      return false; 
+      return false;
     }
 
     return true;
@@ -63,7 +63,7 @@ export default function (state, action) {
 
   switch (action.type) {
     case ADD_DEV:
-      alldata = [ ...state.alldata, _data ];
+      alldata = [ ...state.alldata];
       ctlist = [];
       ctTotal = 0;
       return {

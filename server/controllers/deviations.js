@@ -55,7 +55,7 @@ exports.updateDeviation = function(req, res) {
     delete _dev.dvLog;
 
     if(!_dev.dvNotChanged){
-        mailer.createEmail(_dev);
+        sendEmail(_dev);
     }
 
     delete _dev.dvNotChanged;
@@ -68,24 +68,16 @@ exports.updateDeviation = function(req, res) {
     });
 };
 
-// function createEmail(body){
-//     const _DateCreated = utils.dpFormatDate(body.dvCreated);
-//     const emailType = "Deviation";
-//     const emailActivity = `<b>Deviation - </b><em>${body.dvNo}</em> </br>
-//         <b> Deviation Description:</b><i>${body.dvMatName} <b> Date Created</b> ${_DateCreated}</i>`;
-// //TODO: (4) Not the worlds nicest Promise using a timeout need to rework and improve.
-//     const p = new Promise(function(resolve, reject) {
-//         const toEmail = users.getUserEmail(body.dvAssign);
-//        setTimeout(() => resolve(toEmail), 2000);
-//     }).then(function(res){
-//         const _toEmail = res[0].email;
-//         mailer.sendMail(_toEmail, emailType, emailActivity);
-//     }).catch(function (err) {
-//       utils.handleError(err);
-//     });
-//
-// }
-
+function sendEmail(_body){
+  const emailContent = [];
+  emailContent._id = _body.dvNo;
+  emailContent.name = _body.dvMatName;
+  emailContent.assigned = _body.dvAssign;
+  emailContent.emailDate = _body.dvCreated;
+  emailContent.emailType = "Deviation";
+  emailContent.dateHeader = "Date Created";
+  mailer.createEmail(emailContent);
+}
 
 exports.deleteDeviation = function(req, res) {
     Deviation.remove({ProjNo:req.params.id}, function (err) {
@@ -126,8 +118,6 @@ exports.createDeviation = function(req, res) {
         res.status(200).send(data);
         });
     });
-
-
 };
 
 

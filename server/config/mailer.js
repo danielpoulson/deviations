@@ -13,7 +13,6 @@ const rootPath = path.normalize(__dirname);
 function sendMail(toEmail, emailType, emailActivity) {
   const emailSubject = "You have been assigned ownership of a " + emailType;
   // This is your API key that you retrieve from www.mailgun.com/cp (free up to 10K monthly emails)
-
   let _auth = {
         xoauth2: xoauth2.createXOAuth2Generator({
             user: config.auth.user,
@@ -47,31 +46,21 @@ function sendMail(toEmail, emailType, emailActivity) {
       if (err) {
         console.log('Error: ' + err);
       }
-      
       transporter.close();
     });
   });
 }
 
 function createEmail(body){
-  const _DateCreated = utils.dpFormatDate(body.dvCreated);
-  const emailType = "Deviation";
-  const emailActivity = `<b>Deviation - </b><em>${body.dvNo}</em> </br>
-         <b> Deviation Description:</b><i>${body.dvMatName} <b> Date Created</b> ${_DateCreated}</i>`;
+  const _formattedDate = utils.dpFormatDate(body.emailDate);
+  const emailType = body.emailType;
+  const emailActivity = `<b>${emailType}- </b><em>${body._id}</em> </br>
+         <b> ${emailType}:</b><i>${body.name} <b> ${body.dateHeader}</b> ${_formattedDate}</i>`;
 
-   const p = new Promise(function(resolve, reject) {
-       const toEmail = Users.getUserEmail(body.dvAssign);
-      setTimeout(() => resolve(toEmail), 2000);
-   });
+  Users.getUserEmail(body.assigned).exec((err, doc) => {
+     sendMail(doc[0].email, emailType, emailActivity);
+ });
 
-   p.then(function(res){
-       const _toEmail = res[0].email;
-       sendMail(_toEmail, emailType, emailActivity);
-   });
-
-   p.catch(function (err) {
-     utils.handleError(err);
-   });
 }
 
 exports.createEmail = createEmail;

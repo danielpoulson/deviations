@@ -6,7 +6,7 @@
     "start": "nf start -p 3010",
     "start:prod": "NODE_ENV=production node server/server.js",
     "build:folder": "npm-run-all --parallel copy:*",
-    "build:prod": "npm-run-all delete:dist build:client build:folder",
+    "deploy": "npm-run-all delete:dist build:client build:folder",
     "build:client": "npm run build --prefix client",
     "delete:dist": "del ./dist",
     "dev:babel": "babel server -d dist/server -watch",
@@ -54,8 +54,7 @@
     "mongoose-to-csv": "^0.1.0",
     "morgan": "^1.7.0",
     "multer": "^1.1.0",
-    "nodemailer": "^2.3.0",
-    "nodemailer-mailgun-transport": "https://github.com/orliesaurus/nodemailer-mailgun-transport.git",
+    "nodemailer": "2.3.0",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0",
     "xoauth2": "^1.2.0"

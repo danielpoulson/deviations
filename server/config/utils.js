@@ -1,6 +1,7 @@
 /* eslint no-var: "off" */
 const moment = require('moment');
 const fs = require('fs');
+const config = require('./config');
 
 function dpFormatDate(date) {
   return moment(date).format('DD/MM/YYYY');
@@ -20,7 +21,7 @@ exports.handleLog = (log) =>  console.log(log);
 
 exports.write_to_log = function(write_data) {
     const fs = require("fs");
-    const path = '.././logs/logs.txt';
+    const path = config.rootPath + '../logs/logs.txt';
     const dString = dpFormatDate(new Date());
 
     write_data = "\r\n" + dString + " - " + write_data;
