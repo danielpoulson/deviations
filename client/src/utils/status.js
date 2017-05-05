@@ -39,15 +39,15 @@ export function getExt(ext) {
 
 export function getTraffic(date, taskstatus) {
   let _status = 'fa fa-check-square fa-lg';
-  
-  if (taskstatus === 5) {
+
+  if (taskstatus === 5 || taskstatus === '5') {
     _status = 'fa fa-flag-checkered fa-lg' ;
   } else {
     const _diff = dayDiff(date, 0);
 
     if (_diff > 0 ) {
       _status = 'fa fa-exclamation-triangle fa-lg';
-    } else 
+    } else
     if (_diff <= 0 && _diff > -7) {
       _status = 'fa fa-warning fa-lg';
     }
