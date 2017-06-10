@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Toastr from 'toastr';
 
@@ -13,6 +13,24 @@ import { setMain, setView } from '../../actions/actions_main';
 import { resetLog, getLog } from '../../actions/actions_logger';
 
 class Deviations extends Component {
+
+props: {
+  changes: [],
+  deviations: {},
+  exportDeviations: any,
+  getDeviations: any,
+  getDeviation: any,
+  getLog: any,
+  history: any,
+  loadPage: any,
+  MainId: string,
+  resetLog: any,
+  resetDeviation: any,
+  setMain: any,
+  setView: any,
+  ShowAll: boolean,
+  user: {}
+};
 
 state = {
     activePage: 0,
@@ -69,7 +87,7 @@ state = {
       this.props.setMain({ MainId: _id, CurrentMode: 'deviation', loading: true, reload: true });
     }
 
-    this.context.router.push(`/deviation/${_id}`);
+    this.props.history.push(`/deviation/${_id}`);
 
   };
 
@@ -109,6 +127,7 @@ state = {
     };
 
     this.props.exportDeviations(info);
+    this.props.history.push('/export');
   };
 
   newDeviation = () => {
@@ -116,7 +135,7 @@ state = {
     this.props.resetDeviation();
     this.onChange(1, null);
     this.props.setMain({ MainId: 'new', CurrentMode: 'deviation', loading: false });
-    this.context.router.push('/deviation/new');
+    this.props.history.push('/deviation/new');
   };
 
   showDetailed = () => {
@@ -192,31 +211,6 @@ state = {
     );
   }
 }
-
-Deviations.propTypes = {
-  changes: PropTypes.array,
-  deviations: PropTypes.object,
-  exportDeviations: PropTypes.func,
-  getDeviations: PropTypes.func,
-  getDeviation: PropTypes.func,
-  getLog: PropTypes.func,
-  loadPage: PropTypes.func,
-  MainId: PropTypes.string,
-  resetLog: PropTypes.func,
-  resetDeviation: PropTypes.func,
-  setMain: PropTypes.func,
-  setView: PropTypes.func,
-  ShowAll: PropTypes.bool,
-  user: PropTypes.object
-};
-
-Deviations.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
-
-Deviations.childContextTypes = {
-  location: React.PropTypes.object
-};
 
 export default connect(state => ({ deviations: state.deviations, MainId: state.main.MainId, ShowAll: state.main.ShowAll, user: state.main.user }),
   { getDeviation, getDeviations, addDeviation, loadPage, exportDeviations, resetDeviation, setMain, setView, resetLog, getLog })(Deviations);

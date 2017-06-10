@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserProfileForm from '../../components/User/user-profile-form';
 import UserSelect from '../../components/User/user-select';
@@ -147,11 +148,11 @@ UserProfile.propTypes = {
 };
 
 UserProfile.contextTypes = {
-  router: React.PropTypes.object.isRequired
+  router: PropTypes.object.isRequired
 };
 
 UserProfile.childContextTypes = {
-  location: React.PropTypes.object
+  location: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {

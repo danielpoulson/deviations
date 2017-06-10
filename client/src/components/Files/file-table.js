@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 //SYNC 11/03/2017 DP
-import React, { PropTypes } from 'react';
+import React from 'react';
 import FileRow from './file-row';
 
 const FileTable = (props) => {

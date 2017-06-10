@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { getFiles } from '../../actions/actions_files';
 import { logoutUser } from '../../actions/actions_main';
@@ -8,6 +8,11 @@ import { logoutUser } from '../../actions/actions_main';
 import './styles.css';
 
 class NavBar extends React.Component {
+  props: {
+    username: string,
+    getFiles: any,
+    logoutUser: any
+  }
 
   constructor(props) {
     super(props);
@@ -27,12 +32,10 @@ class NavBar extends React.Component {
     sessionStorage.setItem('authorised', false);
     sessionStorage.setItem('username', false);
     this.props.logoutUser();
-    this.context.router.push('/');
   }
 
   getFileList() {
     this.props.getFiles('exp');
-    this.context.router.push('/export');
   }
 
   setActiveItem(e) {
@@ -54,16 +57,16 @@ class NavBar extends React.Component {
                   <Link id="homeTab" to="/"><i className="fa fa-home fa-fw"></i>&nbsp; Home</Link>
                 </li>
                 <li className={this.state.devTab} onClick={this.setActiveItem}>
-                  <Link id="devTab" to="/deviations" activeClassName="active"><i className="fa fa-list-ul fa-fw"></i>&nbsp; Deviations</Link>
+                  <Link id="devTab" to="/deviations" ><i className="fa fa-list-ul fa-fw"></i>&nbsp; Deviations</Link>
                 </li>
                 <li className={this.state.tasksTab} onClick={this.setActiveItem}>
-                  <Link id="tasksTab" to="/tasks" activeClassName="active"><i className="fa fa-tasks fa-fw"></i>&nbsp; Tasks</Link>
+                  <Link id="tasksTab" to="/tasks" ><i className="fa fa-tasks fa-fw"></i>&nbsp; Tasks</Link>
                 </li>
                 <li className={this.state.filesTab} onClick={this.setActiveItem}>
-                  <a id="filesTab" onClick={this.getFileList}><i className="fa fa-file-text-o fa-fw"></i>&nbsp; Files</a>
+                  <Link to="/export" id="filesTab" onClick={this.getFileList}><i className="fa fa-file-text-o fa-fw"></i>&nbsp; Files</Link>
                 </li>
                 <li>
-                  <a onClick={this.onLogoutUser}><i className="fa fa-sign-out fa-fw"></i>&nbsp; Logout ({this.props.username})</a>
+                  <Link to="/" onClick={this.onLogoutUser}><i className="fa fa-sign-out fa-fw"></i>&nbsp; Logout ({this.props.username})</Link>
                 </li>
               </ul>
             </div>
@@ -72,20 +75,6 @@ class NavBar extends React.Component {
     );
   }
 }
-
-NavBar.propTypes = {
-  username: PropTypes.string,
-  getFiles: PropTypes.func,
-  logoutUser: PropTypes.func
-};
-
-NavBar.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
-
-NavBar.childContextTypes = {
-  location: React.PropTypes.object
-};
 
 export default connect(
   state => ({ username: state.main.user.username }),

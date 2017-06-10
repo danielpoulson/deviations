@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import TaskForm from '../../components/Tasks/task-form';
@@ -11,6 +11,23 @@ import * as taskActions from '../../actions/actions_tasks';
 import * as mainActions from '../../actions/actions_main';
 
 class TaskDetail extends React.Component {
+
+  props: {
+    location: {},
+    deleteTask: any,
+    history: any,
+    main: {},
+    mainActions: {},
+    newTask: any,
+    setLoading: any,
+    editTask: any,
+    addTask: any,
+    task: {},
+    taskActions: {},
+    tasks: {},
+    users: array
+  };
+
   constructor(props, context) {
     super(props, context);
 
@@ -117,7 +134,7 @@ class TaskDetail extends React.Component {
   }
 
   taskNav(id) {
-      this.context.router.push(`/deviation/${id}`);
+      this.props.history.push(`/deviation/${id}`);
   }
 
   render() {
@@ -160,29 +177,6 @@ class TaskDetail extends React.Component {
     );
   }
 }
-
-TaskDetail.propTypes = {
-  location: PropTypes.object,
-  deleteTask: PropTypes.func,
-  main: PropTypes.object,
-  mainActions: PropTypes.object,
-  newTask: PropTypes.func,
-  setLoading: PropTypes.func,
-  editTask: PropTypes.func,
-  addTask: PropTypes.func,
-  task: PropTypes.object,
-  taskActions: PropTypes.object,
-  tasks: PropTypes.object,
-  users: PropTypes.array
-};
-
-TaskDetail.contextTypes = {
-  router: PropTypes.object
-};
-
-TaskDetail.childContextTypes = {
-    location: React.PropTypes.object
-};
 
 function mapStateToProps(state, ownProps) {
 

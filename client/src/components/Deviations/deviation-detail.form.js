@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import InputText from '../../components/Common/form-text-input';
 import TextArea from '../../components/Common/text-area';
 import DateTimePicker from '../../components/Common/date-picker';
@@ -123,8 +124,8 @@ DevDetailForm.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    dev: React.PropTypes.object.isRequired,
-    errors: React.PropTypes.object.isRequired
+    dev: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
   };
 
 export default DevDetailForm;

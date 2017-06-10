@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class BookoutButton extends React.Component {
@@ -76,12 +77,12 @@ export default class BookoutButton extends React.Component {
 }
 
 BookoutButton.propTypes = {
-  fsBooked: React.PropTypes.number,
-  user: React.PropTypes.object,
-  source: React.PropTypes.string,
-  fileId: React.PropTypes.string,
-  bookoutFile: React.PropTypes.func,
-  fileLoad: React.PropTypes.string,
-  createLog: React.PropTypes.func,
-  deleteFile: React.PropTypes.func
+  fsBooked: PropTypes.number,
+  user: PropTypes.object,
+  source: PropTypes.string,
+  fileId: PropTypes.string,
+  bookoutFile: PropTypes.func,
+  fileLoad: PropTypes.string,
+  createLog: PropTypes.func,
+  deleteFile: PropTypes.func
 };

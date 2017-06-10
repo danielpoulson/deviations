@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DeviationPrint from '../../components/DeviationPrint/deviation-print.component';
@@ -13,8 +14,8 @@ class DeviationPrintContainer extends Component {
 }
 
 DeviationPrintContainer.propTypes = {
-	deviation: React.PropTypes.object,
-	task: React.PropTypes.array
+	deviation: PropTypes.object,
+	task: PropTypes.array
 };
 
 export default connect(state => ({

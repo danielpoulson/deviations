@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import d3 from 'd3';
 import _ from 'lodash';
@@ -144,5 +145,5 @@ export default class BarChart extends React.Component{
 }
 
 BarChart.propTypes = {
-	chartData: React.PropTypes.array
+	chartData: PropTypes.array
 };

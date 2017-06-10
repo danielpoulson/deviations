@@ -1,13 +1,18 @@
-//SYNC 11/03/2017 DP
-import React, { PropTypes } from 'react';
+//SYNC Ver.002 DP
+import React from 'react';
 import TaskRow from './task-row';
 
-const TaskTable = (props) => {
-  const _tasks = props.tasklist;
+type Props = {
+  tasklist: any,
+  onSelectTask: any
+}
+
+const TaskTable = ({tasklist, onSelectTask} : Props) => {
+  const _tasks = tasklist;
   let tasks = [];
 
   if (_tasks !== undefined) {
-    tasks = _tasks.map((task, i) => <TaskRow key={task._id} task={task} getTask={props.handleClick.bind(null, i)} />);
+    tasks = _tasks.map((task, i) => <TaskRow key={task._id} task={task} onSelectTask={onSelectTask} />);
   }
 
   return (
@@ -25,11 +30,6 @@ const TaskTable = (props) => {
       </table>
     </div>
   );
-};
-
-TaskTable.propTypes = {
-  tasklist: PropTypes.array,
-  handleClick: PropTypes.func.isRequired
 };
 
 export default TaskTable;

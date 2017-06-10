@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import SelectInput from '../Common/select-input';
 import './user-style.css';
 

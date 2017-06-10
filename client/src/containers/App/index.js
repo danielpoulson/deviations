@@ -16,9 +16,15 @@ import { getUsers } from '../../actions/actions_users';
 
 /* application components */
 import Header from '../../layouts/Header';
-import { Footer } from '../../layouts/Footer';
 
 class App extends Component {
+  props: {
+    children: any,
+    getAllTasks: any,
+    getChanges: any,
+    getUsers: any,
+    setUser: any
+  }
 
   componentWillMount() {
     const authorised = sessionStorage.getItem('authorised');
@@ -31,28 +37,8 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="container">
-        <div className="">
-          <Header />
-        </div>
-        <div>
-            {this.props.children}
-        </div>
-        <div className="">
-          <Footer />
-        </div>
-      </div>
-    );
+    return <Header />;
   }
 }
-
-App.propTypes = {
-  children: React.PropTypes.any,
-  getAllTasks: React.PropTypes.func,
-  getGraphData: React.PropTypes.func,
-  getUsers: React.PropTypes.func,
-  setUser: React.PropTypes.func
-};
 
 export default connect(null, { getAllTasks, setUser, getGraphData, getUsers })(App);

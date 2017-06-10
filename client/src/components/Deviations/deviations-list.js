@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import DeviationRow from './deviation-row';
 import classNames from 'classnames';
@@ -73,12 +74,12 @@ const DeviationList = (props) => {
 };
 
 DeviationList.propTypes = {
-  devlist: React.PropTypes.array,
-  setMain: React.PropTypes.func,
-  getDeviation: React.PropTypes.func,
-  sortByClick: React.PropTypes.func,
-  colSelected: React.PropTypes.string,
-  detailView: React.PropTypes.bool
+  devlist: PropTypes.array,
+  setMain: PropTypes.func,
+  getDeviation: PropTypes.func,
+  sortByClick: PropTypes.func,
+  colSelected: PropTypes.string,
+  detailView: PropTypes.bool
 };
 
 export default DeviationList;

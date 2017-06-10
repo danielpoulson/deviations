@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import TextInputTask from '../Common/form-text-input';
 import SelectInput from '../Common/select-input';
 

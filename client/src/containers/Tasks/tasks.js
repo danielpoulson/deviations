@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import TaskList from '../../components/Tasks/task-list';
@@ -6,8 +6,19 @@ import Pagination from '../../components/Common/pagination';
 import SearchBox from '../../components/Common/search-box';
 /* actions */
 import { getAllTasks, loadPageTask, exportTasks, setCapa } from '../../actions/actions_tasks';
+import { getDeviation, resetDeviation } from '../../actions/actions_deviations';
+import { setMain } from '../../actions/actions_main';
+import { resetLog, getLog } from '../../actions/actions_logger';
 
 class Tasks extends Component {
+  props: {
+    history: any,
+    user: {},
+    tasks: {},
+    exportTasks: any,
+    getAllTasks: any,
+    loadPageTask: any
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +31,7 @@ class Tasks extends Component {
       };
 
     this.onSearchText = this.onSearchText.bind(this);
+    this.onSelectTask = this.onSelectTask.bind(this);
     this.linkClick = this.linkClick.bind(this);
     this.exportTask = this.exportTask.bind(this);
     this.showCapa = this.showCapa.bind(this);
@@ -69,6 +81,21 @@ class Tasks extends Component {
     this.onChange(0, this.state._showCapaOnly, value);
   }
 
+  onSelectTask(i) {
+    const dvNo:string = i.SourceId;
+    if (this.props.mainId !== dvNo ) {
+        this.props.resetLog();
+        this.props.resetDeviation();
+        this.props.getDeviation(dvNo);
+        this.props.getLog(dvNo);
+        this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true, reload: false });
+    } else {
+        this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true, reload: true });
+    };
+
+    this.props.history.push(`/deviation/${dvNo}`);
+  }
+
   onSortByClick(column) {
     this.setState({ activePage: 0 });
     this.onChange(0, this.state._showCapaOnly, this.state.txtSearch, column);
@@ -88,7 +115,7 @@ class Tasks extends Component {
     };
 
     this.props.exportTasks(info);
-    this.context.router.push('/export');
+    this.props.history.push('/export');
   }
 
   render() {
@@ -140,6 +167,7 @@ class Tasks extends Component {
 
         <TaskList
           tasklist={this.props.tasks.paged}
+          onSelectTask={this.onSelectTask}
           type="All" />
 
         </div>
@@ -147,21 +175,5 @@ class Tasks extends Component {
   }
 }
 
-Tasks.propTypes = {
-  user: PropTypes.object,
-  tasks: PropTypes.object,
-  exportTasks: PropTypes.func,
-  getAllTasks: PropTypes.func,
-  loadPageTask: PropTypes.func
-};
-
-Tasks.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
-
-Tasks.childContextTypes = {
-  location: React.PropTypes.object
-};
-
-export default connect(state => ({ tasks: state.tasks, user: state.main.user }),
-  { getAllTasks, loadPageTask, exportTasks, setCapa })(Tasks);
+export default connect(state => ({ tasks: state.tasks, user: state.main.user, mainId: state.main.MainId }),
+  { getAllTasks, loadPageTask, exportTasks, setCapa, getDeviation, resetDeviation, setMain, resetLog, getLog })(Tasks);

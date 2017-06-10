@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DevDetailForm from '../../components/Deviations/deviation-detail.form';
 import DevInvestForm from '../../components/Deviations/deviation-invest.form';
@@ -15,10 +15,30 @@ import toastr from 'toastr';
 
 /* actions */
 import { addDeviation, createLog, editDeviation, closeDeviation, getDeviation } from '../../actions/actions_deviations';
-import { getProjectTasks } from '../../actions/actions_tasks';
+import { getTask, getProjectTasks } from '../../actions/actions_tasks';
 import { setMain } from '../../actions/actions_main';
 
 class DeviationDetail extends Component {
+  props: {
+    addDeviation: any,
+    closeDeviation: any,
+    ctTotal: number,
+    dev: {},
+    deviation: {},
+    editDeviation: any,
+    getDeviation: any,
+    getProjectTasks: any,
+    history: any,
+    location: {},
+    log: [],
+    main: {},
+    onSave: any,
+    onChange: any,
+    onDateChange: any,
+    errors: {},
+    tasklist: [],
+    users: []
+  };
 
   constructor(props) {
     super(props);
@@ -78,6 +98,37 @@ class DeviationDetail extends Component {
     }
   }
 
+  onSelectTask = (i) => {
+    this.props.getTask(i.id);
+    this.props.history.push(`/task/${i.id}`);
+  }
+
+  //   handleClick = (i) => {
+  //   if (this.props.type === 'All') {
+  //     const dvNo:string = this.props.tasklist[i].SourceId;
+  //     //This action is linked to container/deviations onGetDeviation function
+  //     if (this.props.MainId !== dvNo ) {
+  //       this.props.resetLog();
+  //       this.props.resetDeviation();
+  //       this.props.getDeviation(dvNo);
+  //       this.props.getLog(dvNo);
+  //       this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true, reload: false });
+  //     } else {
+  //       this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true, reload: true });
+  //     }
+
+  //     this.props.history.push(`/deviation/${dvNo}`);
+  //   } else {
+  //     const _id = this.props.tasklist[i]._id;
+  //     this.props.getTask(_id);
+  //     this.props.history.push(`/task/${_id}`);
+  //   }
+  // };
+
+  newTask = () => {
+    this.props.getTask('new');
+  };
+
   onRefresh() {
     this.props.getDeviation(this.state._dvNo);
   }
@@ -105,13 +156,13 @@ class DeviationDetail extends Component {
     this.props.closeDeviation(_data);
     toastr.success('Deviation has been Closed', 'Deviation Detail', { timeOut: 1000 });
     this.setState({ dirty: false });
-    this.context.router.push('/deviations');
+    this.props.history.push('/deviations');
 
   }
 
   onPrintDev(e) {
     e.preventDefault();
-    this.context.router.push('/printdeviation');
+    this.props.history.push('/printdeviation');
   }
 
   onApprove() {
@@ -139,7 +190,7 @@ class DeviationDetail extends Component {
 
   cancelDeviation(e) {
     e.preventDefault();
-    this.context.router.push('/deviations');
+    this.props.history.push('/deviations');
   }
 
   saveDetail(event, closed) {
@@ -296,6 +347,8 @@ class DeviationDetail extends Component {
             log={this.props.log} />}
 
           {this.state.notnew && <TaskList
+            newTask={this.newTask}
+            onSelectTask={this.onSelectTask}
             tasklist={this.props.tasklist}
             tasksTab={this.state.TasksTab}
             title={this.state.deviationTitle} />}
@@ -310,34 +363,6 @@ class DeviationDetail extends Component {
   }
 }
 
-DeviationDetail.propTypes = {
-  addDeviation: PropTypes.func,
-  closeDeviation: PropTypes.func,
-  ctTotal: PropTypes.number,
-  dev: PropTypes.object,
-  deviation: PropTypes.object,
-  editDeviation: PropTypes.func,
-  getDeviation: PropTypes.func,
-  getProjectTasks: PropTypes.func,
-  location: PropTypes.object,
-  log: PropTypes.array,
-  main: PropTypes.object,
-  onSave: PropTypes.func,
-  onChange: PropTypes.func,
-  onDateChange: PropTypes.func,
-  errors: PropTypes.object,
-  tasklist: PropTypes.array,
-  users: PropTypes.array
-};
-
-DeviationDetail.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
-
-DeviationDetail.childContextTypes = {
-  location: React.PropTypes.object
-};
-
 function mapStateToProps(state, ownProps) {
 
   return {
@@ -351,5 +376,5 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, {
-  addDeviation, createLog, editDeviation, closeDeviation, getDeviation, getProjectTasks, setMain
+  addDeviation, createLog, editDeviation, closeDeviation, getDeviation, getTask, getProjectTasks, setMain
 })(DeviationDetail);

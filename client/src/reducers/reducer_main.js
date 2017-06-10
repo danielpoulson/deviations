@@ -4,7 +4,7 @@ import toastr from 'toastr';
 
 const initialState = {
   MainId: '',
-  CurrentMode: 'change',
+  CurrentMode: 'deviation',
   ShowAll: false,
   lineData: [],
   chartData: [],

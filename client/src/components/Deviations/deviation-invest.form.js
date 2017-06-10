@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import TextArea from '../../components/Common/text-area';
 import DateTimePicker from '../../components/Common/date-picker';
 import SelectInput from '../../components/Common/select-input';
@@ -104,10 +105,10 @@ const DevInvestForm = ({dev, onSave, onCloseDev, onPrintDev, status, outcomes,
 };
 
 DevInvestForm.propTypes = {
-    dev: React.PropTypes.object.isRequired,
-    categories: React.PropTypes.array.isRequired,
-    classifies: React.PropTypes.array.isRequired,
-    outcomes: React.PropTypes.array.isRequired,
+    dev: PropTypes.object.isRequired,
+    categories: PropTypes.array.isRequired,
+    classifies: PropTypes.array.isRequired,
+    outcomes: PropTypes.array.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import './error-panel.css';
 
@@ -15,7 +16,7 @@ const ErrorPanel = ({errors}) => {
 };
 
 ErrorPanel.propTypes = {
-  errors: React.PropTypes.array
+  errors: PropTypes.array
 };
 
 export default ErrorPanel;

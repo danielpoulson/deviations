@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { calculateDay } from '../../utils/helpers';
 import './deviations-list.css';
 
@@ -38,7 +39,7 @@ const DeviationRow = (props) => {
 DeviationRow.propTypes = {
   getDeviation: PropTypes.func,
   deviation: PropTypes.object,
-  detailView: React.PropTypes.bool
+  detailView: PropTypes.bool
 };
 
 export default DeviationRow;

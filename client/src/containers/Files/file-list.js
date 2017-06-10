@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 //SYNC 12/03/2017 DP
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FileTable from '../../components/Files/file-table';
 import FileZone from '../../components/Files/file-zone';

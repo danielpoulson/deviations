@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -26,8 +27,8 @@ export default class DownloadButton extends React.Component {
 }
 
 DownloadButton.propTypes = {
-  fileLoad: React.PropTypes.string,
-  export: React.PropTypes.string,
-  removeFile: React.PropTypes.func,
-  fileId: React.PropTypes.string
+  fileLoad: PropTypes.string,
+  export: PropTypes.string,
+  removeFile: PropTypes.func,
+  fileId: PropTypes.string
 };

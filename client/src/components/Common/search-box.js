@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const SearchBox = ({ searchText, onChange }) => {
   const divStyle = { paddingRight: 15, marginTop: -10 };

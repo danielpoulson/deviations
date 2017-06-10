@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUserDashboard } from '../../actions/actions_main';
 import { loadPage } from '../../actions/actions_deviations';
@@ -10,6 +10,20 @@ import LineChart from '../../components/graphs/line-chart';
 import './styles.css';
 
 class Home extends Component {
+
+  props: {
+    allOpenDeviations: number,
+    allOpenTasks: number,
+    chartData: [],
+    countDeviationsUser: number,
+    countTasksUser: number,
+    fullname: string,
+    getUserDashboard: any,
+    history: any,
+    lineData: [],
+    loadPage: any,
+    loadPageTask: any
+  };
 
   constructor(props) {
     super(props);
@@ -31,28 +45,28 @@ class Home extends Component {
     const action = {};
     action.search = this.props.fullname || null;
     this.props.loadPageTask(action);
-    this.context.router.push('/tasks');
+    this.props.history.push('/tasks');
   }
 
   getDeviations() {
     const action = {};
     action.search = this.props.fullname || null;
     this.props.loadPage(action);
-    this.context.router.push('/deviations');
+    this.props.history.push('/deviations');
   }
 
   getAllTasks() {
     const action = {};
     action.search = null;
     this.props.loadPageTask(action);
-    this.context.router.push('/tasks');
+    this.props.history.push('/tasks');
   }
 
   getAllDeviations() {
     const action = {};
     action.search = null;
     this.props.loadPage(action);
-    this.context.router.push('/deviations');
+    this.props.history.push('/deviations');
   }
 
   render(){
@@ -99,23 +113,6 @@ class Home extends Component {
     );
   }
 }
-
-Home.propTypes = {
-  allOpenDeviations: PropTypes.number,
-  allOpenTasks: PropTypes.number,
-  chartData: PropTypes.array,
-  countDeviationsUser: PropTypes.number,
-  countTasksUser: PropTypes.number,
-  fullname: PropTypes.string,
-  getUserDashboard: PropTypes.func,
-  lineData: PropTypes.array,
-  loadPage: PropTypes.func,
-  loadPageTask: PropTypes.func
-};
-
-Home.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
 
 export default connect(
   state => ({ fullname: state.main.user.fullname,
