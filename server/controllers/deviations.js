@@ -183,7 +183,6 @@ exports.getUserDashboard = function(req, res){
   const dashboard = {};
   let username = '';
 
-
   const promise = Deviation.count({dvClosed: {$lt:1}}).exec();
 
   promise.then(data => {
@@ -201,7 +200,7 @@ exports.getUserDashboard = function(req, res){
   }).then( data => {
     dashboard.allTaskCount = data;
     res.send(dashboard);
-  });
+  }).catch(err => console.log(err));
 };
 
 exports.dumpDeviations = function(req, res) {

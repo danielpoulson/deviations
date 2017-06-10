@@ -14,11 +14,6 @@ module.exports = function(app) {
     });
 
     app.post('/login', auth.authenticate);
-// router.post('/login', passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/login',
-//     failureFlash: true
-// }));
 
     app.get('/logout', function (req, res) {
         req.logout();

@@ -103,28 +103,6 @@ class DeviationDetail extends Component {
     this.props.history.push(`/task/${i.id}`);
   }
 
-  //   handleClick = (i) => {
-  //   if (this.props.type === 'All') {
-  //     const dvNo:string = this.props.tasklist[i].SourceId;
-  //     //This action is linked to container/deviations onGetDeviation function
-  //     if (this.props.MainId !== dvNo ) {
-  //       this.props.resetLog();
-  //       this.props.resetDeviation();
-  //       this.props.getDeviation(dvNo);
-  //       this.props.getLog(dvNo);
-  //       this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true, reload: false });
-  //     } else {
-  //       this.props.setMain({ MainId: dvNo, CurrentMode: 'deviation', loading: true, reload: true });
-  //     }
-
-  //     this.props.history.push(`/deviation/${dvNo}`);
-  //   } else {
-  //     const _id = this.props.tasklist[i]._id;
-  //     this.props.getTask(_id);
-  //     this.props.history.push(`/task/${_id}`);
-  //   }
-  // };
-
   newTask = () => {
     this.props.getTask('new');
   };

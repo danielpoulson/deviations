@@ -38,7 +38,9 @@ class Home extends Component {
 
   componentWillMount(){
     const username = sessionStorage.getItem('username');
-    this.props.getUserDashboard(username);
+    if (username !== 'false') {
+      this.props.getUserDashboard(username);
+    }
   }
 
   getTasks() {

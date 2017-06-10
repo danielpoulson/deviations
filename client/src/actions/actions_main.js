@@ -11,8 +11,12 @@ export const SET_VIEW = 'SET_VIEW';
 
 
 export function getUserDashboard(username){
-  const url = `/api/deviations/userdashboard/${username}`;
-  const request = axios.get(url);
+  let request = {};
+
+  if (username !== null ) {
+    const url = `/api/deviations/userdashboard/${username}`;
+    request = axios.get(url);
+  }
 
   return {
     type: SET_USER_DASHBOARD,

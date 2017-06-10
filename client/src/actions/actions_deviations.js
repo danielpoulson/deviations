@@ -79,11 +79,9 @@ export function resetDeviation(){
 
 export function loadPage(data) {
   return {
-
     type: LOAD_PAGE_DEVS,
     data
   };
-
 }
 
 export function createLog(data) {

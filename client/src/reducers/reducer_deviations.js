@@ -1,41 +1,19 @@
 import { GET_DEVS, ADD_DEV, DELETE_DEV, LOAD_PAGE_DEVS } from '../actions/actions_deviations';
 import _ from 'lodash';
+import { pagedList, removeByIndex, searchData } from '../utils/data-functions';
 
 const initialState = {
   alldata: [],
-  paged: []
+  page: 1,
+  per_page: 15,
+  offset: 0,
+  paged: [],
+  columns: ['dvNo', 'dvMatNo', 'dvMatName', 'dvCust', 'dvAssign' ]
 };
-
-function searchData(data, searchText, sortColumn) {
-  function search(item) {
-    const reg1 = new RegExp(`${searchText}.*`, 'i');
-
-    if (item.dvNo.match(reg1) || item.dvMatNo.match(reg1) || item.dvMatName.match(reg1) || item.dvCust.match(reg1) || item.dvAssign.match(reg1)) {
-      return true;
-    }
-    return false;
-  }
-
-  if (searchText === null) {
-    return _.sortBy(data, sortColumn);
-  }
-
-  let _sortColumn = '';
-  _sortColumn = sortColumn || 'CC_No';
-  const newList = _.chain(data).filter(search).sortBy(_sortColumn).value();
-  return newList;
-}
-
-function searchIndex(data, index) {
-  return data.filter((item) => item.dvNo !== index);
-}
 
 export default function (state, action) {
   let alldata = [];
   let _data = {};
-  let per_page = 10;
-  let page = 1;
-  let offset = 0;
   let paged = [];
   let searchText = '';
   let currIds = [];
@@ -59,7 +37,7 @@ export default function (state, action) {
         ...state,
         searchText: '',
         total: alldata.length,
-        total_pages: Math.ceil(alldata.length / per_page),
+        total_pages: Math.ceil(alldata.length / state.per_page),
         alldata,
         paged
       };
@@ -75,54 +53,55 @@ export default function (state, action) {
         ...state.alldata.slice(index + 1)
       ];
       return {
+        ...state,
         paged,
         alldata
       };
 
     case DELETE_DEV: {
-      const dvNo = action.payload;
-      const deleted = searchIndex(state.alldata, dvNo);
+      const _id = action.payload;
+      alldata = removeByIndex(state.alldata, _id);
+      paged = pagedList(alldata);
+
       return {
         ...state,
-        alldata: deleted
+        alldata,
+        paged
       };
     }
 
 
     case GET_DEVS:
+      const column = state.sorted;
       alldata = action.payload.data;
-      per_page = 15;
-      page = 1;
-      offset = (page - 1) * per_page;
-      paged = alldata.slice(offset, offset + per_page);
+      state.offset = (state.page - 1) * state.per_page;
+      searchText = state.searchText || null;
+      const searcheddata = searchData(alldata, searchText, column, initialState.columns);
+      paged = pagedList(searcheddata, state.page);
 
       return {
+        ...state,
         searchText: null,
-        page,
-        per_page,
-        total: alldata.length,
-        total_pages: Math.ceil(alldata.length / per_page),
+        total: searcheddata.length,
+        total_pages: Math.ceil(alldata.length / state.per_page),
         paged,
         alldata
       };
 
     case LOAD_PAGE_DEVS: {
       const column = action.data.column || state.sorted;
-      per_page = action.data.numPage || 15;
-      page = action.data.page_num || 1;
-      offset = (page - 1) * per_page;
-      searchText = action.data.search || '';
-      const searcheddata = searchData(state.alldata, searchText, column);
-      paged = searcheddata.slice(offset, offset + per_page);
+      const page = action.data.page_num || 1;
+      searchText = action.data.search;
+      const searcheddata = searchData(state.alldata, searchText, column, initialState.columns);
+      paged = pagedList(searcheddata, page);
 
       return {
         ...state,
         sorted: column,
         searchText,
         page,
-        per_page,
         total: searcheddata.length,
-        total_pages: Math.ceil(alldata.length / per_page),
+        total_pages: Math.ceil(alldata.length / state.per_page),
         paged
       };
     }

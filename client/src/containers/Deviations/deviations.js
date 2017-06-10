@@ -26,6 +26,7 @@ props: {
   MainId: string,
   resetLog: any,
   resetDeviation: any,
+  searchText: string,
   setMain: any,
   setView: any,
   ShowAll: boolean,
