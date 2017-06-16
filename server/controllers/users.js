@@ -131,8 +131,6 @@ exports.deleteUser= function (req, res) {
 function makeUserSafe (user) {
     const safeUser = {};
 
-    console.log(user);
-
     const safeKeys = ['id', 'fullname', 'email', 'username', 'dept', 'role'];
 
     safeKeys.forEach(function (key) {

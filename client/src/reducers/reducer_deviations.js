@@ -32,7 +32,7 @@ export default function (state, action) {
         ...state.alldata,
         _data
       ];
-      paged = alldata.slice(0,14);
+      paged = pagedList(alldata);
       return {
         ...state,
         searchText: '',

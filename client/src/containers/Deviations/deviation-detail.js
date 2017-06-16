@@ -105,6 +105,7 @@ class DeviationDetail extends Component {
 
   newTask = () => {
     this.props.getTask('new');
+    this.props.history.push(`/task/new`);
   };
 
   onRefresh() {

@@ -52,7 +52,7 @@ export function closeDeviation(data){
 
   return {
     type: DELETE_DEV,
-    payload: _data.dvNo
+    payload: _data._id
   };
 }
 
@@ -97,9 +97,10 @@ export function createLog(data) {
 
 export function exportDeviations(search) {
   const url = '/api/deviations/export/';
-  axios.post(url, search);
+  const request = axios.post(url, search);
 
   return {
-    type: 'EXPORT_DEVS'
+    type: 'ADD_EXPORTFILE',
+    payload: request
   };
 }

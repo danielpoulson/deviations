@@ -52,11 +52,7 @@ export default function (state = [], action) {
 
     case 'ADD_EXPORTFILE':
       _data = action.payload.data;
-
-      return [
-        ...state,
-        _data
-      ];
+      return [ _data ];
     
     default:
       return state;

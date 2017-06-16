@@ -247,6 +247,8 @@ exports.dumpDeviations = function(req, res) {
 
       reporter.printToCSV(_devData, filename, fields, fieldNames);
     });
-
+    
+    //Create an id for use on the client side
+    fileData._id = int;
     res.send(fileData);
 };

@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Toastr from 'toastr';
@@ -16,7 +15,10 @@ class Deviations extends Component {
 
 props: {
   changes: [],
-  deviations: {},
+  deviations: {
+    searchText: string,
+    alldata: []
+  },
   exportDeviations: any,
   getDeviations: any,
   getDeviation: any,
@@ -26,11 +28,12 @@ props: {
   MainId: string,
   resetLog: any,
   resetDeviation: any,
-  searchText: string,
   setMain: any,
   setView: any,
   ShowAll: boolean,
-  user: {}
+  user: {
+    username: string
+  }
 };
 
 state = {
@@ -108,14 +111,15 @@ state = {
     this.setState({ showAll: _showAll });
     this.props.setView();
 
-    if (_showAll !== true) {
+    if (this.state.showAll !== true) {
       this.props.getDeviations(2);
     } else {
       this.props.getDeviations(1);
     }
-    this.setState({ txtSearch: '' });
+    this.setState({ txtSearch: null });
     this.setState({ activePage: 0 });
-    Toastr.success(`Only showing active changes - ${String(_showAll)}`, 'Deviation Detail', { timeOut: 1000 });
+    let toastMessage = _showAll ? 'Showing all Deviations' : 'Showing active Deviations'; 
+    Toastr.success(toastMessage, 'Deviation Detail', { timeOut: 1000 });
   };
 
   exportDeviation = () => {
