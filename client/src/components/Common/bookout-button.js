@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { serverURL } from '../../utils/helpers';
 
 export default class BookoutButton extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class BookoutButton extends React.Component {
   }
 
   onBookout() {
-      // TODO (4) If download does not complete donot delete from server.
+    // TODO (4) If download does not complete donot delete from server.
 
     const _log = {
       SourceId: this.props.source,
@@ -20,11 +21,10 @@ export default class BookoutButton extends React.Component {
       LogDate: new Date()
     };
 
-    window.location.href = `/api/files/upload/${this.props.fileLoad}`;
+    window.location.href = `${serverURL}/api/files/upload/${this.props.fileLoad}`;
 
     this.props.createLog(_log);
     this.props.bookoutFile(this.props.fileId, this.props.user.fullname);
-
   }
 
   deleteFile() {
@@ -45,7 +45,6 @@ export default class BookoutButton extends React.Component {
   }
 
   render() {
-
     let text = null;
     let action = {};
     let classButton = '';
@@ -53,27 +52,27 @@ export default class BookoutButton extends React.Component {
 
     if (this.props.fsBooked > 0) {
       if (this.props.user.role === 'admin') {
-
         text = 'Delete';
         action = this.deleteFile;
         classButton = 'btn btn-danger btn-xs';
         classSpan = 'glyphicon glyphicon-trash';
-
       } else {
         text = 'Booked Out';
         classButton = 'btn btn-danger btn-xs';
         classSpan = 'fa fa-hand-paper-o';
       }
-
     } else {
       text = 'Book out';
       action = this.onBookout;
       classButton = 'btn btn-warning btn-xs';
       classSpan = 'glyphicon glyphicon-book';
     }
-    return <button onClick={action} className={classButton}><span className={classSpan}></span> {text} </button>;
+    return (
+      <button onClick={action} className={classButton}>
+        <span className={classSpan} /> {text}{' '}
+      </button>
+    );
   }
-
 }
 
 BookoutButton.propTypes = {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import { serverURL } from '../../utils/helpers';
 
 export default class DownloadButton extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ export default class DownloadButton extends React.Component {
   }
 
   onDownload() {
-    window.location.href = `/api/files/upload/${this.props.fileLoad}`;
+    window.location.href = `${serverURL}/api/files/upload/${this.props.fileLoad}`;
     if (this.props.export === 'hidden') {
       this.props.removeFile(this.props.fileId);
     }
@@ -19,7 +19,7 @@ export default class DownloadButton extends React.Component {
   render() {
     return (
       <button type="button" className="btn btn-info btn-xs" onClick={this.onDownload}>
-        <span className="glyphicon glyphicon-circle-arrow-down"></span>
+        <span className="glyphicon glyphicon-circle-arrow-down" />
         Download
       </button>
     );

@@ -4,7 +4,7 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 import toastr from 'toastr';
 import Request from 'superagent';
-import {fileRegex} from '../../utils/helpers';
+import { fileRegex, serverURL } from '../../utils/helpers';
 
 class FileZone extends React.Component {
   constructor(props) {
@@ -15,10 +15,9 @@ class FileZone extends React.Component {
   onDrop(files) {
     const sourceId = this.props.sourceId;
     const addFile = this.props.addFile;
-    const req = Request.post('/api/files/upload');
+    const req = Request.post(`${serverURL}/api/files/upload`);
 
-    files.forEach((file) => {
-
+    files.forEach(file => {
       const myRe = fileRegex;
       const _fileName = file.name;
       let _newFileName = '';
@@ -42,13 +41,12 @@ class FileZone extends React.Component {
   }
 
   render() {
-
     return (
-        <div className="margin-20-top">
-          <Dropzone className="drop-zone" multiple={false} onDrop={this.onDrop}>
-            <div>File Drop or click to select single file (upload).</div>
-          </Dropzone>
-        </div>
+      <div className="margin-20-top">
+        <Dropzone className="drop-zone" multiple={false} onDrop={this.onDrop}>
+          <div>File Drop or click to select single file (upload).</div>
+        </Dropzone>
+      </div>
     );
   }
 }
@@ -57,7 +55,6 @@ FileZone.propTypes = {
   sourceId: PropTypes.string,
   addFile: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired
-
 };
 
 export default FileZone;

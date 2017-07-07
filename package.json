@@ -21,19 +21,7 @@
     "type": "git",
     "url": "https://github.com/danielpoulson/deviations.git"
   },
-  "keywords": [
-    "react",
-    "reactjs",
-    "babel6",
-    "boilerplate",
-    "redux",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
-    "webpack"
-  ],
+  "keywords": ["react", "reactjs", "babel6", "boilerplate", "redux", "hot", "reload", "hmr", "live", "edit", "webpack"],
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
