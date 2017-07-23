@@ -1,8 +1,9 @@
 const moment = require('moment');
 
-// export const serverURL = 'http://au01a112:6005';
-// export const serverURL = 'http://192.168.1.7:3030';
-export const serverURL = 'http://localhost:6060';
+// export const serverURL = 'http://localhost:6060';
+// export const serverURL = 'http://192.168.1.13:6060';
+// export const serverURL = 'http://au01a112:6060';
+export const serverURL = 'http://au01a112:3030';
 
 export function calculateDay(date, closed) {
   let _dayDiff = '-';
