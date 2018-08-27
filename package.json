@@ -36,7 +36,6 @@
     "foreman": "^2.0.0",
     "git": "^0.1.5",
     "json2csv": "^3.2.0",
-    "lodash": "^3.10.1",
     "moment": "^2.12.0",
     "mongoose": "^4.4.11",
     "mongoose-to-csv": "^0.1.0",
